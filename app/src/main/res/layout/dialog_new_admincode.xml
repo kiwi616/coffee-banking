@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_admincode"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:hint="@string/new_admin_code"
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:stackFromBottom="true" />
+
+    <EditText
+        android:id="@+id/et_admincode_reenter"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:hint="@string/reenter_new_admin_code"
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:stackFromBottom="true" />
+
+
+    <RelativeLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|bottom">
+
+        <Button
+            android:id="@+id/newperson_dialog_btn_save"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@android:string/ok" />
+
+    </RelativeLayout>
+
+</LinearLayout>

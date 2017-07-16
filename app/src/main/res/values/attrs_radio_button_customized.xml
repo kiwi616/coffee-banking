@@ -1,0 +1,9 @@
+<resources>
+    <declare-styleable name="RadioButtonCustomized">
+        <attr name="databaseIdentifier" format="string"/>
+        <attr name="idleDrawable" format="color|reference" />
+        <attr name="idleSecondDrawable" format="color|reference" />
+        <attr name="selectedFirstDrawable" format="color|reference" />
+        <attr name="selectedSecondDrawable" format="color|reference" />
+    </declare-styleable>
+</resources>

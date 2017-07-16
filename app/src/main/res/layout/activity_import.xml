@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="de.fruity.coffeeapp.ImportActivity">
+
+    <!-- Login progress -->
+    <ProgressBar
+        android:id="@+id/import_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="@string/import_database_question"
+        android:textSize="22sp" />
+
+    <RelativeLayout
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|bottom">
+
+        <Button
+            android:id="@+id/btn_activity_import_cancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@android:string/cancel"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/btn_activity_import_ok"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/btn_activity_import_cancel"
+            android:layout_toRightOf="@id/btn_activity_import_cancel"
+            android:text="@android:string/ok"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

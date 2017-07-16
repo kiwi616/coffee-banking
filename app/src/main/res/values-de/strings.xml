@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CoffeeApp</string>
+    <string name="error_nodata">Leere datenbank</string>
+    <string name="save_hint_enter_name">Nachname Vorname</string>
+    <string name="personal_number_hint">Personalnummer</string>
+    <string name="title_activity_main">CoffeeApp</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="manual_selection">Kein Zeiterfassungschip zur Hand? \nHier drücken um über Personalnummer zu buchen.</string>
+    <string name="title_activity_special_reader">spezial leser</string>
+    <string name="user_created">Benutzer erfolgreich angelegt</string>
+    <string name="new_bilance">Neuer Kontostand ist</string>
+    
+    <string name="manual">Bitte entsprechendes Symbol wählen und zum Buchen den Zeiterfassungschip an das Lesegerät führen.</string>
+    
+    <string name="rename">Umbenennen</string>
+    
+    <string name="groupmode">Gruppen Modus</string>
+    
+    <string name="comma_new_coffee_billance">, ihr Kaffeekontostand ist</string> 
+    <string name="comma_new_candy_billance">, ihr Candykontostand ist</string>
+    <string name="comma_new_metcan_billance">, ihr Dosenkontostand ist</string>
+    <string name="comma_new_beer_billance">, ihr Bierkontostand ist</string>
+    
+    <string name="personalnumber_not_found">Die angegebene Nummer ist nicht im System registriert. Bitte legen Sie ihren Zeiterfassungschip auf den Scanner.</string>
+    <string name="no_personalnumber_number">Keine gültige Personalnummer</string>
+    <string name="personalnumber_in_use">Diese Personalnummer ist bereits vergeben</string>
+    
+    <string name="is_correct_name">Ist das ihr richtiger Name?</string>
+    <string name="comma_is_correct_name">, ist das ihr richtiger Name?</string>
+    <string name="hello">Hallo </string>
+
+    <string name="group_booked">Gruppe erfolgreich verbucht</string>
+    
+    <string name="export_database">Datenbank sichern und loeschen</string>
+    <string name="change_coffee_price">Kaffeepreis ändern</string>
+    <string name="create_group">Gruppe erstellen</string>
+    
+    <string name="enter_personalnumber">Geben sie Ihre Personalnummer ein</string>
+    
+    <string name="enter_float">Einen Gleitpunktzahl bitte?</string>
+    
+    <string name="backup_database">Datenbank sichern</string>
+    
+    <string name="candy_billance">  Candykontostand:      </string>
+	<string name="coffee_billance"> Kaffeekontostand:     </string>
+	<string name="met_billance">  Dosenkontostand:      </string>
+	<string name="beer_billance"> Bierkontostand:     </string>
+
+
+    <string name="beer_increase">Bier buchen</string>
+    <string name="beer_decrease">Bier stornieren</string>
+    <string name="coffee_increase">Kaffee buchen</string>
+    <string name="coffee_decrease">Kaffee stornieren</string>
+    <string name="candy_increase">candy buchen</string>
+    <string name="candy_decrease">candy stornieren</string>
+    <string name="can_increase">Dose buchen</string>
+    <string name="can_decrease">Dose stornieren</string>
+
+    <string name="groups">Gruppen</string>
+    <string name="people">Benutzer</string>
+    <string name="admins">Admins</string>
+    <string name="saldo">Saldo</string>
+    <string name="import_database_question">Wollen Sie den Dateiinhalt in die Coffee app importieren? Alle anderen Daten werden verworfen.</string>
+    <string name="all_deleted_you_are_fucked">Alle daten sind verloren gegangen. Die Datei enthielt ungueltige werte.</string>
+    <string name="shit_happens">This is not a valid file.</string>
+    <string name="new_admin_code">Admin Zugangscode</string>
+    <string name="reenter_new_admin_code">Wiederholung Admin Zugangscode</string>
+    <string name="two_field_dont_match">Der inhalt der beiden Felder stimmt nicht überein.</string>
+    <string name="admincode_set_to_default">Admincode wurde auf default 4711 gesetzt</string>
+    <string name="enter_admin_code">Geben sie einen Admincode ein</string>
+</resources>
+
