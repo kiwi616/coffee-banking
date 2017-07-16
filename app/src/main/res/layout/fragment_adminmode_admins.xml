@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.fruity.coffeeapp.adminmode.AdminmodeAdminsFragment">
+
+    <ListView
+        android:id="@+id/lv_admins_fragment"
+        android:layout_alignParentStart="true"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toStartOf="@+id/scrollView" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@android:color/background_light"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
+
+            <include
+                android:id="@+id/price_changer_1"
+                layout="@layout/fragment_adminmode_admins_changeprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/price_changer_2"
+                layout="@layout/fragment_adminmode_admins_changeprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/price_changer_3"
+                layout="@layout/fragment_adminmode_admins_changeprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <include
+                android:id="@+id/price_changer_4"
+                layout="@layout/fragment_adminmode_admins_changeprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

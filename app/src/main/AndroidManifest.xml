@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.fruity.coffeeapp">
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:screenOrientation="landscape"
+        android:theme="@style/Theme.AppCompat.Light">
+
+        <!-- android:theme="@style/AppTheme" > -->
+        <provider
+            android:name=".database.SqlDatabaseContentProvider"
+            android:authorities="de.fruity.coffeeapp"
+            android:enabled="true"
+            android:exported="true"
+            android:multiprocess="true" />
+
+        <activity
+            android:name=".adminmode.AdminmodeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name">
+            <intent-filter>
+
+                <!-- <action android:name="android.nfc.action.TECH_DISCOVERED" /> -->
+                <action android:name="com.acs.integration.action.NFC_READER_OPEN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_main"
+            android:launchMode="singleTask"
+            android:screenOrientation="sensorLandscape">
+
+            <!-- android:screenOrientation="reverseLandscape" > -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:name=".BackupManager"
+            android:process=":remote" />
+
+        <service
+            android:name=".ReaderService"
+            android:label="@string/title_activity_special_reader"/>
+
+        <!-- <activity -->
+        <!-- android:name=".adminmode.AdminmodeActivity" -->
+        <!-- android:label="@string/title_activity_adminmode" > -->
+        <!-- </activity> -->
+        <!-- <receiver -->
+        <!-- android:name=".RFIDReaderReceiver" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true" > -->
+        <!-- </receiver> -->
+        <activity
+            android:name=".ImportActivity"
+            android:label="@string/title_activity_import"
+            android:theme="@android:style/Theme.Holo.Dialog">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="*/*" />
+                <data android:pathPattern=".*\\.csv" />
+                <data android:pathPattern=".*..*..*..*..*..*.csv" />
+                <data android:pathPattern=".*..*..*..*..*.csv" />
+                <data android:pathPattern=".*..*..*..*.csv" />
+                <data android:pathPattern=".*..*..*.csv" />
+                <data android:pathPattern=".*..*.csv" />
+                <data android:pathPattern=".*.csv" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,164 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="bottom"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/chart"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:autoText="false"
+                android:ems="10"
+                android:id="@+id/et_coffee"
+                android:inputType="number"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+
+            <ImageButton
+                style="@android:style/Widget.Holo.Button"
+                android:id="@+id/ib_coffee_up"
+                android:layout_height="40dp"
+                android:layout_weight="0.03"
+                android:layout_width="wrap_content"
+                android:contentDescription="@string/coffee_increase"
+                android:src="@android:drawable/arrow_up_float" />
+
+            <ImageButton
+                style="@android:style/Widget.Holo.Button"
+                android:id="@+id/ib_coffee_down"
+                android:layout_height="40dp"
+                android:layout_weight="0.03"
+                android:layout_width="wrap_content"
+                android:contentDescription="@string/coffee_decrease"
+                android:src="@android:drawable/arrow_down_float" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:autoText="false"
+                android:ems="10"
+                android:id="@+id/et_candy"
+                android:inputType="number"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+
+            <ImageButton
+                style="@android:style/Widget.Holo.Button"
+                android:id="@+id/ib_candy_up"
+                android:layout_height="40dp"
+                android:layout_weight="0.03"
+                android:layout_width="wrap_content"
+                android:contentDescription="@string/candy_increase"
+                android:src="@android:drawable/arrow_up_float" />
+
+            <ImageButton
+                style="@android:style/Widget.Holo.Button"
+                android:id="@+id/ib_candy_down"
+                android:layout_height="40dp"
+                android:layout_weight="0.03"
+                android:layout_width="wrap_content"
+                android:contentDescription="@string/candy_decrease"
+                android:src="@android:drawable/arrow_down_float" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:autoText="false"
+                android:ems="10"
+                android:id="@+id/et_beer"
+                android:inputType="number"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+
+            <ImageButton
+                style="@android:style/Widget.Holo.Button"
+                android:id="@+id/ib_beer_up"
+                android:layout_height="40dp"
+                android:layout_weight="0.03"
+                android:layout_width="wrap_content"
+                android:contentDescription="@string/beer_increase"
+                android:src="@android:drawable/arrow_up_float" />
+
+            <ImageButton
+                style="@android:style/Widget.Holo.Button"
+                android:id="@+id/ib_beer_down"
+                android:layout_height="40dp"
+                android:layout_weight="0.03"
+                android:layout_width="wrap_content"
+                android:contentDescription="@string/beer_decrease"
+                android:src="@android:drawable/arrow_down_float" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <EditText
+                android:autoText="false"
+                android:ems="10"
+                android:id="@+id/et_can"
+                android:inputType="number"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content" />
+
+            <ImageButton
+                style="@android:style/Widget.Holo.Button"
+                android:id="@+id/ib_can_up"
+                android:layout_height="40dp"
+                android:layout_weight="0.03"
+                android:layout_width="wrap_content"
+                android:contentDescription="@string/can_increase"
+                android:src="@android:drawable/arrow_up_float" />
+
+            <ImageButton
+                style="@android:style/Widget.Holo.Button"
+                android:id="@+id/ib_can_down"
+                android:layout_height="40dp"
+                android:layout_weight="0.03"
+                android:layout_width="wrap_content"
+                android:contentDescription="@string/can_decrease"
+                android:src="@android:drawable/arrow_down_float" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

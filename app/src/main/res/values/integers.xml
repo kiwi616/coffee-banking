@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="max_value_candy">25</integer>
+    <integer name="max_value_meetcan">3</integer>
+
+</resources>

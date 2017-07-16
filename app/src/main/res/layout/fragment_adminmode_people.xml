@@ -1,0 +1,42 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.fruity.coffeeapp.adminmode.AdminmodePeopleFragment">
+
+    <LinearLayout
+        android:baselineAligned="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/DatabaseObjectlist"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" >
+
+            <ListView
+                android:id="@id/android:list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:drawSelectorOnTop="false" />
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/people_details_fragment"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1.8"
+            android:background="#dddddd"/>
+
+    </LinearLayout>
+
+
+</FrameLayout>
