@@ -40,7 +40,6 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
             try {
                 if (SqlAccessAPI.isAdmin(context.getContentResolver(), rfidNumber)
                         || rfidNumber == AdminmodeActivity.SECRET_ADMIN_CODE) {
-                    ReaderService.stopContinuity();
                     Intent startAdminMode = new Intent(context, AdminmodeActivity.class);
                     context.startActivity(startAdminMode);
                 }
@@ -55,129 +54,14 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
                     showBalance(context, rfidNumber);
 
             } catch (IllegalArgumentException | SQLiteConstraintException ia_ex) {
-                createNewUser(context, rfidNumber);
+                Dialog d = HelperMethods.createNewUser(context, null, new Integer(rfidNumber));
+                d.show();
             }
         }
 
 
         Log.i(TAG, " id received " + rfidNumber);
 
-    }
-
-    private void createNewUser(final Context context, final int tid) {
-        // custom dialog
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_new_person);
-        dialog.setTitle(R.string.save_hint_enter_name);
-
-        // set the custom dialog components - text, image and button
-        final Button cancelButton = (Button) dialog.findViewById(R.id.newperson_dialog_btn_cancel);
-        final Button btnSave = (Button) dialog.findViewById(R.id.newperson_dialog_btn_save);
-        final EditText et = (EditText) dialog.findViewById(R.id.newperson_dialog_et_name);
-        final EditText et_personalnumber = (EditText) dialog.findViewById(R.id.newperson_dialog_et_personalnumber);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int personalnumber;
-
-                try {
-                    personalnumber = Integer.parseInt(et_personalnumber.getText().toString());
-                } catch (NumberFormatException ex) {
-                    new CustomToast(context,
-                            context.getText(R.string.no_personalnumber_number).toString(), 2000);
-                    return;
-                }
-                if (String.valueOf(personalnumber).length() < 3) {
-                    new CustomToast(context,
-                            context.getText(R.string.no_personalnumber_number).toString(), 2000);
-                    return;
-                }
-
-                try {
-                    SqlAccessAPI.createUser(context.getContentResolver(), et.getText().toString(), tid, personalnumber);
-                    if (SqlAccessAPI.isAdmin(context.getContentResolver(), tid))
-                        createAdminCode(context);
-                } catch (SQLiteConstraintException ex) {
-                    new CustomToast(context,
-                            context.getText(R.string.personalnumber_in_use).toString(), Toast.LENGTH_LONG);
-                    return;
-                }
-
-                new CustomToast(context,
-                        context.getText(R.string.user_created).toString(), Toast.LENGTH_LONG);
-                dialog.dismiss();
-            }
-        });
-
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
-
-    private void createAdminCode(final Context context) {
-        // custom dialog
-        final Dialog dialog = new Dialog(context);
-        dialog.setContentView(R.layout.dialog_new_admincode);
-        dialog.setTitle(R.string.enter_admin_code);
-        dialog.setCancelable(false);
-
-        // set the custom dialog components - text, image and button
-        final Button btnSave = (Button) dialog.findViewById(R.id.newperson_dialog_btn_save);
-        final EditText et = (EditText) dialog.findViewById(R.id.et_admincode);
-        final EditText et_reentered = (EditText) dialog.findViewById(R.id.et_admincode_reenter);
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int first_et_value;
-                int second_et_value;
-
-                try {
-                    first_et_value = Integer.parseInt(et.getText().toString());
-                    second_et_value = Integer.parseInt(et_reentered.getText().toString());
-                } catch (NumberFormatException ex) {
-                    new CustomToast(context,
-                            context.getText(R.string.no_personalnumber_number).toString(), 2000);
-                    return;
-                }
-
-                if(first_et_value != second_et_value)
-                {
-                    new CustomToast(context,
-                            context.getText(R.string.two_field_dont_match).toString(), 2000);
-                    return;
-                }
-
-                if (String.valueOf(et.getText().toString()).length() != 4) {
-                    new CustomToast(context,
-                            context.getText(R.string.no_personalnumber_number).toString(), 2000);
-                    return;
-                }
-
-                AdminmodeActivity.saveAdminCode(context, second_et_value);
-                dialog.dismiss();
-            }
-        });
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                AdminmodeActivity.saveAdminCode(context, 4711);
-                new CustomToast(context,
-                        context.getText(R.string.admincode_set_to_default).toString(), 5000);
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
     }
 
     private void showBalance(Context context, int tid) {

@@ -3,14 +3,11 @@ package de.fruity.coffeeapp.database;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 
 import com.opencsv.CSVReader;
@@ -18,13 +15,11 @@ import com.opencsv.CSVReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.nio.channels.FileChannel;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -32,9 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import de.fruity.coffeeapp.R;
 import de.fruity.coffeeapp.tools.HelperMethods;
-import de.fruity.coffeeapp.ui_elements.CustomToast;
 
 /**
  * Simple SqliteDatabase with 3 Tables * ownObjects the Objects also show in the ListView
@@ -52,39 +45,38 @@ public class SqliteDatabase extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "CustomerDatabase.db";
 	private static final int DATABASE_VERSION = 1;
 	// Main table
-    public static final String TABLE_PEOPLE_OLD = "people_table";
-	public static final String TABLE_PEOPLE = "peoples_table";
-    public static final String TABLE_VALUES = "values_table";
-	public static final String TABLE_PRODUCT = "product_table";
-	public static final String TABLE_ADMINS = "admin_table";
-    public static final String TABLE_GROUP = "group_table";
-    public static final String TABLE_GROUPUSER_REFERENCE = "group_user_reference_table";
+	static final String TABLE_PEOPLE = "peoples_table";
+    static final String TABLE_VALUES = "values_table";
+	static final String TABLE_PRODUCT = "product_table";
+	static final String TABLE_ADMINS = "admin_table";
+    static final String TABLE_GROUP = "group_table";
+    static final String TABLE_GROUPUSER_REFERENCE = "group_user_reference_table";
 
 	public static final String COLUMN_ID = "_id";
     public static final String COLUMN_RFID = "rfid";
     public static final String COLUMN_PERSONAL_NUMBER= "personal_number";
 	public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_DATE = "date";
+    private static final String COLUMN_DATE = "date";
     public static final String COLUMN_POSITION = "position";
 
-    public static final String COLUMN_VE_ID = "_id";
-    public static final String COLUMN_VE_TYPE = "value_type";//beer, candy ...
-    public static final String COLUMN_VE_TIMESTAMP = "booking_timestamp";
-    public static final String COLUMN_VE_VALUE = "value_in_euro";
-    public static final String COLUMN_VE_PEOPLE_ID = "people_id";
+    private static final String COLUMN_VE_ID = "_id";
+    static final String COLUMN_VE_TYPE = "value_type";//beer, candy ...
+    static final String COLUMN_VE_TIMESTAMP = "booking_timestamp";
+    static final String COLUMN_VE_VALUE = "value_in_euro";
+    static final String COLUMN_VE_PEOPLE_ID = "people_id";
 
-    public static final String COLUMN_ADMINS_ID = "_id";
-    public static final String COLUMN_ADMINS_USER_ID = "group_user_id";
+    private static final String COLUMN_ADMINS_ID = "_id";
+    static final String COLUMN_ADMINS_USER_ID = "group_user_id";
 
-    public static final String COLUMN_PRODUCT_ID = "_id";//beer, candy ...
-    public static final String COLUMN_PRODUCT_KIND = "product_kind";//beer, candy ...
-    public static final String COLUMN_PRODUCT_CURVALUE = "cur_value";
-    public static final String COLUMN_PRODUCT_VALUE_MIN = "min_value";
-    public static final String COLUMN_PRODUCT_VALUE_MAX = "max_value";
-    public static final String COLUMN_PRODUCT_VALUE_STEPSIZE = "step_size_value";
-    public static final String COLUMN_PRODUCT_VALUE_DEFAULT = "default_value";
+    static final String COLUMN_PRODUCT_ID = "_id";//beer, candy ...
+    static final String COLUMN_PRODUCT_KIND = "product_kind";//beer, candy ...
+    static final String COLUMN_PRODUCT_CURVALUE = "cur_value";
+    static final String COLUMN_PRODUCT_VALUE_MIN = "min_value";
+    static final String COLUMN_PRODUCT_VALUE_MAX = "max_value";
+    static final String COLUMN_PRODUCT_VALUE_STEPSIZE = "step_size_value";
+    static final String COLUMN_PRODUCT_VALUE_DEFAULT = "default_value";
 
-    public static final String COLUMN_GU_ID = "_id";
+    private static final String COLUMN_GU_ID = "_id";
     public static final String COLUMN_GU_USER_ID = "user_id";
     public static final String COLUMN_GU_GROUP_ID = "group_id";
     
@@ -269,7 +261,7 @@ public class SqliteDatabase extends SQLiteOpenHelper {
         return true;
     }
 
-	public boolean backupDatabaseTo(Context context, File backup_file) {
+	boolean backupDatabaseTo(Context context, File backup_file) {
 
         File sourceFile = context.getDatabasePath(getDatabaseName());
 
@@ -294,33 +286,6 @@ public class SqliteDatabase extends SQLiteOpenHelper {
         }
     }
 	
-	public static void moveDatabaseToReadable(String backupFilename) {
-
-		String sourcePath = "/data/data/de.fruity.coffeeapp/databases/" + DATABASE_NAME;
-
-		File sourceFile = new File(sourcePath);
-		try {
-			FileInputStream fis = new FileInputStream(sourceFile);
-
-			String outFilePath = Environment.getExternalStorageDirectory() + "/" + backupFilename;
-			
-			OutputStream output = new FileOutputStream(outFilePath);
-
-			byte[] buff = new byte[1024];
-			int len;
-			while ((len = fis.read(buff)) > 0) {
-				output.write(buff, 0, len);
-			}
-			output.flush();
-			output.close();
-			fis.close();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-
     public static int importCsv(Uri fileuri, Context context) {
         ContentResolver cr = context.getContentResolver();
         boolean valid = false;

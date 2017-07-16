@@ -38,6 +38,7 @@ import de.fruity.coffeeapp.adminmode.AdminmodeActivity;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
 import de.fruity.coffeeapp.database.SqlDatabaseContentProvider;
 import de.fruity.coffeeapp.database.SqliteDatabase;
+import de.fruity.coffeeapp.tools.HelperMethods;
 import de.fruity.coffeeapp.ui_elements.CustomToast;
 import de.fruity.coffeeapp.ui_elements.RadioButtonCustomized;
 import de.fruity.coffeeapp.ui_elements.SeekBarCustomized;
@@ -158,19 +159,18 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 Integer persno;
 
-                try {
-                    persno = Integer.parseInt(et_personalnumber.getText().toString());
-                } catch (NumberFormatException ex) {
+                if (!HelperMethods.isPersonalnumberValid(et_personalnumber.getText().toString()))
+                {
                     customToast(getText(R.string.no_personalnumber_number).toString(), 800);
                     return;
                 }
 
+                persno = new Integer(Integer.parseInt(et_personalnumber.getText().toString()));
                 dialog.dismiss();
 
                 if (AdminmodeActivity.isAdminCode(getApplicationContext(), persno)){
-                    Intent outgoing = new Intent("android.intent.action.MAIN");
-                    outgoing.putExtra(ReaderService.TID, AdminmodeActivity.SECRET_ADMIN_CODE);
-                    sendBroadcast(outgoing);
+                    Intent startAdminMode = new Intent(getApplication(), AdminmodeActivity.class);
+                    startActivity(startAdminMode);
                     return;
                 }
 
@@ -189,7 +189,10 @@ public class MainActivity extends Activity {
 
                     rfidCursor.close();
                 } else {
-                    customToast(getText(R.string.personalnumber_not_found).toString(), 2500);
+                    dialog.dismiss();
+                    Dialog d = HelperMethods.createNewUser(MainActivity.this, persno, null);
+                    d.show();
+//                    customToast(getText(R.string.personalnumber_not_found).toString(), 2500);
                 }
             }
         });

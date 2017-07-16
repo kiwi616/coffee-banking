@@ -1,10 +1,18 @@
 package de.fruity.coffeeapp.tools;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -22,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import de.fruity.coffeeapp.R;
+import de.fruity.coffeeapp.adminmode.AdminmodeActivity;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
 import de.fruity.coffeeapp.ui_elements.CustomToast;
 
@@ -156,5 +165,144 @@ public class HelperMethods {
         sb.append(" €");
 
         new CustomToast(context, sb.toString(), 1500);
+    }
+
+    public static boolean isPersonalnumberValid(String number) {
+        try {
+            int persno = Integer.parseInt(number);
+            return isPersonalnumberValid(persno);
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    public static boolean isPersonalnumberValid(int number) {
+        if ((number / 99) > 1)
+            return true;
+
+        return false;
+    }
+
+    @SuppressLint("SetTextI18n")
+    public static Dialog createNewUser(final Context context, Integer personalnumber, Integer rfid) {
+        // custom dialog
+        final int rfid_intern = rfid != null ?  rfid : 0;
+
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_new_person);
+        dialog.setTitle(R.string.save_hint_enter_name);
+
+        // set the custom dialog components - text, image and button
+        final Button cancelButton = (Button) dialog.findViewById(R.id.newperson_dialog_btn_cancel);
+        final Button btnSave = (Button) dialog.findViewById(R.id.newperson_dialog_btn_save);
+        final EditText et = (EditText) dialog.findViewById(R.id.newperson_dialog_et_name);
+        final EditText et_personalnumber = (EditText) dialog.findViewById(R.id.newperson_dialog_et_personalnumber);
+
+        if (personalnumber != null)
+            et_personalnumber.setText(personalnumber.toString());
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int personalnumber;
+
+                try {
+                    personalnumber = Integer.parseInt(et_personalnumber.getText().toString());
+                } catch (NumberFormatException ex) {
+                    new CustomToast(context,
+                            context.getText(R.string.no_personalnumber_number).toString(), 2000);
+                    return;
+                }
+                if (!isPersonalnumberValid(personalnumber)) { //more than 2 digit
+                    new CustomToast(context,
+                            context.getText(R.string.no_personalnumber_number).toString(), 2000);
+                    return;
+                }
+
+                try {
+                    SqlAccessAPI.createUser(context.getContentResolver(), et.getText().toString(), rfid_intern, personalnumber);
+                    if (SqlAccessAPI.isAdmin(context.getContentResolver(), rfid_intern))
+                        createAdminCode(context);
+                } catch (SQLiteConstraintException ex) {
+                    new CustomToast(context,
+                            context.getText(R.string.personalnumber_in_use).toString(), Toast.LENGTH_LONG);
+                    return;
+                }
+
+                new CustomToast(context,
+                        context.getText(R.string.user_created).toString(), Toast.LENGTH_LONG);
+                dialog.dismiss();
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                dialog.dismiss();
+            }
+        });
+
+        return dialog;
+    }
+
+    private static void createAdminCode(final Context context) {
+        // custom dialog
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dialog_new_admincode);
+        dialog.setTitle(R.string.enter_admin_code);
+        dialog.setCancelable(false);
+
+        // set the custom dialog components - text, image and button
+        final Button btnSave = (Button) dialog.findViewById(R.id.newperson_dialog_btn_save);
+        final EditText et = (EditText) dialog.findViewById(R.id.et_admincode);
+        final EditText et_reentered = (EditText) dialog.findViewById(R.id.et_admincode_reenter);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int first_et_value;
+                int second_et_value;
+
+                try {
+                    first_et_value = Integer.parseInt(et.getText().toString());
+                    second_et_value = Integer.parseInt(et_reentered.getText().toString());
+                } catch (NumberFormatException ex) {
+                    new CustomToast(context,
+                            context.getText(R.string.no_personalnumber_number).toString(), 2000);
+                    return;
+                }
+
+                if(first_et_value != second_et_value)
+                {
+                    new CustomToast(context,
+                            context.getText(R.string.two_field_dont_match).toString(), 2000);
+                    return;
+                }
+
+                if (String.valueOf(et.getText().toString()).length() != 4) {
+                    new CustomToast(context,
+                            context.getText(R.string.no_personalnumber_number).toString(), 2000);
+                    return;
+                }
+
+                AdminmodeActivity.saveAdminCode(context, second_et_value);
+                dialog.dismiss();
+            }
+        });
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                AdminmodeActivity.saveAdminCode(context, 4711);
+                new CustomToast(context,
+                        context.getText(R.string.admincode_set_to_default).toString(), 5000);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 }

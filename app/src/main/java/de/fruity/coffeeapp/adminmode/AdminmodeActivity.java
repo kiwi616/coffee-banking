@@ -34,6 +34,7 @@ import java.io.IOException;
 
 import de.fruity.coffeeapp.BackupManager;
 import de.fruity.coffeeapp.R;
+import de.fruity.coffeeapp.ReaderService;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
 import de.fruity.coffeeapp.database.SqlDatabaseContentProvider;
 import de.fruity.coffeeapp.database.SqliteDatabase;
@@ -51,7 +52,6 @@ public class AdminmodeActivity extends FragmentActivity {
     private static final String PREFERENCE_KEY_ADMINCODE = "preference_key_admcode";
 
     private DrawerLayout mDrawerLayout;
-//    current admins are 927139142, 1788087709
 
     private void createTestUser()
     {
@@ -63,12 +63,12 @@ public class AdminmodeActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ReaderService.stopContinuity();
         setContentView(R.layout.activity_adminmode_navigationdrawer);
         FrameLayout framelayout = (FrameLayout) findViewById(R.id.content_frame);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-
 
 
         ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -137,17 +137,23 @@ public class AdminmodeActivity extends FragmentActivity {
         });
     }
 
-    public static boolean isAdminCode(Context c, int rfidNumber) {
+    @Override
+    protected void onStop() {
+        super.onStop();
+        ReaderService.startContinuity();
+    }
+
+    public static boolean isAdminCode(Context c, int admincode) {
         int cur_admincode;
         SharedPreferences settings = c.getSharedPreferences(PREFERENCE_KEY_ADMINCODE, -1);
 
         if (settings != null) {
             cur_admincode = settings.getInt(PREFERENCE_KEY_ADMINCODE, -1);
             if (cur_admincode != -1) {
-                if (cur_admincode == rfidNumber)
+                if (cur_admincode == admincode)
                     return true;
             } else {
-                if (rfidNumber == 4711) //4711 is magic number
+                if (admincode == 4711) //4711 is magic number
                     return true;
             }
         }
