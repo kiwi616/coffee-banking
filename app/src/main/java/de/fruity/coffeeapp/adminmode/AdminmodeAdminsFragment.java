@@ -126,7 +126,7 @@ public class AdminmodeAdminsFragment extends Fragment implements
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 int rfid = SqlAccessAPI.getRfid(getActivity().getContentResolver(), mAdminCursorAdapter.getItemId(position));
 
-                if (SqlAccessAPI.isAdmin(getActivity().getContentResolver(), rfid))
+                if (SqlAccessAPI.isAdminByRFID(getActivity().getContentResolver(), rfid))
                     SqlAccessAPI.deleteAdmin(getActivity().getContentResolver(), rfid);
                 else
                     SqlAccessAPI.setAdmin(getActivity().getContentResolver(), rfid);

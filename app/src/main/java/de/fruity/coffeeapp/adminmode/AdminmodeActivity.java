@@ -2,9 +2,9 @@ package de.fruity.coffeeapp.adminmode;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -80,7 +80,7 @@ public class AdminmodeActivity extends FragmentActivity {
                     case R.string.export_database:
 
                         File outputDir = getApplicationContext().getCacheDir(); // context being the Activity pointer
-                        File outputFile = null;
+                        File outputFile;
                         try {
                             outputFile = File.createTempFile("coffeeDB", "csv", outputDir);
 
@@ -109,7 +109,7 @@ public class AdminmodeActivity extends FragmentActivity {
                     default:
                         break;
                 }
-                mDrawerLayout.closeDrawer(Gravity.RIGHT);
+                mDrawerLayout.closeDrawer(Gravity.END);
             }
         });
 
@@ -131,65 +131,36 @@ public class AdminmodeActivity extends FragmentActivity {
         fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                mDrawerLayout.openDrawer(Gravity.RIGHT);
+                mDrawerLayout.openDrawer(Gravity.END);
                 return true;
             }
         });
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         ReaderService.startContinuity();
     }
 
-    public static boolean isAdminCode(Context c, int admincode) {
-        int cur_admincode;
-        SharedPreferences settings = c.getSharedPreferences(PREFERENCE_KEY_ADMINCODE, -1);
-
-        if (settings != null) {
-            cur_admincode = settings.getInt(PREFERENCE_KEY_ADMINCODE, -1);
-            if (cur_admincode != -1) {
-                if (cur_admincode == admincode)
-                    return true;
-            } else {
-                if (admincode == 4711) //4711 is magic number
-                    return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static void saveAdminCode(Context c, int code) {
-        // We need an Editor object to make preference changes.
-        // All objects are from android.context.Context
-        SharedPreferences settings = c.getSharedPreferences(PREFERENCE_KEY_ADMINCODE, 0);
-        SharedPreferences.Editor editor = settings.edit();
-
-        editor.putInt(PREFERENCE_KEY_ADMINCODE, code);
-
-        // Commit the edits important!
-        editor.commit();
-    }
-
-    static class ViewHolder {
+    private static class ViewHolder {
         private TextView friendsname;
         private ImageView thumb_image;
     }
 
-    public class NavigationDrawerWithIcon extends ArrayAdapter {
+    private class NavigationDrawerWithIcon extends ArrayAdapter {
         private Context context;
         private ViewHolder mViewHolder = null;
 
-        public NavigationDrawerWithIcon(Context context) {
+        NavigationDrawerWithIcon(Context context) {
             super(context, R.layout.activity_adminmode_navigationdrawer_object);
             this.context = context;
         }
 
 
+        @NonNull
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             if (convertView == null) {
                 mViewHolder = new ViewHolder();
 
@@ -228,9 +199,9 @@ public class AdminmodeActivity extends FragmentActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class DemoCollectionPagerAdapter extends FragmentPagerAdapter {
+    private class DemoCollectionPagerAdapter extends FragmentPagerAdapter {
 
-        public DemoCollectionPagerAdapter(FragmentManager fm) {
+        DemoCollectionPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

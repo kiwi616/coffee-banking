@@ -165,25 +165,23 @@ public class MainActivity extends Activity {
                     return;
                 }
 
-                persno = new Integer(Integer.parseInt(et_personalnumber.getText().toString()));
+                persno = Integer.parseInt(et_personalnumber.getText().toString());
                 dialog.dismiss();
 
-                if (AdminmodeActivity.isAdminCode(getApplicationContext(), persno)){
+
+                if (mRadiogroupMerger.getCheckedId() == R.id.admin && SqlAccessAPI.isAdminByPersonalnumber(getContentResolver(), persno)){
                     Intent startAdminMode = new Intent(getApplication(), AdminmodeActivity.class);
                     startActivity(startAdminMode);
                     return;
                 }
 
                 Cursor rfidCursor = getContentResolver().query(SqlDatabaseContentProvider.CONTENT_URI, null,
-                        SqliteDatabase.COLUMN_PERSONAL_NUMBER + " =  ?",
-                        new String[] {persno.toString()}, null);
+                        SqliteDatabase.COLUMN_PERSONAL_NUMBER + " =  ?", new String[]{persno.toString()}, null);
+
 
                 if (rfidCursor != null && rfidCursor.moveToFirst()) {
                     String s = rfidCursor.getString(rfidCursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_NAME));
                     final int rfid = rfidCursor.getInt(rfidCursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_RFID));
-
-                    if (mRadiogroupMerger.getCheckedId() == R.id.admin && SqlAccessAPI.isAdmin(getContentResolver(), rfid))
-                        return;
 
                     showIsThisYourNameDialog(s, rfid);
 

@@ -38,7 +38,7 @@ public class AdminCursorAdapter extends CursorAdapter{
 
         tv.setText(name);
 
-		if (SqlAccessAPI.isAdmin(mContentResolver, rfid)) {
+		if (SqlAccessAPI.isAdminByRFID(mContentResolver, rfid)) {
 			switchAdmin.setChecked(true);
 		} else {
 			switchAdmin.setChecked(false);

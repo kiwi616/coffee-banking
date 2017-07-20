@@ -3,21 +3,15 @@ package de.fruity.coffeeapp;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import de.fruity.coffeeapp.adminmode.AdminmodeActivity;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
 import de.fruity.coffeeapp.tools.HelperMethods;
-import de.fruity.coffeeapp.ui_elements.CustomToast;
 
 public class RFIDReaderReceiver extends BroadcastReceiver {
 
@@ -38,7 +32,7 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
 
         if (position == R.id.admin) {
             try {
-                if (SqlAccessAPI.isAdmin(context.getContentResolver(), rfidNumber)
+                if (SqlAccessAPI.isAdminByRFID(context.getContentResolver(), rfidNumber)
                         || rfidNumber == AdminmodeActivity.SECRET_ADMIN_CODE) {
                     Intent startAdminMode = new Intent(context, AdminmodeActivity.class);
                     context.startActivity(startAdminMode);

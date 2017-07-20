@@ -36,7 +36,7 @@ public class PeopleTableCursorAdapter extends CursorAdapter{
 
 		tvName.setText(type);
 
-		if (SqlAccessAPI.isAdmin(context.getContentResolver(), rfid))
+		if (SqlAccessAPI.isAdminByRFID(context.getContentResolver(), rfid))
 			tvName.append("  (admin)");
 
 	}

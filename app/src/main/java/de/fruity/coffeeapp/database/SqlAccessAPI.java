@@ -342,6 +342,23 @@ public class SqlAccessAPI {
         return pk_id;
     }
 
+    static public int getPeopleIdByPersonalnumber(ContentResolver cr, int personalnumber)
+    {
+        int pk_id = -1;
+        Integer rfid_class = personalnumber;
+        String[] projection = { SqliteDatabase.COLUMN_ID };
+
+        Cursor idCursor = cr.query(SqlDatabaseContentProvider.CONTENT_URI, projection,
+                SqliteDatabase.COLUMN_PERSONAL_NUMBER + " = ?", new String[]{rfid_class.toString()}, null);
+
+        if (idCursor != null && idCursor.moveToFirst()) {
+            pk_id = idCursor.getInt(idCursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_ID));
+            idCursor.close();
+        }
+
+        return pk_id;
+    }
+
     private static boolean isUserDbEmpty(ContentResolver cr) {
         int columnSum = 0;
 
@@ -417,15 +434,31 @@ public class SqlAccessAPI {
         return ret;
     }
 
-    public static boolean isAdmin(ContentResolver cr, int rfid) {
+    public static boolean isAdminByPersonalnumber(ContentResolver cr, int persno) {
         boolean ret = false;
-        final int admin_arr[] = { 927139142, 1788087709 };
+        Integer people_id = getPeopleIdByPersonalnumber(cr, persno);
+
+        Cursor admin_cursor = cr.query(SqlDatabaseContentProvider.ADMIN_URI, null,
+                SqliteDatabase.COLUMN_ADMINS_USER_ID + "= ?",
+                new String[]{people_id.toString()}, null);
+
+        if (admin_cursor != null) {
+            ret = admin_cursor.moveToFirst();
+            admin_cursor.close();
+        }
+
+        return ret;
+
+    }
+
+
+    public static boolean isAdminByRFID(ContentResolver cr, int rfid) {
+        boolean ret = false;
+        final int admin_arr[] = {927139142, 1788087709}; //const true
         Integer people_id = getPeopleIdByRFID(cr, rfid);
 
         for (int id : admin_arr)
-            if (rfid == id) {
-                return true;
-            }
+            if (rfid == id) return true;
 
         Cursor admin_cursor = cr.query(SqlDatabaseContentProvider.ADMIN_URI, null,
                 SqliteDatabase.COLUMN_ADMINS_USER_ID + "= ?",
