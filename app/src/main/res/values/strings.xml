@@ -7,12 +7,12 @@
     <string name="personal_number_hint">enter your personal number</string>
     <string name="title_activity_main">CoffeeApp</string>
     <string name="action_settings">Settings</string>
-    <string name="manual_selection">Select name by personalnumber</string>
+    <string name="manual_selection">You have no RFID tag. Press here to book via identifiaction number</string>
     <string name="title_activity_special_reader">Special_reader</string>
     <string name="user_created">User successful created</string>
     <string name="new_bilance">New billance is </string>
     
-    <string name="manual">Please select the disered symbol and take your RFID tag to the reader</string>
+    <string name="manual">Please select the desired symbol and take your RFID tag to the reader</string>
 
     <string name="rename">Rename</string>
 

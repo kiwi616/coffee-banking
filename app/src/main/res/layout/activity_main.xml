@@ -1,6 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +10,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="de.fruity.coffeeapp.MainActivity" >
+    tools:context="de.fruity.coffeeapp.MainActivity">
+
+
+    <TextView
+        android:id="@+id/tv_manual"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/manual"
+        android:textSize="32sp" />
 
     <Button
         android:id="@+id/btn_main"
@@ -22,127 +33,133 @@
         android:text="@string/manual_selection"
         android:textSize="32sp" />
 
-    <RadioGroup
-        android:id="@+id/rg_upper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btn_main"
+        android:layout_below="@id/tv_manual"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dip"
-        android:gravity="center_vertical|center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="vertical">
 
-        <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
-            android:id="@+id/candy"
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:layout_marginEnd="5dp"
-            android:gravity="top|start"
-            android:textSize="28sp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:button="@android:color/transparent"
-            app:databaseIdentifier="candy"
-            app:idleDrawable="@drawable/candy_bw"
-            app:selectedFirstDrawable="@drawable/candy_colored" />
+        <RadioGroup
+            android:id="@+id/rg_upper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="10dip"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="20dip"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
-            android:id="@+id/coffee"
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:layout_marginEnd="5dp"
-            android:gravity="top|start"
-            android:textSize="28sp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:button="@android:color/transparent"
-            android:checked="true"
-            app:databaseIdentifier="coffee"
-            app:idleDrawable="@drawable/coffee_bw"
-            app:idleSecondDrawable="@drawable/coffee_multiple_bw"
-            app:selectedFirstDrawable="@drawable/coffee_colored"
-            app:selectedSecondDrawable="@drawable/coffee_multiple_colored"/>
+            <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
+                android:id="@+id/candy"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dip"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingLeft="3dip"
+                android:paddingRight="3dip"
+                android:textSize="28sp"
+                app:databaseIdentifier="candy"
+                app:idleDrawable="@drawable/candy_bw"
+                app:selectedFirstDrawable="@drawable/candy_colored" />
 
-        <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
-            android:id="@+id/bilance"
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:layout_marginEnd="5dp"
-            android:gravity="top|start"
-            android:textSize="28sp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:text="@string/saldo"
-            android:button="@android:color/transparent"
-            app:databaseIdentifier="billance"
-            app:idleDrawable="@drawable/moneybag_bw"
-            app:selectedFirstDrawable="@drawable/moneybag_colored" />
+            <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
+                android:id="@+id/coffee"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dip"
+                android:button="@android:color/transparent"
+                android:checked="true"
+                android:gravity="center"
+                android:paddingLeft="3dip"
+                android:paddingRight="3dip"
+                android:textSize="28sp"
+                app:databaseIdentifier="coffee"
+                app:idleDrawable="@drawable/coffee_bw"
+                app:idleSecondDrawable="@drawable/coffee_multiple_bw"
+                app:selectedFirstDrawable="@drawable/coffee_colored"
+                app:selectedSecondDrawable="@drawable/coffee_multiple_colored" />
 
-        <RadioButton
-            android:id="@+id/admin"
-            android:layout_width="20dip"
-            android:layout_height="230dp"
-            android:button="@android:color/transparent"
-            android:checked="false" />
-    </RadioGroup>
+            <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
+                android:id="@+id/bilance"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dip"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingLeft="3dip"
+                android:paddingRight="3dip"
+                android:text="@string/saldo"
+                android:textSize="28sp"
+                app:databaseIdentifier="billance"
+                app:idleDrawable="@drawable/moneybag_bw"
+                app:selectedFirstDrawable="@drawable/moneybag_colored" />
 
-    <de.fruity.coffeeapp.ui_elements.SeekBarCustomized
-        android:id="@+id/slider_candy_main"
-        android:layout_width="230dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/rg_upper"
-        android:layout_below="@+id/rg_upper"
-        android:visibility="invisible" />
+            <RadioButton
+                android:id="@+id/admin"
+                android:layout_width="20dip"
+                android:layout_height="match_parent"
+                android:button="@android:color/transparent"
+                android:checked="false" />
+        </RadioGroup>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/btn_main"
-        android:gravity="center"
-        android:text="@string/manual"
-        android:textSize="32sp" />
+        <de.fruity.coffeeapp.ui_elements.SeekBarCustomized
+            android:id="@+id/slider_candy_main"
+            android:layout_width="230dip"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/rg_upper"
+            android:layout_below="@+id/rg_upper"
+            android:visibility="invisible" />
 
-    <RadioGroup
-        android:id="@+id/rg_down"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rg_upper"
-        android:layout_marginTop="40dip"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal" >
+        <RadioGroup
+            android:id="@+id/rg_down"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dip"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
-            android:id="@+id/beer"
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:gravity="top|start"
-            android:textSize="28sp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            android:button="@android:color/transparent"
-            app:idleDrawable="@drawable/beer_half_bw"
-            app:idleSecondDrawable="@drawable/beer_full_bw"
-            app:selectedFirstDrawable="@drawable/beer_half_colored"
-            app:databaseIdentifier="beer"
-            app:selectedSecondDrawable="@drawable/beer_full_colored"/>
+            <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
+                android:id="@+id/beer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingLeft="3dip"
+                android:paddingRight="3dip"
+                android:textSize="28sp"
+                app:databaseIdentifier="beer"
+                app:idleDrawable="@drawable/beer_half_bw"
+                app:idleSecondDrawable="@drawable/beer_full_bw"
+                app:selectedFirstDrawable="@drawable/beer_half_colored"
+                app:selectedSecondDrawable="@drawable/beer_full_colored" />
 
 
-        <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
-            android:id="@+id/can"
-            android:layout_width="230dp"
-            android:layout_height="230dp"
-            android:gravity="top|start"
-            android:textSize="28sp"
-            android:button="@android:color/transparent"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-            app:idleDrawable="@drawable/can_small_bw"
-            app:idleSecondDrawable="@drawable/can_big_bw"
-            app:databaseIdentifier="can"
-            app:selectedFirstDrawable="@drawable/can_small_colored"
-            app:selectedSecondDrawable="@drawable/can_big_colored"/>
+            <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
+                android:id="@+id/can"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@android:color/transparent"
+                android:gravity="center"
+                android:paddingLeft="3dip"
+                android:paddingRight="3dip"
+                android:textSize="28sp"
+                app:databaseIdentifier="can"
+                app:idleDrawable="@drawable/can_small_bw"
+                app:idleSecondDrawable="@drawable/can_big_bw"
+                app:selectedFirstDrawable="@drawable/can_small_colored"
+                app:selectedSecondDrawable="@drawable/can_big_colored" />
 
-    </RadioGroup>
+        </RadioGroup>
+    </LinearLayout>
 
 </RelativeLayout>

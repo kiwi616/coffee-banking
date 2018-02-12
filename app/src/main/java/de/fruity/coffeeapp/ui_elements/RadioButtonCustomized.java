@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -23,7 +24,7 @@ import de.fruity.coffeeapp.tools.HelperMethods;
 /**
  * TODO: document your custom view class.
  */
-public class RadioButtonCustomized extends RadioButton {
+public class RadioButtonCustomized extends AppCompatRadioButton {
 
     private Drawable mIdleDrawable = null;
     private Drawable mIdleSecondDrawable = null;
@@ -163,6 +164,8 @@ public class RadioButtonCustomized extends RadioButton {
         int contentWidth = getWidth() - paddingLeft - paddingRight;
         int contentHeight = getHeight() - paddingTop - paddingBottom;
 
+        int cl = Math.min(contentHeight, contentWidth);
+
         OFFSET = 20;
 
         // Draw the example drawable on top of the text.
@@ -186,14 +189,14 @@ public class RadioButtonCustomized extends RadioButton {
 
         super.onDraw(canvas);
 
-        int drawable_left_to_content = ((contentWidth - drawable.getMinimumWidth()) / 2) + OFFSET;
-        int drawable_up_to_content = ((contentHeight - drawable.getMinimumHeight()) / 2) + OFFSET;
+        int drawable_left_to_content = ((cl - drawable.getMinimumWidth()) / 2) + OFFSET;
+        int drawable_up_to_content = ((cl - drawable.getMinimumHeight()) / 2) + OFFSET;
 
         drawable.setBounds(
                 drawable_left_to_content,
                 drawable_up_to_content,
-                contentWidth - drawable_left_to_content,
-                contentHeight - drawable_up_to_content);
+                cl - drawable_left_to_content,
+                cl - drawable_up_to_content);
         drawable.draw(canvas);
 
         if (mCurrentValue != 0.0f)
