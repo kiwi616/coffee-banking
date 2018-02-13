@@ -65,12 +65,13 @@ public class MainActivity extends Activity {
             getActionBar().hide();
 
         setContentView(R.layout.activity_main_navigationdrawer);
-        FrameLayout framelayout = (FrameLayout) findViewById(R.id.content_frame);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        FrameLayout framelayout = findViewById(R.id.content_frame);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mDrawerList = findViewById(R.id.left_drawer);
 
-        ViewGroup vg = (ViewGroup) findViewById(R.id.rl_activity_main);
+        ViewGroup vg = findViewById(R.id.rl_activity_main);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        assert inflater != null;
         RelativeLayout myView = (RelativeLayout) inflater.inflate(R.layout.activity_main, vg, false);
         framelayout.addView(myView);
 
@@ -88,9 +89,9 @@ public class MainActivity extends Activity {
                 (RadioGroup) findViewById(R.id.rg_down));
         mRadiogroupMerger.setDefaults(getContentResolver(), R.id.coffee, default_coffe, "coffee");
 
-        final RadioButtonCustomized rb_candy = (RadioButtonCustomized) findViewById(R.id.candy);
-        final SeekBarCustomized sb_candy = (SeekBarCustomized) findViewById(R.id.slider_candy_main);
-        Button select_by_person_Button = (Button) findViewById(R.id.btn_main);
+        final RadioButtonCustomized rb_candy = findViewById(R.id.candy);
+        final SeekBarCustomized sb_candy = findViewById(R.id.slider_candy_main);
+        Button select_by_person_Button = findViewById(R.id.btn_main);
 
         mReceiver = new RFIDReaderReceiver(mRadiogroupMerger);
 
@@ -150,10 +151,10 @@ public class MainActivity extends Activity {
 
         // set the custom dialog components - text, image and button
 
-        Button cancelButton = (Button) dialog.findViewById(R.id.personalnumber_dialog_btn_cancel);
-        final Button btnSave = (Button) dialog.findViewById(R.id.personalnumber_dialog_btn_save);
+        Button cancelButton = dialog.findViewById(R.id.personalnumber_dialog_btn_cancel);
+        final Button btnSave = dialog.findViewById(R.id.personalnumber_dialog_btn_save);
 
-        final EditText et_personalnumber = (EditText) dialog.findViewById(R.id.personalnumber_dialog_et);
+        final EditText et_personalnumber = dialog.findViewById(R.id.personalnumber_dialog_et);
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -227,7 +228,7 @@ public class MainActivity extends Activity {
         dialog.setTitle(R.string.groupmode);
 
         // set the custom dialog components - text, image and button
-        ListView lvData = (ListView) dialog.findViewById(R.id.groupmode_lv_dialog);
+        ListView lvData = dialog.findViewById(R.id.groupmode_lv_dialog);
         List<GroupmodeData> list_names = SqlAccessAPI.getNamesInGroup(getContentResolver(), group_id);
 
         final CheckboxListAdapter adapter = new CheckboxListAdapter(getLayoutInflater());
@@ -237,8 +238,8 @@ public class MainActivity extends Activity {
             adapter.add(data);
 
         dialog.setCancelable(false);
-        Button cancelButton = (Button) dialog.findViewById(R.id.groupmode_btn_cancel);
-        Button btnSave = (Button) dialog.findViewById(R.id.groupmode_btn_save);
+        Button cancelButton = dialog.findViewById(R.id.groupmode_btn_cancel);
+        Button btnSave = dialog.findViewById(R.id.groupmode_btn_save);
         btnSave.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 StringBuilder sb = new StringBuilder();

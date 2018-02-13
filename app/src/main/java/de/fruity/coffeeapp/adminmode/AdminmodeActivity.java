@@ -65,13 +65,13 @@ public class AdminmodeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         ReaderService.stopContinuity();
         setContentView(R.layout.activity_adminmode_navigationdrawer);
-        FrameLayout framelayout = (FrameLayout) findViewById(R.id.content_frame);
+        FrameLayout framelayout = findViewById(R.id.content_frame);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
 
-        ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        ListView mDrawerList = findViewById(R.id.left_drawer);
         mDrawerList.setAdapter(new NavigationDrawerWithIcon(this));
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -113,21 +113,21 @@ public class AdminmodeActivity extends FragmentActivity {
             }
         });
 
-        ViewGroup vg = (ViewGroup) findViewById(R.id.rl_activity_adminmode);
+        ViewGroup vg = findViewById(R.id.rl_activity_adminmode);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         RelativeLayout myView = (RelativeLayout) inflater.inflate(R.layout.activity_adminmode, vg, false);
         framelayout.addView(myView);
 
         // Set up the action bar.// ViewPager and its adapters use support library
         // fragments, so use getSupportFragmentManager.
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager_admin_activity);
+        ViewPager viewPager = findViewById(R.id.pager_admin_activity);
         viewPager.setAdapter(new DemoCollectionPagerAdapter(getSupportFragmentManager()));
-        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.pager_title_strip);
+        PagerSlidingTabStrip tabsStrip = findViewById(R.id.pager_title_strip);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_admin);
+        FloatingActionButton fab = findViewById(R.id.fab_admin);
         fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -167,8 +167,8 @@ public class AdminmodeActivity extends FragmentActivity {
                 LayoutInflater vi = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
                 convertView = vi.inflate(R.layout.activity_adminmode_navigationdrawer_object, parent, false);
-                mViewHolder.friendsname = (TextView) convertView.findViewById(R.id.tv_drawerobject_adminactivity); // title
-                mViewHolder.thumb_image = (ImageView) convertView.findViewById(R.id.iv_drawerobject_adminactivity); // thumb image
+                mViewHolder.friendsname = convertView.findViewById(R.id.tv_drawerobject_adminactivity); // title
+                mViewHolder.thumb_image = convertView.findViewById(R.id.iv_drawerobject_adminactivity); // thumb image
 
                 convertView.setTag(mViewHolder);
             } else {

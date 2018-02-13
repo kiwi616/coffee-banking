@@ -161,25 +161,32 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
         int paddingRight = getPaddingRight();
         int paddingBottom = getPaddingBottom();
 
-        int contentWidth = getWidth() - paddingLeft - paddingRight;
-        int contentHeight = getHeight() - paddingTop - paddingBottom;
+        int wp = getWidth() - paddingLeft - paddingRight;
+        int hp = getHeight() - paddingTop - paddingBottom;
 
-        int cl = Math.min(contentHeight, contentWidth);
+        int cl = Math.min(hp, wp);
+        int m = getWidth()/2;
+        int startx = m - cl / 2;
+        int starty = getHeight() /2  - cl / 2;
+        int endx = m + cl /2;
+        int endy = getHeight() /2  + cl / 2;
 
         OFFSET = 20;
 
         // Draw the example drawable on top of the text.
         if (isChecked()) {
-            if (mIsLowerSelected || mSelectedSecondDrawable == null)
+            if (mIsLowerSelected || mSelectedSecondDrawable == null) {
                 drawable = mSelectedFirstDrawable;
-            else
+            }
+            else {
                 drawable = mSelectedSecondDrawable;
+            }
 
             //draw frame arround button
-            canvas.drawLine(0, 0, getWidth(), 0, mTextPaint);
-            canvas.drawLine(0, 0, 0, getHeight(), mTextPaint);
-            canvas.drawLine(0, getHeight(), getHeight(), getWidth(), mTextPaint);
-            canvas.drawLine(getWidth(), 0, getWidth(), getHeight(), mTextPaint);
+            canvas.drawLine(startx, starty, endx, starty, mTextPaint); //upper
+            canvas.drawLine(startx, starty, startx, endx, mTextPaint); //left
+            canvas.drawLine(startx, endy, endx, endy, mTextPaint); //bottom
+            canvas.drawLine(endx, 0, endx, endx, mTextPaint); //right
         } else {
             if (mIsLowerSelected || mIdleSecondDrawable == null)
                 drawable = mIdleDrawable;
@@ -189,14 +196,13 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
 
         super.onDraw(canvas);
 
-        int drawable_left_to_content = ((cl - drawable.getMinimumWidth()) / 2) + OFFSET;
         int drawable_up_to_content = ((cl - drawable.getMinimumHeight()) / 2) + OFFSET;
 
         drawable.setBounds(
-                drawable_left_to_content,
-                drawable_up_to_content,
-                cl - drawable_left_to_content,
-                cl - drawable_up_to_content);
+                startx + OFFSET,
+                starty + OFFSET,
+                endx - OFFSET,
+                endy - OFFSET);
         drawable.draw(canvas);
 
         if (mCurrentValue != 0.0f)

@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.net.Uri;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
@@ -12,7 +13,7 @@ import de.fruity.coffeeapp.database.SqlAccessAPI;
 import de.fruity.coffeeapp.database.SqlDatabaseContentProvider;
 import de.fruity.coffeeapp.tools.HelperMethods;
 
-public class SeekBarCustomized extends SeekBar implements SeekBar.OnSeekBarChangeListener{
+public class SeekBarCustomized extends AppCompatSeekBar implements SeekBar.OnSeekBarChangeListener{
     private ContentResolver mContentResolver;
     private RadiogroupMerger mRadiogroupMerger;
     private String mDatabaseIdentifier;

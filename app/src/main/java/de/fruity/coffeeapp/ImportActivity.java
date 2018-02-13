@@ -32,7 +32,7 @@ public class ImportActivity extends Activity {
             return;
         }
 
-        Button btn_ok = (Button) findViewById(R.id.btn_activity_import_ok);
+        Button btn_ok = findViewById(R.id.btn_activity_import_ok);
         btn_ok.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +58,7 @@ public class ImportActivity extends Activity {
 
         });
 
-        Button btn_cancel = (Button) findViewById(R.id.btn_activity_import_cancel);
+        Button btn_cancel = findViewById(R.id.btn_activity_import_cancel);
         btn_cancel.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
