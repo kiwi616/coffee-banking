@@ -1,6 +1,7 @@
 <resources>
     <declare-styleable name="RadioButtonCustomized">
         <attr name="databaseIdentifier" format="string"/>
+        <attr name="hasSeekbar" format="boolean"/>
         <attr name="idleDrawable" format="color|reference" />
         <attr name="idleSecondDrawable" format="color|reference" />
         <attr name="selectedFirstDrawable" format="color|reference" />

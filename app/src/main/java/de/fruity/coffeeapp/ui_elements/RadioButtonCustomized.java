@@ -12,8 +12,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.widget.RadioButton;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import de.fruity.coffeeapp.R;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
@@ -34,6 +36,7 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
 
     private float mCurrentValue;
     private String mDatabaseIdentifier;
+    private boolean mHasSeekbar = false;
 
     private Paint mTextPaint;
 
@@ -41,17 +44,20 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
 
     public RadioButtonCustomized(Context context) {
         super(context);
-        constructor(null, 0);
+        constructor(context,null, 0);
     }
 
     public RadioButtonCustomized(Context context, AttributeSet attrs) {
         super(context, attrs);
-        constructor(attrs, 0);
+        constructor(context, attrs, 0);
     }
+
+    private SeekBarCustomized mSeekbar;
 
     public RadioButtonCustomized(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        constructor(attrs, defStyle);
+        constructor(context, attrs, defStyle);
+
     }
 
     private boolean isNearMin() {
@@ -90,10 +96,11 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
         }
     }
 
-    private void constructor(AttributeSet attrs, int defStyle) {
+    private void constructor(Context context, AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.RadioButtonCustomized, defStyle, 0);
+
 
         mDatabaseIdentifier = a.getString(R.styleable.RadioButtonCustomized_databaseIdentifier);
 
@@ -105,8 +112,24 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
             mSelectedFirstDrawable = a.getDrawable(R.styleable.RadioButtonCustomized_selectedFirstDrawable);
         if (a.hasValue(R.styleable.RadioButtonCustomized_selectedSecondDrawable))
             mSelectedSecondDrawable = a.getDrawable(R.styleable.RadioButtonCustomized_selectedSecondDrawable);
-
+        if (a.hasValue(R.styleable.RadioButtonCustomized_hasSeekbar))
+            mHasSeekbar = a.getBoolean(R.styleable.RadioButtonCustomized_hasSeekbar, false);
         a.recycle();
+        if (mHasSeekbar) {
+            ViewGroup vg = findViewById(R.id.rl_activity_main);
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            assert inflater != null;
+            RelativeLayout myView = (RelativeLayout) inflater.inflate(R.layout.activity_main, vg, false);
+
+
+            RadioButtonCustomized rl = findViewById(R.id.candy);
+            mSeekbar = new SeekBarCustomized(context, attrs, defStyle);
+            mSeekbar.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+
+//            mSeekbar.init(mRadiogroupMerger, "candy");
+            myView.addView(mSeekbar);
+        }
+
 
         // Set up a default TextPaint object
         mTextPaint = new Paint();
@@ -156,13 +179,8 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
 
         // TODO: consider storing these as member variables to reduce
         // allocations per draw cycle.
-        int paddingLeft = getPaddingLeft();
-        int paddingTop = getPaddingTop();
-        int paddingRight = getPaddingRight();
-        int paddingBottom = getPaddingBottom();
-
-        int wp = getWidth() - paddingLeft - paddingRight;
-        int hp = getHeight() - paddingTop - paddingBottom;
+        int wp = getWidth() - getPaddingLeft() - getPaddingRight();
+        int hp = getHeight() - getPaddingTop() - getPaddingBottom();
 
         int cl = Math.min(hp, wp);
         int m = getWidth()/2;
@@ -195,8 +213,6 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
         }
 
         super.onDraw(canvas);
-
-        int drawable_up_to_content = ((cl - drawable.getMinimumHeight()) / 2) + OFFSET;
 
         drawable.setBounds(
                 startx + OFFSET,

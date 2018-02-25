@@ -1,0 +1,110 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+
+    <TextView
+        android:id="@+id/tv_manual"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/manual"
+        android:textSize="32sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_marginStart="30dip"
+        android:layout_marginEnd="30dip"
+        android:layout_marginTop="30dip"
+        android:layout_marginBottom="30dip">
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:columnCount="3">
+
+
+            <include
+                android:id="@+id/candy"
+                layout="@layout/activity_main_booking_object"
+                android:layout_width="250dip"
+                android:layout_height="250dip"
+                android:layout_gravity="center"
+                app:databaseIdentifier="candy"
+                app:hasSeekbar="true"
+                app:idleDrawable="@drawable/candy_bw"
+                app:selectedFirstDrawable="@drawable/candy_colored" />
+
+            <include
+                android:id="@+id/coffee"
+                layout="@layout/activity_main_booking_object"
+                android:layout_width="250dip"
+                android:layout_height="250dip"
+                app:databaseIdentifier="candy"
+                app:idleDrawable="@drawable/candy_bw"
+                app:selectedFirstDrawable="@drawable/candy_colored" />
+
+            <include
+                android:id="@+id/coffee"
+                layout="@layout/activity_main_booking_object"
+                android:layout_width="250dip"
+                android:layout_height="250dip"
+                app:databaseIdentifier="candy"
+                app:idleDrawable="@drawable/candy_bw"
+                app:selectedFirstDrawable="@drawable/candy_colored" />
+
+            <include
+                android:id="@+id/coffee"
+                layout="@layout/activity_main_booking_object"
+                android:layout_width="250dip"
+                android:layout_height="250dip"
+                app:databaseIdentifier="candy"
+                app:idleDrawable="@drawable/candy_bw"
+                app:selectedFirstDrawable="@drawable/candy_colored" />
+
+            <include
+                android:id="@+id/coffee"
+                layout="@layout/activity_main_booking_object"
+                android:layout_width="250dip"
+                android:layout_height="250dip"
+                app:databaseIdentifier="candy"
+                app:idleDrawable="@drawable/candy_bw"
+                app:selectedFirstDrawable="@drawable/candy_colored" />
+
+            <include
+                android:id="@+id/coffee"
+                layout="@layout/activity_main_booking_object"
+                android:layout_width="250dip"
+                android:layout_height="250dip"
+                app:databaseIdentifier="candy"
+                app:idleDrawable="@drawable/candy_bw"
+                app:selectedFirstDrawable="@drawable/candy_colored" />
+
+
+        </GridLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_main"
+        style="@style/btnStyleSeagull"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/manual_selection"
+        android:textSize="32sp" />
+
+</LinearLayout>

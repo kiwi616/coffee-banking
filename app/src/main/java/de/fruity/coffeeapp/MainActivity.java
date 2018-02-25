@@ -90,7 +90,7 @@ public class MainActivity extends Activity {
         mRadiogroupMerger.setDefaults(getContentResolver(), R.id.coffee, default_coffe, "coffee");
 
         final RadioButtonCustomized rb_candy = findViewById(R.id.candy);
-        final SeekBarCustomized sb_candy = findViewById(R.id.slider_candy_main);
+//        final SeekBarCustomized sb_candy = findViewById(R.id.slider_candy_main);
         Button select_by_person_Button = findViewById(R.id.btn_main);
 
         mReceiver = new RFIDReaderReceiver(mRadiogroupMerger);
@@ -106,19 +106,19 @@ public class MainActivity extends Activity {
             }
         });
 
-        sb_candy.init(mRadiogroupMerger, "candy");
-
-        rb_candy.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    sb_candy.setVisibility(View.VISIBLE);
-                } else {
-                    sb_candy.setVisibility(View.INVISIBLE);
-                }
-            }
-        });
+//        sb_candy.init(mRadiogroupMerger, "candy");
+//
+//        rb_candy.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+//
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked) {
+//                    sb_candy.setVisibility(View.VISIBLE);
+//                } else {
+//                    sb_candy.setVisibility(View.INVISIBLE);
+//                }
+//            }
+//        });
     }
 
 

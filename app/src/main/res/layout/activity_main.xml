@@ -63,6 +63,7 @@
                 android:paddingRight="3dip"
                 android:textSize="28sp"
                 app:databaseIdentifier="candy"
+                app:hasSeekbar="true"
                 app:idleDrawable="@drawable/candy_bw"
                 app:selectedFirstDrawable="@drawable/candy_colored" />
 
@@ -108,13 +109,13 @@
                 android:checked="false" />
         </RadioGroup>
 
-        <de.fruity.coffeeapp.ui_elements.SeekBarCustomized
-            android:id="@+id/slider_candy_main"
-            android:layout_width="230dip"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/rg_upper"
-            android:layout_below="@+id/rg_upper"
-            android:visibility="invisible" />
+        <!--<de.fruity.coffeeapp.ui_elements.SeekBarCustomized-->
+            <!--android:id="@+id/slider_candy_main"-->
+            <!--android:layout_width="230dip"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignStart="@+id/rg_upper"-->
+            <!--android:layout_below="@+id/rg_upper"-->
+            <!--android:visibility="invisible" />-->
 
         <RadioGroup
             android:id="@+id/rg_down"
