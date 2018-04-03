@@ -61,11 +61,7 @@
                 android:gravity="top|center"
                 android:paddingLeft="3dip"
                 android:paddingRight="3dip"
-                android:textSize="28sp"
-                app:databaseIdentifier="candy"
-                app:hasSeekbar="true"
-                app:idleDrawable="@drawable/candy_bw"
-                app:selectedFirstDrawable="@drawable/candy_colored" />
+                android:textSize="28sp" />
 
             <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
                 android:id="@+id/coffee"
@@ -96,10 +92,7 @@
                 android:paddingLeft="3dip"
                 android:paddingRight="3dip"
                 android:text="@string/saldo"
-                android:textSize="28sp"
-                app:databaseIdentifier="billance"
-                app:idleDrawable="@drawable/moneybag_bw"
-                app:selectedFirstDrawable="@drawable/moneybag_colored" />
+                android:textSize="28sp" />
 
             <RadioButton
                 android:id="@+id/admin"
@@ -154,12 +147,7 @@
                 android:paddingLeft="3dip"
                 android:paddingRight="3dip"
                 android:paddingBottom="3dip"
-                android:textSize="28sp"
-                app:databaseIdentifier="can"
-                app:idleDrawable="@drawable/can_small_bw"
-                app:idleSecondDrawable="@drawable/can_big_bw"
-                app:selectedFirstDrawable="@drawable/can_small_colored"
-                app:selectedSecondDrawable="@drawable/can_big_colored" />
+                android:textSize="28sp" />
 
         </RadioGroup>
     </LinearLayout>

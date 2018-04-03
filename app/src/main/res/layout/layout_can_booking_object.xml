@@ -1,0 +1,39 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/booking_object"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <de.fruity.coffeeapp.ui_elements.RadioButtonCustomized
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@android:color/transparent"
+            android:gravity="top|center"
+            android:text="@string/saldo"
+            android:textSize="28sp"
+            app:databaseIdentifier="can"
+            app:idleDrawable="@drawable/can_small_bw"
+            app:idleSecondDrawable="@drawable/can_big_bw"
+            app:selectedFirstDrawable="@drawable/can_small_colored"
+            app:selectedSecondDrawable="@drawable/can_big_colored"/>
+
+        <!--<SeekBar-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"/>-->
+
+        <de.fruity.coffeeapp.ui_elements.SeekBarCustomized
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="9" />
+
+    </LinearLayout>
+</layout>

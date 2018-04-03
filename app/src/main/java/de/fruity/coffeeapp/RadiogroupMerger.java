@@ -3,6 +3,7 @@ package de.fruity.coffeeapp;
 import android.content.ContentResolver;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
@@ -12,7 +13,6 @@ import de.fruity.coffeeapp.ui_elements.RadioButtonCustomized;
 public class RadiogroupMerger {
     private RadioGroup radiogroup1;
     private RadioGroup radiogroup2;
-    private OnCheckedChangeListener globalListener;
 
     private String mDatabaseIdentifier;
     private float mDefaultValue;
@@ -43,13 +43,17 @@ public class RadiogroupMerger {
     public RadiogroupMerger(RadioGroup r1, RadioGroup r2) {
         radiogroup1 = r1;
         radiogroup2 = r2;
-        globalListener = null;
 
         radiogroup1.clearCheck(); // this is so we can start fresh, with no selection on both RadioGroups
         radiogroup2.clearCheck();
 
         radiogroup1.setOnCheckedChangeListener(listener1);
         radiogroup2.setOnCheckedChangeListener(listener2);
+    }
+
+    public void addView(View v)
+    {
+        v.setOnClickListener(globallistener);
     }
 
     public int getCheckedId() {
@@ -62,7 +66,7 @@ public class RadiogroupMerger {
         return radiogroup1.findViewById(id) != null;
     }
 
-    public void check(int check_id) {
+    private void check(int check_id) {
         if (isIdGroupOfRg1(check_id))
             radiogroup1.check(check_id);
         else
@@ -72,12 +76,19 @@ public class RadiogroupMerger {
     public RadioButtonCustomized getChecked() {
         RadioButtonCustomized return_handle;
         if (isIdGroupOfRg1(getCheckedId()))
-            return_handle = (RadioButtonCustomized) radiogroup1.findViewById(getCheckedId());
+            return_handle = radiogroup1.findViewById(getCheckedId());
         else
-            return_handle = (RadioButtonCustomized) radiogroup2.findViewById(getCheckedId());
+            return_handle = radiogroup2.findViewById(getCheckedId());
 
         return return_handle;
     }
+
+    private View.OnClickListener globallistener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
 
     private OnCheckedChangeListener listener1 = new OnCheckedChangeListener() {
 
@@ -92,8 +103,6 @@ public class RadiogroupMerger {
                 if (group.getCheckedRadioButtonId() != mDefaultViewId)
                     retriggerTimer();
 
-                if (globalListener != null)
-                    globalListener.onCheckedChanged(group, checkedId);
             }
         }
     };
@@ -109,9 +118,6 @@ public class RadiogroupMerger {
 
                 if (group.getCheckedRadioButtonId() != mDefaultViewId)
                     retriggerTimer();
-
-                if (globalListener != null)
-                    globalListener.onCheckedChanged(group, checkedId);
             }
         }
     };

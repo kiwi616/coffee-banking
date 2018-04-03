@@ -72,7 +72,7 @@ public class MainActivity extends Activity {
         ViewGroup vg = findViewById(R.id.rl_activity_main);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert inflater != null;
-        RelativeLayout myView = (RelativeLayout) inflater.inflate(R.layout.activity_main, vg, false);
+        RelativeLayout myView = (RelativeLayout) inflater.inflate(R.layout.activity_main_test, vg, false);
         framelayout.addView(myView);
 
         // Set the adapter for the list view

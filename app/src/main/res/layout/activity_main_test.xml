@@ -1,5 +1,4 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rl_activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,76 +23,58 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:layout_marginStart="30dip"
+        android:layout_marginBottom="30dip"
         android:layout_marginEnd="30dip"
+        android:layout_marginStart="30dip"
         android:layout_marginTop="30dip"
-        android:layout_marginBottom="30dip">
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <GridLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:columnCount="3">
+            android:columnCount="3"
+            android:orientation="horizontal">
 
 
             <include
                 android:id="@+id/candy"
-                layout="@layout/activity_main_booking_object"
+                layout="@layout/layout_candy_booking_object"
                 android:layout_width="250dip"
                 android:layout_height="250dip"
-                android:layout_gravity="center"
-                app:databaseIdentifier="candy"
-                app:hasSeekbar="true"
-                app:idleDrawable="@drawable/candy_bw"
-                app:selectedFirstDrawable="@drawable/candy_colored" />
+                android:layout_gravity="center" />
 
             <include
                 android:id="@+id/coffee"
-                layout="@layout/activity_main_booking_object"
+                layout="@layout/layout_coffee_booking_object"
                 android:layout_width="250dip"
-                android:layout_height="250dip"
-                app:databaseIdentifier="candy"
-                app:idleDrawable="@drawable/candy_bw"
-                app:selectedFirstDrawable="@drawable/candy_colored" />
+                android:layout_height="250dip" />
 
             <include
                 android:id="@+id/coffee"
-                layout="@layout/activity_main_booking_object"
+                layout="@layout/layout_saldo_booking_object"
                 android:layout_width="250dip"
-                android:layout_height="250dip"
-                app:databaseIdentifier="candy"
-                app:idleDrawable="@drawable/candy_bw"
-                app:selectedFirstDrawable="@drawable/candy_colored" />
+                android:layout_height="250dip" />
 
             <include
                 android:id="@+id/coffee"
-                layout="@layout/activity_main_booking_object"
+                layout="@layout/layout_beer_booking_object"
                 android:layout_width="250dip"
-                android:layout_height="250dip"
-                app:databaseIdentifier="candy"
-                app:idleDrawable="@drawable/candy_bw"
-                app:selectedFirstDrawable="@drawable/candy_colored" />
+                android:layout_height="250dip" />
 
             <include
                 android:id="@+id/coffee"
-                layout="@layout/activity_main_booking_object"
+                layout="@layout/layout_can_booking_object"
                 android:layout_width="250dip"
-                android:layout_height="250dip"
-                app:databaseIdentifier="candy"
-                app:idleDrawable="@drawable/candy_bw"
-                app:selectedFirstDrawable="@drawable/candy_colored" />
+                android:layout_height="250dip" />
 
             <include
                 android:id="@+id/coffee"
-                layout="@layout/activity_main_booking_object"
+                layout="@layout/layout_meat_booking_object"
                 android:layout_width="250dip"
-                android:layout_height="250dip"
-                app:databaseIdentifier="candy"
-                app:idleDrawable="@drawable/candy_bw"
-                app:selectedFirstDrawable="@drawable/candy_colored" />
+                android:layout_height="250dip" />
 
 
         </GridLayout>
