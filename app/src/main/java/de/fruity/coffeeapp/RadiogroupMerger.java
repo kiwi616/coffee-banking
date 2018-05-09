@@ -4,15 +4,19 @@ import android.content.ContentResolver;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.fruity.coffeeapp.database.SqlAccessAPI;
 import de.fruity.coffeeapp.ui_elements.RadioButtonCustomized;
+import de.fruity.coffeeapp.ui_elements.SeekBarCustomized;
 
 public class RadiogroupMerger {
-    private RadioGroup radiogroup1;
-    private RadioGroup radiogroup2;
+    private List<LinearLayout> mList;
+    private int mChecked;
 
     private String mDatabaseIdentifier;
     private float mDefaultValue;
@@ -20,6 +24,10 @@ public class RadiogroupMerger {
     private ContentResolver mContentResolver;
 
     final private Handler mHandler = new Handler();
+
+    RadiogroupMerger() {
+        mList = new ArrayList<>();
+    }
 
     public void retriggerTimer() {
         Runnable runnable = new Runnable() {
@@ -33,95 +41,72 @@ public class RadiogroupMerger {
                 }
             }
         };
-        if (mHandler != null) {
-            mHandler.removeMessages(0); // this id is 100 percent random :P seems
-            // to be the default id
-            mHandler.postDelayed(runnable, 15000);
-        }
+        mHandler.removeMessages(0); // this id is 100 percent random :P seems
+        // to be the default id
+        mHandler.postDelayed(runnable, 15000);
     }
 
-    public RadiogroupMerger(RadioGroup r1, RadioGroup r2) {
-        radiogroup1 = r1;
-        radiogroup2 = r2;
+    public void addView(LinearLayout v) {
+        RadioButtonCustomized rbc = v.findViewWithTag("RadioButtonCustomized");
 
-        radiogroup1.clearCheck(); // this is so we can start fresh, with no selection on both RadioGroups
-        radiogroup2.clearCheck();
+        SeekBarCustomized sbc = v.findViewWithTag("SeekBarCustomized");
+        sbc.setTimerTrigger(this);
 
-        radiogroup1.setOnCheckedChangeListener(listener1);
-        radiogroup2.setOnCheckedChangeListener(listener2);
+        mList.add(v);
+        rbc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                int checkedId = ((View) buttonView.getParent()).getId();
+                if(isChecked)
+                    check(checkedId);
+
+                if (checkedId != mDefaultViewId)
+                    retriggerTimer();
+            }
+        });
     }
 
-    public void addView(View v)
+    private LinearLayout GetViewFromId(int id)
     {
-        v.setOnClickListener(globallistener);
+        for(LinearLayout v : mList)
+        {
+            if (v.getId() == id)
+                return v;
+        }
+        return null;
     }
 
     public int getCheckedId() {
-        int chkId1 = radiogroup1.getCheckedRadioButtonId();
-        int chkId2 = radiogroup2.getCheckedRadioButtonId();
-        return (chkId1 == -1 ? chkId2 : chkId1);
-    }
-
-    private boolean isIdGroupOfRg1(int id) {
-        return radiogroup1.findViewById(id) != null;
+        return mChecked;
     }
 
     private void check(int check_id) {
-        if (isIdGroupOfRg1(check_id))
-            radiogroup1.check(check_id);
-        else
-            radiogroup2.check(check_id);
+        LinearLayout v = GetViewFromId(mChecked);
+        if(v != null) { //allowed because inital set
+            RadioButtonCustomized rbc = v.findViewWithTag("RadioButtonCustomized");
+            SeekBarCustomized sbc = v.findViewWithTag("SeekBarCustomized");
+            rbc.setChecked(false);
+
+            sbc.setVisibility(View.INVISIBLE);
+        }
+
+        mChecked = check_id;
+
+        v = GetViewFromId(mChecked);
+        assert v != null;
+        RadioButtonCustomized rbc = v.findViewWithTag("RadioButtonCustomized");
+        SeekBarCustomized sbc = v.findViewWithTag("SeekBarCustomized");
+        rbc.setChecked(true);
+        sbc.setVisibility(View.VISIBLE);
     }
 
-    public RadioButtonCustomized getChecked() {
-        RadioButtonCustomized return_handle;
-        if (isIdGroupOfRg1(getCheckedId()))
-            return_handle = radiogroup1.findViewById(getCheckedId());
-        else
-            return_handle = radiogroup2.findViewById(getCheckedId());
-
-        return return_handle;
+    public void bookValueOnCustomer(int pk)
+    {
+        LinearLayout v = GetViewFromId(mChecked);
+        assert v != null;
+        RadioButtonCustomized rbc = v.findViewWithTag("RadioButtonCustomized");
+        rbc.bookValue(pk);
     }
-
-    private View.OnClickListener globallistener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-        }
-    };
-
-    private OnCheckedChangeListener listener1 = new OnCheckedChangeListener() {
-
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            if (checkedId != -1) {
-                radiogroup2.setOnCheckedChangeListener(null); // remove the listener before clearing so we don't throw that stackoverflow exception(like Vladimir Volodin pointed out)
-                radiogroup2.clearCheck(); // clear the second RadioGroup!
-                radiogroup2.setOnCheckedChangeListener(listener2); //reset the listener
-
-
-                if (group.getCheckedRadioButtonId() != mDefaultViewId)
-                    retriggerTimer();
-
-            }
-        }
-    };
-
-    private OnCheckedChangeListener listener2 = new OnCheckedChangeListener() {
-
-        @Override
-        public void onCheckedChanged(RadioGroup group, int checkedId) {
-            if (checkedId != -1) {
-                radiogroup1.setOnCheckedChangeListener(null);
-                radiogroup1.clearCheck();
-                radiogroup1.setOnCheckedChangeListener(listener1);
-
-                if (group.getCheckedRadioButtonId() != mDefaultViewId)
-                    retriggerTimer();
-            }
-        }
-    };
-
 
     public void setDefaults(ContentResolver cr, int default_view,
                             float default_value, String default_datbaseident) {

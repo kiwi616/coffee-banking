@@ -29,29 +29,29 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
         int rfidNumber = intent.getIntExtra(ReaderService.TID, 0);
         int pk_id = SqlAccessAPI.getPeopleIdByRFID(context.getContentResolver(), rfidNumber);
 
+//
+//        if (position == R.id.admin) {
+//            try {
+//                if (SqlAccessAPI.isAdminByRFID(context.getContentResolver(), rfidNumber)
+//                        || rfidNumber == AdminmodeActivity.SECRET_ADMIN_CODE) {
+//                    Intent startAdminMode = new Intent(context, AdminmodeActivity.class);
+//                    context.startActivity(startAdminMode);
+//                }
+//            } catch (Exception ignored) {
+//            }
+//        } else {
 
-        if (position == R.id.admin) {
             try {
-                if (SqlAccessAPI.isAdminByRFID(context.getContentResolver(), rfidNumber)
-                        || rfidNumber == AdminmodeActivity.SECRET_ADMIN_CODE) {
-                    Intent startAdminMode = new Intent(context, AdminmodeActivity.class);
-                    context.startActivity(startAdminMode);
-                }
-            } catch (Exception ignored) {
-            }
-        } else {
-
-            try {
-                if (position != R.id.bilance)
-                    mRadiogroupMerger.getChecked().bookValue(pk_id);
+                if (position != R.id.balance)
+                    mRadiogroupMerger.bookValueOnCustomer(pk_id);
                 else
                     showBalance(context, rfidNumber);
 
             } catch (IllegalArgumentException | SQLiteConstraintException ia_ex) {
-                Dialog d = HelperMethods.createNewUser(context, null, new Integer(rfidNumber));
+                Dialog d = HelperMethods.createNewUser(context, null, rfidNumber);
                 d.show();
             }
-        }
+//        }
 
 
         Log.i(TAG, " id received " + rfidNumber);
@@ -65,10 +65,10 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
         dialog.setContentView(R.layout.dialog_billance);
         dialog.setTitle(SqlAccessAPI.getName(context.getContentResolver(), pk_id));
 
-        TextView tv_coffee = (TextView) dialog.findViewById(R.id.value_coffee_billance_dialog);
-        TextView tv_candy = (TextView) dialog.findViewById(R.id.value_candy_billance_dialog);
-        TextView tv_metcan = (TextView) dialog.findViewById(R.id.value_metcan_billance_dialog);
-        TextView tv_beer = (TextView) dialog.findViewById(R.id.value_beer_billance_dialog);
+        TextView tv_coffee = dialog.findViewById(R.id.value_coffee_billance_dialog);
+        TextView tv_candy = dialog.findViewById(R.id.value_candy_billance_dialog);
+        TextView tv_metcan = dialog.findViewById(R.id.value_metcan_billance_dialog);
+        TextView tv_beer = dialog.findViewById(R.id.value_beer_billance_dialog);
 
         tv_coffee.setText(String.format("%s€", HelperMethods.roundTwoDecimals(
                 SqlAccessAPI.getCoffeeValueFromPerson(context.getContentResolver(), pk_id))));

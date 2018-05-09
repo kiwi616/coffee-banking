@@ -101,6 +101,7 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.RadioButtonCustomized, defStyle, 0);
 
+        setTag("RadioButtonCustomized");
 
         mDatabaseIdentifier = a.getString(R.styleable.RadioButtonCustomized_databaseIdentifier);
 
@@ -112,24 +113,7 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
             mSelectedFirstDrawable = a.getDrawable(R.styleable.RadioButtonCustomized_selectedFirstDrawable);
         if (a.hasValue(R.styleable.RadioButtonCustomized_selectedSecondDrawable))
             mSelectedSecondDrawable = a.getDrawable(R.styleable.RadioButtonCustomized_selectedSecondDrawable);
-        if (a.hasValue(R.styleable.RadioButtonCustomized_hasSeekbar))
-            mHasSeekbar = a.getBoolean(R.styleable.RadioButtonCustomized_hasSeekbar, false);
         a.recycle();
-        if (mHasSeekbar) {
-            ViewGroup vg = findViewById(R.id.rl_activity_main);
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            assert inflater != null;
-            RelativeLayout myView = (RelativeLayout) inflater.inflate(R.layout.activity_main, vg, false);
-
-
-            RadioButtonCustomized rl = findViewById(R.id.candy);
-            mSeekbar = new SeekBarCustomized(context, attrs, defStyle);
-            mSeekbar.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-
-//            mSeekbar.init(mRadiogroupMerger, "candy");
-            myView.addView(mSeekbar);
-        }
-
 
         // Set up a default TextPaint object
         mTextPaint = new Paint();
@@ -137,9 +121,11 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
         mTextPaint.setTextAlign(Paint.Align.LEFT);
         mTextPaint.setStrokeWidth(3f);
 
-        mCurrentValue = SqlAccessAPI.getPriceByIdentifier(getContext().getContentResolver(),
-                mDatabaseIdentifier);
-        mIsLowerSelected = isNearMin();
+        if (mDatabaseIdentifier != null) {
+            mCurrentValue = SqlAccessAPI.getPriceByIdentifier(getContext().getContentResolver(),
+                    mDatabaseIdentifier);
+            mIsLowerSelected = isNearMin();
+        }
 
         getContext().getContentResolver().registerContentObserver(
                 SqlDatabaseContentProvider.PRODUCT_URI, true, new ContentObserver(getHandler()) {
@@ -156,7 +142,7 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (isChecked()) {
+            if (isChecked() && mDatabaseIdentifier != null) {
                 float new_value = mCurrentValue + SqlAccessAPI.getPriceStepsize(
                         getContext().getContentResolver(), mDatabaseIdentifier);
                 SqlAccessAPI.setCurrentPrice(getContext().getContentResolver(),
@@ -227,9 +213,11 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
 
     public void bookValue(int people_id)
     {
-        SqlAccessAPI.bookValueByName(getContext().getContentResolver(), mDatabaseIdentifier,
-                people_id);
+        if (mDatabaseIdentifier != null) {
+            SqlAccessAPI.bookValueByName(getContext().getContentResolver(), mDatabaseIdentifier,
+                    people_id);
 
-        HelperMethods.billanceToast(getContext(), people_id, mDatabaseIdentifier);
+            HelperMethods.billanceToast(getContext(), people_id, mDatabaseIdentifier);
+        }
     }
 }

@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
@@ -29,7 +28,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import de.fruity.coffeeapp.R;
-import de.fruity.coffeeapp.adminmode.AdminmodeActivity;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
 import de.fruity.coffeeapp.ui_elements.CustomToast;
 
@@ -126,7 +124,7 @@ public class HelperMethods {
         multiRenderer.setYAxisMax(cur_y_max + ((cur_y_max / 100) * 20));
         // Creating a Time Chart
 
-        return ChartFactory.getTimeChartView(context, dataset, multiRenderer, "hh:mm dd-MMM");
+        return null;//ChartFactory.getTimeChartView(context, dataset, multiRenderer, "hh:mm dd-MMM");
     }
 
     static private TimeSeries getDataset(ContentResolver cr, String kind, long person_id) {
@@ -166,20 +164,17 @@ public class HelperMethods {
         new CustomToast(context, sb.toString(), 1500);
     }
 
-    public static boolean isPersonalnumberValid(String number) {
+    public static boolean isPersonalNumberValid(String number) {
         try {
             int persno = Integer.parseInt(number);
-            return isPersonalnumberValid(persno);
+            return isPersonalNumberValid(persno);
         } catch (NumberFormatException ex) {
             return false;
         }
     }
 
-    public static boolean isPersonalnumberValid(int number) {
-        if ((number / 99) > 1)
-            return true;
-
-        return false;
+    private static boolean isPersonalNumberValid(int number) {
+        return (number / 99) > 1;
     }
 
     @SuppressLint("SetTextI18n")
@@ -192,10 +187,10 @@ public class HelperMethods {
         dialog.setTitle(R.string.save_hint_enter_name);
 
         // set the custom dialog components - text, image and button
-        final Button cancelButton = (Button) dialog.findViewById(R.id.newperson_dialog_btn_cancel);
-        final Button btnSave = (Button) dialog.findViewById(R.id.newperson_dialog_btn_save);
-        final EditText et = (EditText) dialog.findViewById(R.id.newperson_dialog_et_name);
-        final EditText et_personalnumber = (EditText) dialog.findViewById(R.id.newperson_dialog_et_personalnumber);
+        final Button cancelButton = dialog.findViewById(R.id.newperson_dialog_btn_cancel);
+        final Button btnSave = dialog.findViewById(R.id.newperson_dialog_btn_save);
+        final EditText et = dialog.findViewById(R.id.newperson_dialog_et_name);
+        final EditText et_personalnumber = dialog.findViewById(R.id.newperson_dialog_et_personalnumber);
 
         if (personalnumber != null)
             et_personalnumber.setText(personalnumber.toString());
@@ -212,7 +207,7 @@ public class HelperMethods {
                             context.getText(R.string.no_personalnumber_number).toString(), 2000);
                     return;
                 }
-                if (!isPersonalnumberValid(personalnumber)) { //more than 2 digit
+                if (!isPersonalNumberValid(personalnumber)) { //more than 2 digit
                     new CustomToast(context,
                             context.getText(R.string.no_personalnumber_number).toString(), 2000);
                     return;

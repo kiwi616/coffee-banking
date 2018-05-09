@@ -2,12 +2,14 @@ package de.fruity.coffeeapp.ui_elements;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
+import de.fruity.coffeeapp.R;
 import de.fruity.coffeeapp.RadiogroupMerger;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
 import de.fruity.coffeeapp.database.SqlDatabaseContentProvider;
@@ -21,22 +23,36 @@ public class SeekBarCustomized extends AppCompatSeekBar implements SeekBar.OnSee
 
     public SeekBarCustomized(Context context) {
         super(context);
-        mContentResolver = context.getContentResolver();
+        constructor(context, null, 0);
     }
 
     public SeekBarCustomized(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mContentResolver = context.getContentResolver();
+        constructor(context, attrs, 0);
     }
 
     public SeekBarCustomized(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mContentResolver = context.getContentResolver();
+        constructor(context, attrs, defStyleAttr);
     }
 
-    public void init(RadiogroupMerger rgm, String database_ident) {
+    public void setTimerTrigger(RadiogroupMerger rgm)
+    {
         mRadiogroupMerger = rgm;
-        mDatabaseIdentifier = database_ident;
+    }
+
+    private void constructor(Context context, AttributeSet attrs, int defStyle) {
+        // Load attributes
+        final TypedArray a = getContext().obtainStyledAttributes(
+                attrs, R.styleable.RadioButtonCustomized, defStyle, 0);
+
+        setTag("SeekBarCustomized");
+
+        mDatabaseIdentifier = a.getString(R.styleable.RadioButtonCustomized_databaseIdentifier);
+
+        if ( mDatabaseIdentifier == null)
+            return;
+        mContentResolver = context.getContentResolver();
 
         // sb_candy TODO onClicklistener
         setMax(HelperMethods.roundAndConvert(

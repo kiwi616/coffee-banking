@@ -10,7 +10,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-
     <TextView
         android:id="@+id/tv_manual"
         android:layout_width="fill_parent"
@@ -43,8 +42,7 @@
                 android:id="@+id/candy"
                 layout="@layout/layout_candy_booking_object"
                 android:layout_width="250dip"
-                android:layout_height="250dip"
-                android:layout_gravity="center" />
+                android:layout_height="250dip" />
 
             <include
                 android:id="@+id/coffee"
@@ -53,29 +51,28 @@
                 android:layout_height="250dip" />
 
             <include
-                android:id="@+id/coffee"
+                android:id="@+id/balance"
                 layout="@layout/layout_saldo_booking_object"
                 android:layout_width="250dip"
                 android:layout_height="250dip" />
 
             <include
-                android:id="@+id/coffee"
+                android:id="@+id/beer"
                 layout="@layout/layout_beer_booking_object"
                 android:layout_width="250dip"
                 android:layout_height="250dip" />
 
             <include
-                android:id="@+id/coffee"
+                android:id="@+id/can"
                 layout="@layout/layout_can_booking_object"
                 android:layout_width="250dip"
                 android:layout_height="250dip" />
 
             <include
-                android:id="@+id/coffee"
+                android:id="@+id/meat"
                 layout="@layout/layout_meat_booking_object"
                 android:layout_width="250dip"
                 android:layout_height="250dip" />
-
 
         </GridLayout>
     </LinearLayout>
@@ -87,5 +84,6 @@
         android:layout_height="wrap_content"
         android:text="@string/manual_selection"
         android:textSize="32sp" />
+
 
 </LinearLayout>

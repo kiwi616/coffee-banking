@@ -15,12 +15,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:id="@+id/test"
             android:button="@android:color/transparent"
             android:gravity="top|center"
             android:text="@string/saldo"
             android:textSize="28sp"
             app:databaseIdentifier="candy"
-            app:hasSeekbar="true"
             app:idleDrawable="@drawable/candy_bw"
             app:selectedFirstDrawable="@drawable/candy_colored"/>
 
@@ -32,6 +32,8 @@
         <de.fruity.coffeeapp.ui_elements.SeekBarCustomized
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:databaseIdentifier="candy"
+            android:visibility="invisible"
             android:layout_weight="9" />
 
     </LinearLayout>

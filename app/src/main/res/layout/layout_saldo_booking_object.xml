@@ -19,11 +19,8 @@
             android:gravity="top|center"
             android:text="@string/saldo"
             android:textSize="28sp"
-            app:databaseIdentifier="coffee"
-            app:idleDrawable="@drawable/coffee_bw"
-            app:idleSecondDrawable="@drawable/coffee_multiple_bw"
-            app:selectedFirstDrawable="@drawable/coffee_colored"
-            app:selectedSecondDrawable="@drawable/coffee_multiple_colored"  />
+            app:idleDrawable="@drawable/moneybag_bw"
+            app:selectedFirstDrawable="@drawable/moneybag_colored" />
 
         <!--<SeekBar-->
         <!--android:layout_width="match_parent"-->
@@ -33,6 +30,7 @@
         <de.fruity.coffeeapp.ui_elements.SeekBarCustomized
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="invisible"
             android:layout_weight="9" />
 
     </LinearLayout>

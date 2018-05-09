@@ -17,7 +17,6 @@
             android:layout_weight="1"
             android:button="@android:color/transparent"
             android:gravity="top|center"
-            android:text="@string/saldo"
             android:textSize="28sp"
             app:databaseIdentifier="coffee"
             app:idleDrawable="@drawable/coffee_bw"
@@ -33,6 +32,8 @@
         <de.fruity.coffeeapp.ui_elements.SeekBarCustomized
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:databaseIdentifier="coffee"
+            android:visibility="invisible"
             android:layout_weight="9" />
 
     </LinearLayout>
