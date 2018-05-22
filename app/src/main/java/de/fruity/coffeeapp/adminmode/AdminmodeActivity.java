@@ -23,7 +23,6 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,13 +64,13 @@ public class AdminmodeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         ReaderService.stopContinuity();
         setContentView(R.layout.activity_adminmode_navigationdrawer);
-        FrameLayout framelayout = findViewById(R.id.content_frame);
+        FrameLayout framelayout = findViewById(R.id.fl_adminactivity);
 
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
 
-        ListView mDrawerList = findViewById(R.id.left_drawer);
+        ListView mDrawerList = findViewById(R.id.lv_admin_drawer);
         mDrawerList.setAdapter(new NavigationDrawerWithIcon(this));
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -115,7 +114,8 @@ public class AdminmodeActivity extends FragmentActivity {
 
         ViewGroup vg = findViewById(R.id.rl_activity_adminmode);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        RelativeLayout myView = (RelativeLayout) inflater.inflate(R.layout.activity_adminmode, vg, false);
+        assert inflater != null;
+        View myView = inflater.inflate(R.layout.activity_adminmode, vg, false);
         framelayout.addView(myView);
 
         // Set up the action bar.// ViewPager and its adapters use support library
@@ -127,7 +127,7 @@ public class AdminmodeActivity extends FragmentActivity {
         tabsStrip.setViewPager(viewPager);
 
 
-        FloatingActionButton fab = findViewById(R.id.fab_admin);
+        FloatingActionButton fab = findViewById(R.id.fab_adminactivity);
         fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {

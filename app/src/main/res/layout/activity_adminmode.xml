@@ -5,35 +5,37 @@
     android:layout_height="match_parent">
 
     <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
-        <com.astuetz.PagerSlidingTabStrip
-            android:id="@+id/pager_title_strip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:background="@android:color/background_dark"
-            android:paddingBottom="20dp"
-            android:paddingTop="20dp"
-            android:textColor="#fff"
-            app:pstsShouldExpand="true"
-            app:pstsTextAllCaps="true" />
+    <com.astuetz.PagerSlidingTabStrip
+        android:id="@+id/pager_title_strip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:background="@android:color/background_dark"
+        android:paddingBottom="20dp"
+        android:paddingTop="20dp"
+        android:textColor="#fff"
+    app:pstsTextAllCaps="true"
+        />
+    <!--app:pstsShouldExpand="true"-->
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager_admin_activity"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/pager_title_strip"
-            android:layout_alignParentStart="true" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager_admin_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/pager_title_strip" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_admin"
+        android:id="@+id/fab_adminactivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
+        android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginRight="20dp"
         android:src="@drawable/ic_more_vert_white_48dp" />
 </RelativeLayout>

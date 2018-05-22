@@ -150,7 +150,7 @@ public class ShowPersonsDetailFragment extends android.support.v4.app.DialogFrag
         });
 
 
-        LinearLayout chartContainer = (LinearLayout) mainMeasurementView.findViewById(R.id.chart);
+        LinearLayout chartContainer = mainMeasurementView.findViewById(R.id.chart);
         GraphicalView chart = HelperMethods.createLineChart(getContext(), getShownID());
         chartContainer.addView(chart);
 

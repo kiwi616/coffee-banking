@@ -6,20 +6,15 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="close">
     <!-- The main content view -->
-    <!--<android.support.design.widget.CoordinatorLayout-->
-        <!--android:id="@+id/coordinatorLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:orientation="vertical">-->
 
         <FrameLayout
-            android:id="@+id/content_frame"
+            android:id="@+id/fl_adminactivity"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <!-- The navigation drawer -->
         <ListView
-            android:id="@+id/left_drawer"
+            android:id="@+id/lv_admin_drawer"
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
@@ -27,5 +22,4 @@
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp" />
-    <!--</android.support.design.widget.CoordinatorLayout>-->
 </android.support.v4.widget.DrawerLayout>

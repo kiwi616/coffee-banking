@@ -50,7 +50,8 @@ public class RadiogroupMerger {
         RadioButtonCustomized rbc = v.findViewWithTag("RadioButtonCustomized");
 
         SeekBarCustomized sbc = v.findViewWithTag("SeekBarCustomized");
-        sbc.setTimerTrigger(this);
+        if (sbc != null)
+            sbc.setTimerTrigger(this);
 
         mList.add(v);
         rbc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -86,8 +87,8 @@ public class RadiogroupMerger {
             RadioButtonCustomized rbc = v.findViewWithTag("RadioButtonCustomized");
             SeekBarCustomized sbc = v.findViewWithTag("SeekBarCustomized");
             rbc.setChecked(false);
-
-            sbc.setVisibility(View.INVISIBLE);
+            if (sbc != null)
+                sbc.setVisibility(View.INVISIBLE);
         }
 
         mChecked = check_id;
@@ -97,7 +98,8 @@ public class RadiogroupMerger {
         RadioButtonCustomized rbc = v.findViewWithTag("RadioButtonCustomized");
         SeekBarCustomized sbc = v.findViewWithTag("SeekBarCustomized");
         rbc.setChecked(true);
-        sbc.setVisibility(View.VISIBLE);
+        if (sbc != null)
+            sbc.setVisibility(View.VISIBLE);
     }
 
     public void bookValueOnCustomer(int pk)

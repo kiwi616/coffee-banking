@@ -13,7 +13,7 @@
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:id="@+id/scrollView">
@@ -23,6 +23,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:background="@android:color/background_light"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp">
 

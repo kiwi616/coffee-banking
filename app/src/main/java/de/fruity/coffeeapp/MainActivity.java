@@ -15,8 +15,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.DragEvent;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,15 +48,6 @@ public class MainActivity extends Activity {
 
     private BroadcastReceiver mReceiver;
 
-    private RadiogroupMerger mRadiogroupMerger;
-
-    public FloatingActionButton getFab(Context context) {
-        FloatingActionButton fab = new FloatingActionButton(context);
-        fab.setImageDrawable(getResources().getDrawable(android.R.drawable.ic_menu_today));
-        fab.setBackgroundColor(0xFF2196F3);
-
-        return fab;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,35 +60,14 @@ public class MainActivity extends Activity {
             getActionBar().hide();
 
         setContentView(R.layout.activity_main_navigationdrawer);
-        FrameLayout framelayout = findViewById(R.id.content_frame);
+        FrameLayout framelayout = findViewById(R.id.fl_adminactivity);
         mDrawerLayout = findViewById(R.id.drawer_layout);
-        mDrawerList = findViewById(R.id.left_drawer);
-        mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                FloatingActionButton fab = getFab(getApplicationContext());
-                fab.show();
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
+        mDrawerList = findViewById(R.id.lv_admin_drawer);
 
         ViewGroup vg = findViewById(R.id.rl_activity_main);
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         assert inflater != null;
-        LinearLayout myView = (LinearLayout) inflater.inflate(R.layout.activity_main_test, vg, false);
+        View myView = inflater.inflate(R.layout.activity_main_test, vg, false);
         framelayout.addView(myView);
 
         // Set the adapter for the list view
@@ -112,7 +80,7 @@ public class MainActivity extends Activity {
 
         default_coffe = SqlAccessAPI.getPriceMin(getContentResolver(), "coffee");
 
-        mRadiogroupMerger = new RadiogroupMerger();
+        RadiogroupMerger mRadiogroupMerger = new RadiogroupMerger();
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.candy));
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.coffee));
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.can));
@@ -122,8 +90,16 @@ public class MainActivity extends Activity {
 
         mRadiogroupMerger.setDefaults(getContentResolver(), R.id.coffee, default_coffe, "coffee");
 
-//        final RadioButtonCustomized rb_candy = findViewById(R.id.candy);
-//        final SeekBarCustomized sb_candy = findViewById(R.id.slider_candy_main);
+        FloatingActionButton fab = findViewById(R.id.fab_admin);
+        fab.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO force authentificate
+                Intent startAdminMode = new Intent(getApplication(), AdminmodeActivity.class);
+                startActivity(startAdminMode);
+            }
+        });
+
         Button select_by_person_Button = findViewById(R.id.btn_main);
         // Initialize get features button
         select_by_person_Button.setOnClickListener(new OnClickListener() {
@@ -187,12 +163,6 @@ public class MainActivity extends Activity {
                 persno = Integer.parseInt(et_personalnumber.getText().toString());
                 dialog.dismiss();
 
-    //TODO
-//                if (mRadiogroupMerger.getCheckedId() == R.id.admin && SqlAccessAPI.isAdminByPersonalnumber(getContentResolver(), persno)){
-//                    Intent startAdminMode = new Intent(getApplication(), AdminmodeActivity.class);
-//                    startActivity(startAdminMode);
-//                    return;
-//                }
 
                 Cursor rfidCursor = getContentResolver().query(SqlDatabaseContentProvider.CONTENT_URI, null,
                         SqliteDatabase.COLUMN_PERSONAL_NUMBER + " =  ?", new String[]{persno.toString()}, null);

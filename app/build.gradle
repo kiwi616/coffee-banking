@@ -28,5 +28,4 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.astuetz:pagerslidingtabstrip:1.0.1'
     implementation 'com.opencsv:opencsv:3.4'
-    implementation group: 'org.achartengine', name: 'achartengine', version: '1.2.0'
 }

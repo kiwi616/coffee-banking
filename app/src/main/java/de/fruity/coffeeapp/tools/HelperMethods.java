@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
@@ -124,7 +125,7 @@ public class HelperMethods {
         multiRenderer.setYAxisMax(cur_y_max + ((cur_y_max / 100) * 20));
         // Creating a Time Chart
 
-        return null;//ChartFactory.getTimeChartView(context, dataset, multiRenderer, "hh:mm dd-MMM");
+        return ChartFactory.getTimeChartView(context, dataset, multiRenderer, "hh:mm dd-MMM");
     }
 
     static private TimeSeries getDataset(ContentResolver cr, String kind, long person_id) {

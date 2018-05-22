@@ -5,11 +5,11 @@
     android:layout_height="match_parent">
     <!-- The main content view -->
     <FrameLayout
-        android:id="@+id/content_frame"
+        android:id="@+id/fl_adminactivity"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
     <!-- The navigation drawer -->
-    <ListView android:id="@+id/left_drawer"
+    <ListView android:id="@+id/lv_admin_drawer"
         android:layout_width="340dp"
         android:layout_height="match_parent"
         android:layout_gravity="end"

@@ -19,10 +19,9 @@
             android:gravity="top|center"
             android:textSize="28sp"
             app:databaseIdentifier="beer"
-            app:idleDrawable="@drawable/beer_half_bw"
-            app:idleSecondDrawable="@drawable/beer_full_bw"
-            app:selectedFirstDrawable="@drawable/beer_half_colored"
-            app:selectedSecondDrawable="@drawable/beer_full_colored" />
+            app:idleSecondDrawable="@drawable/food_bw"
+            app:selectedSecondDrawable="@drawable/food_colored"
+            />
 
         <!--<SeekBar-->
         <!--android:layout_width="match_parent"-->

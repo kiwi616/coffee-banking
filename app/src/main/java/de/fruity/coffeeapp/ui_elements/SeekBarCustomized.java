@@ -55,6 +55,8 @@ public class SeekBarCustomized extends AppCompatSeekBar implements SeekBar.OnSee
         mContentResolver = context.getContentResolver();
 
         // sb_candy TODO onClicklistener
+//        setMin(HelperMethods.roundAndConvert(
+//                SqlAccessAPI.getPriceMin(mContentResolver, mDatabaseIdentifier)));
         setMax(HelperMethods.roundAndConvert(
                 SqlAccessAPI.getPriceMax(mContentResolver, mDatabaseIdentifier)));
         setProgress(HelperMethods.roundAndConvert(
