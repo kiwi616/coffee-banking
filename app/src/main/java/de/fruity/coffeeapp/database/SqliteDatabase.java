@@ -38,12 +38,13 @@ import de.fruity.coffeeapp.tools.HelperMethods;
  * @author kiwi
  *
  *	TODO implement Indices
+ *  TODO add values due runtime
  */
 public class SqliteDatabase extends SQLiteOpenHelper {
 	private static final String TAG = SqliteDatabase.class.getSimpleName();
 
 	private static final String DATABASE_NAME = "CustomerDatabase.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 4;
 	// Main table
 	static final String TABLE_PEOPLE = "peoples_table";
     static final String TABLE_VALUES = "values_table";
@@ -102,7 +103,7 @@ public class SqliteDatabase extends SQLiteOpenHelper {
             + COLUMN_VE_VALUE + " double NOT NULL,"
             + COLUMN_VE_PEOPLE_ID + " integer NOT NULL, "
             + " foreign key (" + COLUMN_VE_PEOPLE_ID + ") references " + TABLE_PEOPLE
-            + " (" + COLUMN_ID + ") ON DELETE CASCADE ON UPDATE CASCADE "
+            + " (" + COLUMN_ID + ") ON DELETE CASCADE ON UPDATE CASCADE, "
             + " foreign key (" + COLUMN_VE_TYPE + ") references " + TABLE_PRODUCT
             + " (" + COLUMN_PRODUCT_ID + ") ON DELETE CASCADE ON UPDATE CASCADE "
             +  ");";
@@ -110,7 +111,7 @@ public class SqliteDatabase extends SQLiteOpenHelper {
     private static final String PRODUCT_TAB_CREATE = "create table "
             + TABLE_PRODUCT + "("
             + COLUMN_PRODUCT_ID	+ " integer primary key autoincrement, "
-            + COLUMN_PRODUCT_KIND+ " varchar NOT NULL,"
+            + COLUMN_PRODUCT_KIND + " varchar NOT NULL,"
             + COLUMN_PRODUCT_CURVALUE + " float default 0.0, "
             + COLUMN_PRODUCT_VALUE_MAX +  " float NOT NULL,"
             + COLUMN_PRODUCT_VALUE_MIN +  " float NOT NULL, "
@@ -138,7 +139,7 @@ public class SqliteDatabase extends SQLiteOpenHelper {
             + COLUMN_GU_USER_ID	+ " integer not null, "
             + COLUMN_GU_GROUP_ID	+ " integer not null, "
             + " foreign key (" + COLUMN_GU_USER_ID + ") references " + TABLE_PEOPLE
-            + " (" + COLUMN_ID + ") ON DELETE CASCADE ON UPDATE CASCADE "
+            + " (" + COLUMN_ID + ") ON DELETE CASCADE ON UPDATE CASCADE, "
             + " foreign key (" + COLUMN_GU_GROUP_ID + ") references " + TABLE_GROUP
             + " (" + COLUMN_G_GROUP_ID + ") ON DELETE CASCADE ON UPDATE CASCADE "
             +  ");";
@@ -160,6 +161,8 @@ public class SqliteDatabase extends SQLiteOpenHelper {
             + TABLE_PRODUCT + " VALUES( 3, 'beer', 0.35, 0.70, 0.35, 0.35, 0.70);";
     private static final String PRODUCT_TAB_DEFAULT_CAN = "insert into "
             + TABLE_PRODUCT + " VALUES( 4, 'can', 2.00, 3.00, 2.00, 1.0, 2.00);";
+    private static final String PRODUCT_TAB_DEFAULT_MISC = "insert into "
+            + TABLE_PRODUCT + " VALUES( 5, 'misc', 1.00, 5.00, 1.00, 1.0, 2.00);";
 
 
     public SqliteDatabase(Context context) {
@@ -190,11 +193,11 @@ public class SqliteDatabase extends SQLiteOpenHelper {
         database.execSQL(PRODUCT_TAB_DEFAULT_CANDY);
         database.execSQL(PRODUCT_TAB_DEFAULT_BEER);
         database.execSQL(PRODUCT_TAB_DEFAULT_CAN);
+        database.execSQL(PRODUCT_TAB_DEFAULT_MISC);
 	}
 
 	@Override
     public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-
 
         Log.w(TAG, "Upgrading de.fruity.tallysheet.database from version " + oldVersion + " to " + newVersion
                 + ", which will destroy all old data");
@@ -207,6 +210,7 @@ public class SqliteDatabase extends SQLiteOpenHelper {
         database.execSQL(PRODUCT_TAB_DEFAULT_CANDY);
         database.execSQL(PRODUCT_TAB_DEFAULT_BEER);
         database.execSQL(PRODUCT_TAB_DEFAULT_CAN);
+        database.execSQL(PRODUCT_TAB_DEFAULT_MISC);
 
 ////		database.execSQL("alter table " + TABLE_VALUES + " add column " + COLUMN_V_BEER + " double default 0.0");
 //

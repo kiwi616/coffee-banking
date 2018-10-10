@@ -57,33 +57,39 @@ public class ShowPersonsDetailFragment extends android.support.v4.app.DialogFrag
         View mainMeasurementView = inflater.inflate(R.layout.fragment_adminmode_peopledetail,
                 container, false);
 
-        EditText tvCoffee = (EditText) mainMeasurementView.findViewById(R.id.et_coffee);
-        EditText tvCandy = (EditText) mainMeasurementView.findViewById(R.id.et_candy);
-        EditText tvBeer = (EditText) mainMeasurementView.findViewById(R.id.et_beer);
-        EditText tvCan = (EditText) mainMeasurementView.findViewById(R.id.et_can);
+        EditText etCoffee = mainMeasurementView.findViewById(R.id.et_coffee);
+        EditText etCandy = mainMeasurementView.findViewById(R.id.et_candy);
+        EditText etBeer = mainMeasurementView.findViewById(R.id.et_beer);
+        EditText etCan = mainMeasurementView.findViewById(R.id.et_can);
+        EditText etMisc = mainMeasurementView.findViewById(R.id.et_meat);
 
-        ImageButton ib_inc_coffee = (ImageButton) mainMeasurementView.findViewById(R.id.ib_coffee_up);
-        ImageButton ib_dec_coffee = (ImageButton) mainMeasurementView.findViewById(R.id.ib_coffee_down);
-        ImageButton ib_inc_candy = (ImageButton) mainMeasurementView.findViewById(R.id.ib_candy_up);
-        ImageButton ib_dec_candy = (ImageButton) mainMeasurementView.findViewById(R.id.ib_candy_down);
-        ImageButton ib_inc_beer = (ImageButton) mainMeasurementView.findViewById(R.id.ib_beer_up);
-        ImageButton ib_dec_beer = (ImageButton) mainMeasurementView.findViewById(R.id.ib_beer_down);
-        ImageButton ib_inc_can = (ImageButton) mainMeasurementView.findViewById(R.id.ib_can_up);
-        ImageButton ib_dec_can = (ImageButton) mainMeasurementView.findViewById(R.id.ib_can_down);
+        ImageButton ib_inc_coffee = mainMeasurementView.findViewById(R.id.ib_coffee_up);
+        ImageButton ib_dec_coffee = mainMeasurementView.findViewById(R.id.ib_coffee_down);
+        ImageButton ib_inc_candy = mainMeasurementView.findViewById(R.id.ib_candy_up);
+        ImageButton ib_dec_candy = mainMeasurementView.findViewById(R.id.ib_candy_down);
+        ImageButton ib_inc_beer = mainMeasurementView.findViewById(R.id.ib_beer_up);
+        ImageButton ib_dec_beer = mainMeasurementView.findViewById(R.id.ib_beer_down);
+        ImageButton ib_inc_can = mainMeasurementView.findViewById(R.id.ib_can_up);
+        ImageButton ib_dec_can = mainMeasurementView.findViewById(R.id.ib_can_down);
+        ImageButton ib_inc_meat = mainMeasurementView.findViewById(R.id.ib_meat_up);
+        ImageButton ib_dec_meat = mainMeasurementView.findViewById(R.id.ib_meat_down);
 
-        tvCoffee.setText(String.format("Coffee Balance: %s", HelperMethods.roundTwoDecimals(
+
+        etCoffee.setText(String.format("Coffee Balance: %s", HelperMethods.roundTwoDecimals(
                 SqlAccessAPI.getCoffeeValueFromPerson(
                         getActivity().getContentResolver(), (int) getShownID()))));
-        tvCandy.setText(String.format("Candy Balance: %s", HelperMethods.roundTwoDecimals(
+        etCandy.setText(String.format("Candy Balance: %s", HelperMethods.roundTwoDecimals(
                 SqlAccessAPI.getCandyValueFromPerson(
                         getActivity().getContentResolver(), (int) getShownID()))));
-        tvBeer.setText(String.format("Beer Balance: %s", HelperMethods.roundTwoDecimals(
+        etBeer.setText(String.format("Beer Balance: %s", HelperMethods.roundTwoDecimals(
                 SqlAccessAPI.getBeerValueFromPerson(
                         getActivity().getContentResolver(), (int) getShownID()))));
-        tvCan.setText(String.format("Can Balance: %s", HelperMethods.roundTwoDecimals(
+        etCan.setText(String.format("Can Balance: %s", HelperMethods.roundTwoDecimals(
                 SqlAccessAPI.getCanValueFromPerson(
                         getActivity().getContentResolver(), (int) getShownID()))));
-
+        etMisc.setText(String.format("Meat and stuff Balance: %s", HelperMethods.roundTwoDecimals(
+                SqlAccessAPI.getMiscValueFromPerson(
+                        getActivity().getContentResolver(), (int) getShownID()))));
 
         ib_inc_coffee.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +154,22 @@ public class ShowPersonsDetailFragment extends android.support.v4.app.DialogFrag
                         (int) getShownID());
             }
         });
+        ib_inc_meat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SqlAccessAPI.bookMisc(getActivity().getContentResolver(),
+                        (int) getShownID());
+            }
+        });
+
+        ib_dec_meat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SqlAccessAPI.unbookMisc(getActivity().getContentResolver(),
+                        (int) getShownID());
+            }
+        });
+
 
 
         LinearLayout chartContainer = mainMeasurementView.findViewById(R.id.chart);

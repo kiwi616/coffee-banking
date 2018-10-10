@@ -199,6 +199,14 @@ public class SqlAccessAPI {
         insertValue(cr, people_id, valuename, false);
     }
 
+    static public void bookMisc(ContentResolver cr, int people_id) {
+        insertValue(cr, people_id, "misc", false);
+    }
+
+    static public void unbookMisc(ContentResolver cr, int people_id) {
+        insertValue(cr, people_id, "misc", true);
+    }
+
     static public void bookCoffee(ContentResolver cr, int people_id) {
         insertValue(cr, people_id, "coffee", false);
     }
@@ -257,6 +265,10 @@ public class SqlAccessAPI {
 
     static public float getCandyValueFromPerson(ContentResolver cr, long people_id) {
         return valueQueryFor(cr, (int)people_id, "candy");
+    }
+
+    static public float getMiscValueFromPerson(ContentResolver cr, long people_id) {
+        return valueQueryFor(cr, (int)people_id, "misc");
     }
 
     static public Map<Date, BigDecimal> getDateValueTupel(ContentResolver cr, long people_id, String database_id) {

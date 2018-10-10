@@ -18,21 +18,16 @@
             android:button="@android:color/transparent"
             android:gravity="top|center"
             android:textSize="28sp"
-            app:databaseIdentifier="beer"
-            app:idleSecondDrawable="@drawable/food_bw"
-            app:selectedSecondDrawable="@drawable/food_colored"
+            app:databaseIdentifier="misc"
+            app:idleDrawable="@drawable/food_bw"
+            app:selectedFirstDrawable="@drawable/food_colored"
             />
-
-        <!--<SeekBar-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"/>-->
 
         <de.fruity.coffeeapp.ui_elements.SeekBarCustomized
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible"
-            app:databaseIdentifier="beer"
+            app:databaseIdentifier="misc"
             android:layout_weight="9" />
 
     </LinearLayout>

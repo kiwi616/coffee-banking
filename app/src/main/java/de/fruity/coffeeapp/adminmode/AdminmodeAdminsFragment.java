@@ -136,8 +136,8 @@ public class AdminmodeAdminsFragment extends Fragment implements
         });
 
         int[] arr_ids = new int[]{R.id.price_changer_1, R.id.price_changer_2,
-                R.id.price_changer_3, R.id.price_changer_4};
-        String[] arr = new String[]{"coffee", "candy", "beer", "can"};
+                R.id.price_changer_3, R.id.price_changer_4, R.id.price_changer_5};
+        String[] arr = new String[]{"coffee", "candy", "beer", "can", "misc"};
 
         for (i = 0; i < arr_ids.length; i++) {
             tv = (TextView) rootView.

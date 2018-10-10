@@ -200,12 +200,14 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
 
         super.onDraw(canvas);
 
-        drawable.setBounds(
-                startx + OFFSET,
-                starty + OFFSET,
-                endx - OFFSET,
-                endy - OFFSET);
-        drawable.draw(canvas);
+        if (drawable != null) {
+            drawable.setBounds(
+                    startx + OFFSET,
+                    starty + OFFSET,
+                    endx - OFFSET,
+                    endy - OFFSET);
+            drawable.draw(canvas);
+        }
 
         if (mCurrentValue != 0.0f)
             setText(String.format("%s€", HelperMethods.roundTwoDecimals(mCurrentValue)));
