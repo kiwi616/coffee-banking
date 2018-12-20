@@ -293,6 +293,7 @@ public class SqliteDatabase extends SQLiteOpenHelper {
     public static int importCsv(Uri fileuri, Context context) {
         ContentResolver cr = context.getContentResolver();
         boolean valid = false;
+        boolean old_db = false;
         List<String[]> userlist_with_values = new ArrayList<>();
 
         try {
@@ -314,8 +315,13 @@ public class SqliteDatabase extends SQLiteOpenHelper {
             csvReader.readNext();
             csvReader.readNext();
 
-            if (Integer.parseInt(secondline[0]) == DATABASE_VERSION)
+            try {
+                if (Integer.parseInt(secondline[0]) == DATABASE_VERSION)
+                    valid = true; //break could be better
+            } catch (NumberFormatException nfe) {
+                old_db = true;
                 valid = true; //break could be better
+            }
 
             while ((line = csvReader.readNext()) != null) {
                 userlist_with_values.add(line);
@@ -334,20 +340,23 @@ public class SqliteDatabase extends SQLiteOpenHelper {
 
                 for (String[] user : userlist_with_values) {
                     int pid = SqlAccessAPI.createUser(cr,
-                            user[0], Integer.parseInt(user[1]), Integer.parseInt(user[2]));
+                            user[0], old_db ? 0 : Integer.parseInt(user[1]),
+                            old_db ? Integer.parseInt(user[1]) : Integer.parseInt(user[2]));
 
-                    while (SqlAccessAPI.getValueFromPersonById(cr, pid, "coffee") <
-                            NumberFormat.getNumberInstance(Locale.getDefault()).parse(user[3]).floatValue())
-                        SqlAccessAPI.bookValueByName(cr, "coffee", pid);
-                    while (SqlAccessAPI.getValueFromPersonById(cr, pid, "candy") <
-                            NumberFormat.getNumberInstance(Locale.getDefault()).parse(user[4]).floatValue())
-                        SqlAccessAPI.bookValueByName(cr, "candy", pid);
-                    while (SqlAccessAPI.getValueFromPersonById(cr, pid, "beer") <
-                            NumberFormat.getNumberInstance(Locale.getDefault()).parse(user[5]).floatValue())
-                        SqlAccessAPI.bookValueByName(cr, "beer", pid);
-                    while (SqlAccessAPI.getValueFromPersonById(cr, pid, "can") <
-                            NumberFormat.getNumberInstance(Locale.getDefault()).parse(user[6]).floatValue())
-                        SqlAccessAPI.bookValueByName(cr, "can", pid);
+                    if ( !old_db) {
+                        while (SqlAccessAPI.getValueFromPersonById(cr, pid, "coffee") <
+                                NumberFormat.getNumberInstance(Locale.getDefault()).parse(user[3]).floatValue())
+                            SqlAccessAPI.bookValueByName(cr, "coffee", pid);
+                        while (SqlAccessAPI.getValueFromPersonById(cr, pid, "candy") <
+                                NumberFormat.getNumberInstance(Locale.getDefault()).parse(user[4]).floatValue())
+                            SqlAccessAPI.bookValueByName(cr, "candy", pid);
+                        while (SqlAccessAPI.getValueFromPersonById(cr, pid, "beer") <
+                                NumberFormat.getNumberInstance(Locale.getDefault()).parse(user[5]).floatValue())
+                            SqlAccessAPI.bookValueByName(cr, "beer", pid);
+                        while (SqlAccessAPI.getValueFromPersonById(cr, pid, "can") <
+                                NumberFormat.getNumberInstance(Locale.getDefault()).parse(user[6]).floatValue())
+                            SqlAccessAPI.bookValueByName(cr, "can", pid);
+                    }
                 }
             } catch (NumberFormatException | SQLiteConstraintException | ParseException ex) {
                 ex.printStackTrace();
