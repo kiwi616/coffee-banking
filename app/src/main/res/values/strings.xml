@@ -17,7 +17,8 @@
     <string name="rename">Rename</string>
 
     <string name="groupmode">Group mode</string>
-    <string name="create_group">create group</string>
+    <string name="create_group">Create group</string>
+    <string name="create_user">Create user</string>
 
     <string name="comma_new_coffee_billance">, your new coffee billance is</string> 
     <string name="comma_new_candy_billance">, your new candy billance is</string>

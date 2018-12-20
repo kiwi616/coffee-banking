@@ -30,6 +30,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import java.io.IOException;
 import java.util.List;
 
 import de.fruity.coffeeapp.adminmode.AdminmodeActivity;
@@ -94,7 +95,13 @@ public class MainActivity extends Activity {
         fab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogWaitForAdminRfid();
+                if (SqlAccessAPI.isUserDbEmpty(getContentResolver())){
+                    Dialog d = HelperMethods.createNewUser(MainActivity.this, 4711, null);
+                    d.show();
+                }
+                else {
+                    dialogWaitForAdminRfid();
+                }
             }
         });
 
@@ -178,8 +185,7 @@ public class MainActivity extends Activity {
             @Override
             public boolean onKey(View arg0, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
-                    btnSave.callOnClick();
-                    return true;
+                    return btnSave.callOnClick();
                 }
                 return false;
             }
@@ -233,9 +239,8 @@ public class MainActivity extends Activity {
 
                 if (rfidCursor != null && rfidCursor.moveToFirst()) {
                     String s = rfidCursor.getString(rfidCursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_NAME));
-                    final int rfid = rfidCursor.getInt(rfidCursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_RFID));
 
-                    showIsThisYourNameDialog(s, rfid);
+                    showIsThisYourNameDialog(s, persno);
 
                     rfidCursor.close();
                 } else {
@@ -318,7 +323,7 @@ public class MainActivity extends Activity {
         dialog.show();
     }
 
-    private void showIsThisYourNameDialog(String name, final int rfid) {
+    private void showIsThisYourNameDialog(String name, final int persno) {
 
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setTitle(R.string.is_correct_name);
@@ -326,7 +331,7 @@ public class MainActivity extends Activity {
         adb.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent outgoing = new Intent("android.intent.action.MAIN");
-                outgoing.putExtra(ReaderService.TID, rfid);
+                outgoing.putExtra(ReaderService.PERSONAL_ID, persno);
                 sendBroadcast(outgoing);
             }
         });

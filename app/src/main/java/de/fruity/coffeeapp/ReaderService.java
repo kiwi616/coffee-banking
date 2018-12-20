@@ -26,6 +26,7 @@ public class ReaderService extends Service {
 	private static final String TAG = ReaderService.class.getSimpleName();
 
 	public static final String TID = "tag_id";
+	public static final String PERSONAL_ID = "personal_no";
 	static private Features mFeatures = new Features();
 
 	static private int mSlotNum;

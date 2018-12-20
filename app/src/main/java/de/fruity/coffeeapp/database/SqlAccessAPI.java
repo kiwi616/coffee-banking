@@ -371,7 +371,7 @@ public class SqlAccessAPI {
         return pk_id;
     }
 
-    private static boolean isUserDbEmpty(ContentResolver cr) {
+    public static boolean isUserDbEmpty(ContentResolver cr) {
         int columnSum = 0;
 
         Cursor cursor = cr.query(SqlDatabaseContentProvider.CONTENT_URI, null, null, null, null);

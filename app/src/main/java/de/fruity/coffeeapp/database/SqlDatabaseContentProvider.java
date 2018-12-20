@@ -224,9 +224,9 @@ public class SqlDatabaseContentProvider extends ContentProvider {
 
         switch (uriType) {
             case TablePeople:
-                Log.i(TAG, "insert new person " + values.toString());
                 values.put(SqliteDatabase.COLUMN_POSITION, getNextPostion(
                         sqlDB, SqliteDatabase.TABLE_PEOPLE, SqliteDatabase.COLUMN_POSITION));
+                Log.i(TAG, "insert new person " + values.toString());
                 id = sqlDB.insertOrThrow(SqliteDatabase.TABLE_PEOPLE, null, values);
                 uri = Uri.parse(CONTENT_URI + "/" + id);
                 break;

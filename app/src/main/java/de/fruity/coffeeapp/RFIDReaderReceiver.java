@@ -32,31 +32,24 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         int position = mRadiogroupMerger.getCheckedId();
         int rfidNumber = intent.getIntExtra(ReaderService.TID, 0);
-        int pk_id = SqlAccessAPI.getPeopleIdByRFID(context.getContentResolver(), rfidNumber);
+        int pk_id;
+        if (rfidNumber != 0) {
+            pk_id = SqlAccessAPI.getPeopleIdByRFID(context.getContentResolver(), rfidNumber);
+        } else {
+            int persno = intent.getIntExtra(ReaderService.PERSONAL_ID, 0);
+            pk_id = SqlAccessAPI.getPeopleIdByPersonalnumber(context.getContentResolver(), persno);
+        }
 
-//
-//        if (position == R.id.admin) {
-//            try {
-//                if (SqlAccessAPI.isAdminByRFID(context.getContentResolver(), rfidNumber)
-//                        || rfidNumber == AdminmodeActivity.SECRET_ADMIN_CODE) {
-//                    Intent startAdminMode = new Intent(context, AdminmodeActivity.class);
-//                    context.startActivity(startAdminMode);
-//                }
-//            } catch (Exception ignored) {
-//            }
-//        } else {
+        try {
+            if (position != R.id.balance)
+                mRadiogroupMerger.bookValueOnCustomer(pk_id);
+            else
+                showBalance(context, rfidNumber);
 
-            try {
-                if (position != R.id.balance)
-                    mRadiogroupMerger.bookValueOnCustomer(pk_id);
-                else
-                    showBalance(context, rfidNumber);
-
-            } catch (IllegalArgumentException | SQLiteConstraintException ia_ex) {
-                Dialog d = HelperMethods.createNewUser(context, null, rfidNumber);
-                d.show();
-            }
-//        }
+        } catch (IllegalArgumentException | SQLiteConstraintException ia_ex) {
+            Dialog d = HelperMethods.createNewUser(context, null, rfidNumber);
+            d.show();
+        }
 
 
         Log.i(TAG, " id received " + rfidNumber);
@@ -78,7 +71,7 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogWaitForAdminRfid();
+                // add edit stuff
             }
         });
 

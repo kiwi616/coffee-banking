@@ -89,7 +89,7 @@ public class SqliteDatabase extends SQLiteOpenHelper {
 			+ TABLE_PEOPLE + "("
 			+ COLUMN_ID	+ " integer primary key autoincrement, " 
 			+ COLUMN_NAME + " text not null, "
-            + COLUMN_RFID + " integer unique not null, "
+            + COLUMN_RFID + " integer unique, "
             + COLUMN_PERSONAL_NUMBER + " integer unique not null, "
 			+ COLUMN_DATE + " datetime default current_timestamp, "
 			+ COLUMN_POSITION + " integer not null"
