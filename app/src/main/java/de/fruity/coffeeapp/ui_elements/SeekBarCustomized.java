@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.ContentObserver;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.widget.AppCompatSeekBar;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
@@ -55,8 +56,10 @@ public class SeekBarCustomized extends AppCompatSeekBar implements SeekBar.OnSee
         mContentResolver = context.getContentResolver();
 
         // sb_candy TODO onClicklistener
-//        setMin(HelperMethods.roundAndConvert(
-//                SqlAccessAPI.getPriceMin(mContentResolver, mDatabaseIdentifier)));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            setMin(HelperMethods.roundAndConvert(
+                    SqlAccessAPI.getPriceMin(mContentResolver, mDatabaseIdentifier)));
+        }
         setMax(HelperMethods.roundAndConvert(
                 SqlAccessAPI.getPriceMax(mContentResolver, mDatabaseIdentifier)));
         setProgress(HelperMethods.roundAndConvert(

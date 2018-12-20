@@ -94,9 +94,7 @@ public class MainActivity extends Activity {
         fab.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO force authentificate
-                Intent startAdminMode = new Intent(getApplication(), AdminmodeActivity.class);
-                startActivity(startAdminMode);
+                dialogWaitForAdminRfid();
             }
         });
 
@@ -135,6 +133,71 @@ public class MainActivity extends Activity {
             groupMode(position + 1);
             mDrawerLayout.closeDrawer(mDrawerList);
         }
+    }
+
+
+    private void dialogWaitForAdminRfid() {
+        // custom dialog
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_enter_personalnumber);
+        dialog.setTitle(R.string.enter_personalnumber);
+
+        // set the custom dialog components - text, image and button
+
+        Button cancelButton = dialog.findViewById(R.id.personalnumber_dialog_btn_cancel);
+        final Button btnSave = dialog.findViewById(R.id.personalnumber_dialog_btn_save);
+
+        final EditText et_personalnumber = dialog.findViewById(R.id.personalnumber_dialog_et);
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Integer persno;
+
+                if (!HelperMethods.isPersonalNumberValid(et_personalnumber.getText().toString()))
+                {
+                    customToast(getText(R.string.no_personalnumber_number).toString(), 800);
+                    return;
+                }
+
+                persno = Integer.parseInt(et_personalnumber.getText().toString());
+
+                if (SqlAccessAPI.isAdminByPersonalnumber(getContentResolver(), persno)) {
+
+                    dialog.dismiss();
+                    Intent startAdminMode = new Intent(getApplication(), AdminmodeActivity.class);
+                    startActivity(startAdminMode);
+                }
+                else
+                {
+                    customToast(getText(R.string.enter_admin_code).toString(), 800);
+                }
+            }
+        });
+
+        et_personalnumber.setOnKeyListener(new OnKeyListener() {
+            @Override
+            public boolean onKey(View arg0, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_UP) {
+                    btnSave.callOnClick();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setOnCancelListener(new OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
     }
 
     private void dialogEnterPersonal() {

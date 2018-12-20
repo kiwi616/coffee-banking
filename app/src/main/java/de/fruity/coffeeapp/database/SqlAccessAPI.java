@@ -387,19 +387,18 @@ public class SqlAccessAPI {
 
     public static int createUser(ContentResolver cr, String username, int rfid, int personalnumber)
     {
-        boolean isEmpty;
         int ret;
         ContentValues values = new ContentValues();
 
         values.put(SqliteDatabase.COLUMN_NAME, username);
-        values.put(SqliteDatabase.COLUMN_RFID, rfid);
+        if (rfid != 0) {
+            values.put(SqliteDatabase.COLUMN_RFID, rfid);
+        }
         values.put(SqliteDatabase.COLUMN_PERSONAL_NUMBER, personalnumber);
-
-        isEmpty = isUserDbEmpty(cr);
 
         Uri uri = cr.insert(SqlDatabaseContentProvider.CONTENT_URI, values);
 
-        if ( isEmpty )
+        if ( isUserDbEmpty(cr) )
             setAdmin(cr, rfid);
 
         assert uri != null;
@@ -460,7 +459,6 @@ public class SqlAccessAPI {
         }
 
         return ret;
-
     }
 
 

@@ -28,7 +28,6 @@
             android:weightSum="1">
 
             <EditText
-                android:autoText="false"
                 android:ems="10"
                 android:id="@+id/et_coffee"
                 android:inputType="number"
@@ -64,7 +63,6 @@
             android:weightSum="1">
 
             <EditText
-                android:autoText="false"
                 android:ems="10"
                 android:id="@+id/et_candy"
                 android:inputType="number"
@@ -99,7 +97,6 @@
             android:weightSum="1">
 
             <EditText
-                android:autoText="false"
                 android:ems="10"
                 android:id="@+id/et_beer"
                 android:inputType="number"

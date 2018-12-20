@@ -55,7 +55,7 @@ public class AdminmodeActivity extends FragmentActivity {
     private void createTestUser()
     {
         for (int i = 0; i < 10; i++)
-            SqlAccessAPI.createUser(getContentResolver(), "user" + Integer.valueOf(i).toString(), 927139142 + i, 20 + i);
+            SqlAccessAPI.createUser(getContentResolver(), "user" + Integer.valueOf(i).toString(), 927139142 + i, 200 + i);
     }
 
 

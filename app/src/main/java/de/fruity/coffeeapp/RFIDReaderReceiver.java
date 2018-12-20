@@ -6,8 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import org.achartengine.GraphicalView;
 
 import de.fruity.coffeeapp.adminmode.AdminmodeActivity;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
@@ -65,19 +70,17 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
         dialog.setContentView(R.layout.dialog_billance);
         dialog.setTitle(SqlAccessAPI.getName(context.getContentResolver(), pk_id));
 
-        TextView tv_coffee = dialog.findViewById(R.id.value_coffee_billance_dialog);
-        TextView tv_candy = dialog.findViewById(R.id.value_candy_billance_dialog);
-        TextView tv_metcan = dialog.findViewById(R.id.value_metcan_billance_dialog);
-        TextView tv_beer = dialog.findViewById(R.id.value_beer_billance_dialog);
+        LinearLayout chartContainer = dialog.findViewById(R.id.chart);
+        GraphicalView chart = HelperMethods.createLineChart(context, pk_id);
+        chartContainer.addView(chart);
 
-        tv_coffee.setText(String.format("%s€", HelperMethods.roundTwoDecimals(
-                SqlAccessAPI.getCoffeeValueFromPerson(context.getContentResolver(), pk_id))));
-        tv_candy.setText(String.format("%s€", HelperMethods.roundTwoDecimals(
-                SqlAccessAPI.getCandyValueFromPerson(context.getContentResolver(), pk_id))));
-        tv_metcan.setText(String.format("%s€", HelperMethods.roundTwoDecimals(
-                SqlAccessAPI.getCanValueFromPerson(context.getContentResolver(), pk_id))));
-        tv_beer.setText(String.format("%s€", HelperMethods.roundTwoDecimals(
-                SqlAccessAPI.getBeerValueFromPerson(context.getContentResolver(), pk_id))));
+        FloatingActionButton fab = dialog.findViewById(R.id.fab_config_user);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogWaitForAdminRfid();
+            }
+        });
 
         final Handler handler = new Handler();
 
@@ -87,7 +90,7 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
                 dialog.dismiss();
             }
         };
-        handler.postDelayed(runnable, 10000);
+        handler.postDelayed(runnable, 15000);
         dialog.show();
 
     }

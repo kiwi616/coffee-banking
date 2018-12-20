@@ -81,12 +81,14 @@ public class HelperMethods {
         TimeSeries ts_candy = getDataset(context.getContentResolver(), "candy", person_id);
         TimeSeries ts_beer = getDataset(context.getContentResolver(), "beer", person_id);
         TimeSeries ts_can = getDataset(context.getContentResolver(), "can", person_id);
+        TimeSeries ts_misc = getDataset(context.getContentResolver(), "misc", person_id);
 
         // Adding Visits Series to the dataset
         dataset.addSeries(ts_coffee);
         dataset.addSeries(ts_candy);
         dataset.addSeries(ts_beer);
         dataset.addSeries(ts_can);
+        dataset.addSeries(ts_misc);
 
         double cur_x_max = dataset.getSeriesAt(0).getMaxX();
         double cur_x_min = dataset.getSeriesAt(0).getMinX();
