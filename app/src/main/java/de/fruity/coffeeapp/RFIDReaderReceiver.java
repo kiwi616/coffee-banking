@@ -44,7 +44,7 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
             if (position != R.id.balance)
                 mRadiogroupMerger.bookValueOnCustomer(pk_id);
             else
-                showBalance(context, rfidNumber);
+                showBalance(context, pk_id);
 
         } catch (IllegalArgumentException | SQLiteConstraintException ia_ex) {
             Dialog d = HelperMethods.createNewUser(context, null, rfidNumber);
@@ -56,9 +56,7 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
 
     }
 
-    private void showBalance(Context context, int tid) {
-        long pk_id = SqlAccessAPI.getPeopleIdByRFID(context.getContentResolver(), tid);
-
+    private void showBalance(Context context, int pk_id) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_billance);
         dialog.setTitle(SqlAccessAPI.getName(context.getContentResolver(), pk_id));

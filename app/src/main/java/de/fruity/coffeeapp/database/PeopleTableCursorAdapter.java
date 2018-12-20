@@ -32,11 +32,11 @@ public class PeopleTableCursorAdapter extends CursorAdapter{
 
 		//int tmp = cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_TYPE);
 		String type = cursor.getString(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_NAME));
-		int rfid = cursor.getInt(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_RFID));
+		int people_id = cursor.getInt(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_ID));
 
 		tvName.setText(type);
 
-		if (SqlAccessAPI.isAdminByRFID(context.getContentResolver(), rfid))
+		if (SqlAccessAPI.isAdminByID(context.getContentResolver(), people_id))
 			tvName.append("  (admin)");
 
 	}

@@ -322,21 +322,6 @@ public class SqlAccessAPI {
             return null;
     }
 
-    static public int getRfid(ContentResolver cr, long people_id)
-    {
-        Long id = people_id;
-        Cursor cursor = cr.query(SqlDatabaseContentProvider.CONTENT_URI, null,
-                SqliteDatabase.COLUMN_ID + " =  ?",
-                new String[] {id.toString()}, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            int ret = cursor.getInt(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_RFID));
-            cursor.close();
-            return ret;
-        }
-        else
-            return -1;
-    }
-
     static public int getPeopleIdByRFID(ContentResolver cr, int rfid)
     {
         int pk_id = -1;
@@ -385,10 +370,11 @@ public class SqlAccessAPI {
     }
 
 
-    public static int createUser(ContentResolver cr, String username, int rfid, int personalnumber)
-    {
+    public static int createUser(ContentResolver cr, String username, int rfid, int personalnumber) {
         int ret;
         ContentValues values = new ContentValues();
+        boolean make_admin = isUserDbEmpty(cr);
+
 
         values.put(SqliteDatabase.COLUMN_NAME, username);
         if (rfid != 0) {
@@ -398,11 +384,10 @@ public class SqlAccessAPI {
 
         Uri uri = cr.insert(SqlDatabaseContentProvider.CONTENT_URI, values);
 
-        if ( isUserDbEmpty(cr) )
-            setAdmin(cr, rfid);
-
         assert uri != null;
         ret = Integer.parseInt(uri.getLastPathSegment());
+        if (make_admin)
+            setAdmin(cr, ret);
         return ret;
     }
 
@@ -462,17 +447,13 @@ public class SqlAccessAPI {
     }
 
 
-    public static boolean isAdminByRFID(ContentResolver cr, int rfid) {
+    public static boolean isAdminByID(ContentResolver cr, int people_id) {
         boolean ret = false;
-        final int admin_arr[] = {927139142, 1788087709}; //const true
-        Integer people_id = getPeopleIdByRFID(cr, rfid);
-
-        for (int id : admin_arr)
-            if (rfid == id) return true;
+        Integer p = people_id;
 
         Cursor admin_cursor = cr.query(SqlDatabaseContentProvider.ADMIN_URI, null,
                 SqliteDatabase.COLUMN_ADMINS_USER_ID + "= ?",
-                new String[]{people_id.toString()}, null);
+                new String[]{p.toString()}, null);
 
         if (admin_cursor != null) {
             ret = admin_cursor.moveToFirst();
@@ -483,17 +464,17 @@ public class SqlAccessAPI {
 
     }
 
-    public static void setAdmin(ContentResolver cr, int rfid) {
+    public static void setAdmin(ContentResolver cr, int people_id) {
         ContentValues cv = new ContentValues();
 
-        cv.put(SqliteDatabase.COLUMN_ADMINS_USER_ID, getPeopleIdByRFID(cr, rfid));
+        cv.put(SqliteDatabase.COLUMN_ADMINS_USER_ID, people_id);
         cr.insert(SqlDatabaseContentProvider.ADMIN_URI, cv);
     }
 
-    public static void deleteAdmin(ContentResolver cr, int rfid) {
-        Integer people_id = getPeopleIdByRFID(cr, rfid);
+    public static void deleteAdmin(ContentResolver cr, int people_id) {
+        Integer p = people_id;
 
         cr.delete(SqlDatabaseContentProvider.ADMIN_URI, SqliteDatabase.COLUMN_ADMINS_USER_ID + " = ?",
-                new String[] {people_id.toString()});
+                new String[] {p.toString()});
     }
 }

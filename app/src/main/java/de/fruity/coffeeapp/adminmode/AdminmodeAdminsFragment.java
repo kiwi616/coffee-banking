@@ -120,16 +120,16 @@ public class AdminmodeAdminsFragment extends Fragment implements
         NumberPicker et_stepsize;
         NumberPicker et_defaultvalue;
 
-        mListView = (ListView) rootView.findViewById(R.id.lv_admins_fragment);
+        mListView = rootView.findViewById(R.id.lv_admins_fragment);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                int rfid = SqlAccessAPI.getRfid(getActivity().getContentResolver(), mAdminCursorAdapter.getItemId(position));
+                int personal_id = (int) mAdminCursorAdapter.getItemId(position);
 
-                if (SqlAccessAPI.isAdminByRFID(getActivity().getContentResolver(), rfid))
-                    SqlAccessAPI.deleteAdmin(getActivity().getContentResolver(), rfid);
+                if (SqlAccessAPI.isAdminByID(getActivity().getContentResolver(), personal_id))
+                    SqlAccessAPI.deleteAdmin(getActivity().getContentResolver(), personal_id);
                 else
-                    SqlAccessAPI.setAdmin(getActivity().getContentResolver(), rfid);
+                    SqlAccessAPI.setAdmin(getActivity().getContentResolver(), personal_id);
 
                 mAdminCursorAdapter.notifyDataSetChanged();
             }
@@ -140,23 +140,23 @@ public class AdminmodeAdminsFragment extends Fragment implements
         String[] arr = new String[]{"coffee", "candy", "beer", "can", "misc"};
 
         for (i = 0; i < arr_ids.length; i++) {
-            tv = (TextView) rootView.
+            tv = rootView.
                     findViewById(arr_ids[i]).findViewById(R.id.tv_kind);
             tv.setText(arr[i]);
 
-            et_min = (NumberPicker) rootView.
+            et_min = rootView.
                     findViewById(arr_ids[i]).findViewById(R.id.np_min);
             configureNumberpicker(et_min, arr[i], DATABASE_PRICE_FIELDS.MIN);
 
-            et_max = (NumberPicker) rootView.
+            et_max = rootView.
                     findViewById(arr_ids[i]).findViewById(R.id.np_max);
             configureNumberpicker(et_max, arr[i], DATABASE_PRICE_FIELDS.MAX);
 
-            et_stepsize = (NumberPicker) rootView.
+            et_stepsize = rootView.
                     findViewById(arr_ids[i]).findViewById(R.id.np_stepsize);
             configureNumberpicker(et_stepsize, arr[i], DATABASE_PRICE_FIELDS.STEPSIZE);
 
-            et_defaultvalue = (NumberPicker) rootView.
+            et_defaultvalue = rootView.
                     findViewById(arr_ids[i]).findViewById(R.id.np_default);
             configureNumberpicker(et_defaultvalue, arr[i], DATABASE_PRICE_FIELDS.DEFAULTVALUE);
         }
@@ -183,8 +183,7 @@ public class AdminmodeAdminsFragment extends Fragment implements
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         if (D)
             Log.i(TAG, "onCreateLoader");
-        String[] projection = {SqliteDatabase.COLUMN_ID, SqliteDatabase.COLUMN_RFID,
-                SqliteDatabase.COLUMN_NAME};
+        String[] projection = {SqliteDatabase.COLUMN_ID, SqliteDatabase.COLUMN_NAME};
         return new CursorLoader(getActivity(),
                 SqlDatabaseContentProvider.CONTENT_URI, projection, null, null,
                 SqliteDatabase.COLUMN_POSITION + " ASC");

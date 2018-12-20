@@ -188,8 +188,7 @@ public class AdminmodePeopleFragment extends ListFragment implements
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         if (D)
             Log.i(TAG, "onCreateLoader");
-        String[] projection = {SqliteDatabase.COLUMN_ID, SqliteDatabase.COLUMN_RFID,
-                SqliteDatabase.COLUMN_NAME};
+        String[] projection = {SqliteDatabase.COLUMN_ID, SqliteDatabase.COLUMN_NAME};
         return new CursorLoader(getActivity(),
                 SqlDatabaseContentProvider.CONTENT_URI, projection, null, null,
                 SqliteDatabase.COLUMN_POSITION + " ASC");

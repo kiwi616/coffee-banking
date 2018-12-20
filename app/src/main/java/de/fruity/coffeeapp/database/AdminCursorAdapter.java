@@ -29,16 +29,15 @@ public class AdminCursorAdapter extends CursorAdapter{
 	
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
-        TextView tv = (TextView) view.findViewById(R.id.tv_listobject_adminsfragment);
-		Switch switchAdmin = (Switch) view.findViewById(R.id.sw_listobject_adminsfragment);
+        TextView tv = view.findViewById(R.id.tv_listobject_adminsfragment);
+		Switch switchAdmin = view.findViewById(R.id.sw_listobject_adminsfragment);
         ContentResolver mContentResolver = context.getContentResolver();
-		//int tmp = cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_TYPE);
 		String name = cursor.getString(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_NAME));
-		final int rfid = cursor.getInt(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_RFID));
+		final int id = cursor.getInt(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_ID));
 
         tv.setText(name);
 
-		if (SqlAccessAPI.isAdminByRFID(mContentResolver, rfid)) {
+		if (SqlAccessAPI.isAdminByID(mContentResolver, id)) {
 			switchAdmin.setChecked(true);
 		} else {
 			switchAdmin.setChecked(false);
