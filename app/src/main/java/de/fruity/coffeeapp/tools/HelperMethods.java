@@ -75,6 +75,7 @@ public class HelperMethods {
         multiRenderer.setMargins(new int[]{25, 50, 25, 25});
         multiRenderer.setShowLabels(true);
         multiRenderer.setShowLegend(true);
+        multiRenderer.setLegendTextSize(50);
         multiRenderer.setFitLegend(true);
 
         TimeSeries ts_coffee = getDataset(context.getContentResolver(), "coffee", person_id);
@@ -101,7 +102,7 @@ public class HelperMethods {
             singleRenderer.setPointStyle(PointStyle.CIRCLE);
             singleRenderer.setFillPoints(true);
             singleRenderer.setLineWidth(3);
-            singleRenderer.setChartValuesTextSize(20);
+            singleRenderer.setChartValuesTextSize(50);
             singleRenderer.setDisplayChartValues(true);
             singleRenderer.setAnnotationsColor(Color.YELLOW);
             singleRenderer.setAnnotationsTextAlign(Paint.Align.CENTER);

@@ -22,7 +22,8 @@
     <string name="comma_new_candy_billance">, ihr Candykontostand ist</string>
     <string name="comma_new_metcan_billance">, ihr Dosenkontostand ist</string>
     <string name="comma_new_beer_billance">, ihr Bierkontostand ist</string>
-    
+    <string name="comma_new_misc_billance">, ihr Fleisch/Fisch Kontostand ist</string>
+
     <string name="personalnumber_not_found">Die angegebene Nummer ist nicht im System registriert. Bitte legen Sie ihren Zeiterfassungschip auf den Scanner.</string>
     <string name="no_personalnumber_number">Keine gültige Personalnummer</string>
     <string name="personalnumber_in_use">Diese Personalnummer ist bereits vergeben</string>
@@ -36,6 +37,7 @@
     <string name="export_database">Datenbank sichern und loeschen</string>
     <string name="change_coffee_price">Kaffeepreis ändern</string>
     <string name="create_group">Gruppe erstellen</string>
+    <string name="create_user">Neuer Benutzer</string>
     
     <string name="enter_personalnumber">Geben sie Ihre Personalnummer ein</string>
     
@@ -69,6 +71,6 @@
     <string name="reenter_new_admin_code">Wiederholung Admin Zugangscode</string>
     <string name="two_field_dont_match">Der inhalt der beiden Felder stimmt nicht überein.</string>
     <string name="admincode_set_to_default">Admincode wurde auf default 4711 gesetzt</string>
-    <string name="enter_admin_code">Geben sie einen Admincode ein</string>
+    <string name="enter_admin_code">Personalnummer ist kein Administrator</string>
 </resources>
 

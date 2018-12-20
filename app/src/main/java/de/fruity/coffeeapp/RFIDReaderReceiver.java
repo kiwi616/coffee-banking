@@ -69,7 +69,7 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // add edit stuff
+                // TODO add edit stuff
             }
         });
 
