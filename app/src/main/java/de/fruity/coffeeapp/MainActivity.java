@@ -30,7 +30,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import java.io.IOException;
 import java.util.List;
 
 import de.fruity.coffeeapp.adminmode.AdminmodeActivity;
@@ -53,7 +52,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        float default_coffe;
+        float default_coffee;
         ArrayAdapter<String> dla;
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -79,7 +78,7 @@ public class MainActivity extends Activity {
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        default_coffe = SqlAccessAPI.getPriceMin(getContentResolver(), "coffee");
+        default_coffee = SqlAccessAPI.getPriceMin(getContentResolver(), "coffee");
 
         RadiogroupMerger mRadiogroupMerger = new RadiogroupMerger();
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.candy));
@@ -89,7 +88,7 @@ public class MainActivity extends Activity {
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.beer));
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.meat));
 
-        mRadiogroupMerger.setDefaults(getContentResolver(), R.id.coffee, default_coffe, "coffee");
+        mRadiogroupMerger.setDefaults(getContentResolver(), R.id.coffee, default_coffee, "coffee");
 
         FloatingActionButton fab = findViewById(R.id.fab_admin);
         fab.setOnClickListener(new OnClickListener() {

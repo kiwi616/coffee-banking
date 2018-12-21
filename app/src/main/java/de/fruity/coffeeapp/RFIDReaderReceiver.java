@@ -56,7 +56,7 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
 
     }
 
-    private void showBalance(Context context, int pk_id) {
+    private void showBalance(final Context context, final int pk_id) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_billance);
         dialog.setTitle(SqlAccessAPI.getName(context.getContentResolver(), pk_id));
@@ -69,7 +69,9 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO add edit stuff
+                Intent startAdminMode = new Intent(context, UserConfigActivity.class);
+                startAdminMode.putExtra(UserConfigActivity.PK_USER, pk_id);
+                context.startActivity(startAdminMode);
             }
         });
 

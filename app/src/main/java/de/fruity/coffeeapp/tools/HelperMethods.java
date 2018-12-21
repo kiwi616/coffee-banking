@@ -158,7 +158,7 @@ public class HelperMethods {
 
         float value = SqlAccessAPI.getValueFromPersonById(context.getContentResolver(), pk, database_ident);
         String packname = context.getPackageName();
-        int resourceId= context.getResources().getIdentifier(gettext, "string", packname);
+        int resourceId = context.getResources().getIdentifier(gettext, "string", packname);
         sb.append(context.getText(resourceId));
 
         sb.append(' ');
@@ -221,12 +221,12 @@ public class HelperMethods {
                     SqlAccessAPI.createUser(context.getContentResolver(), et.getText().toString(), rfid_intern, personalnumber);
                 } catch (SQLiteConstraintException ex) {
                     new CustomToast(context,
-                            context.getText(R.string.personalnumber_in_use).toString(), Toast.LENGTH_LONG);
+                            context.getText(R.string.personalnumber_in_use).toString(), 2000);
                     return;
                 }
 
                 new CustomToast(context,
-                        context.getText(R.string.user_created).toString(), Toast.LENGTH_LONG);
+                        context.getText(R.string.user_created).toString(), 2000);
                 dialog.dismiss();
             }
         });

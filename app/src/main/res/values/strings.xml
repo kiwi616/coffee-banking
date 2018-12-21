@@ -90,6 +90,10 @@
     <string name="two_field_dont_match">Fields don\'t match please validate your input</string>
     <string name="admincode_set_to_default">Admin code set to default 4711</string>
     <string name="enter_admin_code">The number is no administrator</string>
+    <string name="user_personal_number">Personal number</string>
+    <string name="user_rfid">RFID</string>
+    <string name="user_name">Username</string>
+    <string name="user_creation_date">Date of creation</string>
 
 </resources>
 

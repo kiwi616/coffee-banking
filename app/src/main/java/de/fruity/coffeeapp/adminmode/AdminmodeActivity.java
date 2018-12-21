@@ -95,15 +95,14 @@ public class AdminmodeActivity extends FragmentActivity {
                         }
                         break;
                     case R.string.backup_database:
-                        createTestUser();
-//                        try {
-//
-//                            String backupname = BackupManager.BackupDatabase(getContentResolver());
-//                            Toast.makeText(getApplicationContext(), "Backup to file " + backupname, Toast.LENGTH_LONG).show();
-//                        } catch (IllegalArgumentException e) {
-//                            e.printStackTrace();
-//                            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
-//                        }
+                        try {
+
+                            String backupname = BackupManager.BackupDatabase(getContentResolver());
+                            Toast.makeText(getApplicationContext(), "Backup to file " + backupname, Toast.LENGTH_LONG).show();
+                        } catch (IllegalArgumentException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+                        }
                         break;
                     default:
                         break;

@@ -72,5 +72,8 @@
     <string name="two_field_dont_match">Der inhalt der beiden Felder stimmt nicht überein.</string>
     <string name="admincode_set_to_default">Admincode wurde auf default 4711 gesetzt</string>
     <string name="enter_admin_code">Personalnummer ist kein Administrator</string>
+    <string name="user_personal_number">Personal Nummer</string>
+    <string name="user_rfid">RFID</string>
+    <string name="user_creation_date">Erstelldatum</string>
 </resources>
 

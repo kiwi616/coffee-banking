@@ -57,7 +57,7 @@ public class SqliteDatabase extends SQLiteOpenHelper {
     public static final String COLUMN_RFID = "rfid";
     public static final String COLUMN_PERSONAL_NUMBER= "personal_number";
 	public static final String COLUMN_NAME = "name";
-    private static final String COLUMN_DATE = "date";
+    public static final String COLUMN_DATE = "date";
     public static final String COLUMN_POSITION = "position";
 
     private static final String COLUMN_VE_ID = "_id";
