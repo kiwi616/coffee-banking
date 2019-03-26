@@ -11,7 +11,6 @@ import android.graphics.Paint;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -67,22 +66,22 @@ public class HelperMethods {
         XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
-        multiRenderer.setChartTitle("Values over time");
-        multiRenderer.setXTitle("Time");
+        multiRenderer.setChartTitle(context.getText(R.string.current_ballance).toString());
+        multiRenderer.setXTitle(context.getText(R.string.time).toString());
         multiRenderer.setXLabelsPadding(4.0f);
         multiRenderer.setYTitle("Value in euro");
         multiRenderer.setYLabelsPadding(10.0f);
         multiRenderer.setMargins(new int[]{25, 50, 25, 25});
         multiRenderer.setShowLabels(true);
         multiRenderer.setShowLegend(true);
-        multiRenderer.setLegendTextSize(50);
+        multiRenderer.setLegendTextSize(40);
         multiRenderer.setFitLegend(true);
 
-        TimeSeries ts_coffee = getDataset(context.getContentResolver(), "coffee", person_id);
-        TimeSeries ts_candy = getDataset(context.getContentResolver(), "candy", person_id);
-        TimeSeries ts_beer = getDataset(context.getContentResolver(), "beer", person_id);
-        TimeSeries ts_can = getDataset(context.getContentResolver(), "can", person_id);
-        TimeSeries ts_misc = getDataset(context.getContentResolver(), "misc", person_id);
+        TimeSeries ts_coffee = getDataset(context.getContentResolver(), context.getText(R.string.coffee), "coffee", person_id);
+        TimeSeries ts_candy = getDataset(context.getContentResolver(), context.getText(R.string.candy), "candy", person_id);
+        TimeSeries ts_beer = getDataset(context.getContentResolver(), context.getText(R.string.beer), "beer", person_id);
+        TimeSeries ts_can = getDataset(context.getContentResolver(),context.getText(R.string.can),  "can", person_id);
+        TimeSeries ts_misc = getDataset(context.getContentResolver(), context.getText(R.string.misc), "misc", person_id);
 
         // Adding Visits Series to the dataset
         dataset.addSeries(ts_coffee);
@@ -131,8 +130,8 @@ public class HelperMethods {
         return ChartFactory.getTimeChartView(context, dataset, multiRenderer, "hh:mm dd-MMM");
     }
 
-    static private TimeSeries getDataset(ContentResolver cr, String kind, long person_id) {
-        TimeSeries ts_candy = new TimeSeries(kind);
+    static private TimeSeries getDataset(ContentResolver cr, final CharSequence legend_title, String kind, long person_id) {
+        TimeSeries ts_candy = new TimeSeries(legend_title.toString());
         double summ_candy_val = 0.0d;
         Map<Date, BigDecimal> data_candy = SqlAccessAPI.getDateValueTupel(cr, person_id, kind);
 
@@ -188,7 +187,7 @@ public class HelperMethods {
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_new_person);
-        dialog.setTitle(R.string.save_hint_enter_name);
+        dialog.setTitle(R.string.create_user);
 
         // set the custom dialog components - text, image and button
         final Button cancelButton = dialog.findViewById(R.id.newperson_dialog_btn_cancel);

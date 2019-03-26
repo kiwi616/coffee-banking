@@ -75,5 +75,13 @@
     <string name="user_personal_number">Personal Nummer</string>
     <string name="user_rfid">RFID</string>
     <string name="user_creation_date">Erstelldatum</string>
+
+    <string name="coffee">Kaffee</string>
+    <string name="candy">Süßigkeit</string>
+    <string name="beer">Bier</string>
+    <string name="can">Dosen</string>
+    <string name="misc">Fleisch und Wurst</string>
+    <string name="current_ballance">Aktueller Kontostand</string>
+    <string name="time">Zeit</string>
 </resources>
 

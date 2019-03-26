@@ -94,6 +94,13 @@
     <string name="user_rfid">RFID</string>
     <string name="user_name">Username</string>
     <string name="user_creation_date">Date of creation</string>
+    <string name="coffee">Coffee</string>
+    <string name="candy">Candy</string>
+    <string name="beer">Beer</string>
+    <string name="can">Can</string>
+    <string name="misc">Meat and stuff</string>
+    <string name="current_ballance">Current ballance</string>
+    <string name="time">Time</string>
 
 </resources>
 

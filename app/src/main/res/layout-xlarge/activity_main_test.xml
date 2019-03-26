@@ -56,38 +56,38 @@
                 <include
                     android:id="@+id/candy"
                     layout="@layout/layout_candy_booking_object"
-                    android:layout_width="250dip"
-                    android:layout_height="250dip" />
+                    android:layout_width="350dip"
+                    android:layout_height="350dip" />
 
                 <include
                     android:id="@+id/coffee"
                     layout="@layout/layout_coffee_booking_object"
-                    android:layout_width="250dip"
-                    android:layout_height="250dip" />
+                    android:layout_width="350dip"
+                    android:layout_height="350dip" />
 
                 <include
                     android:id="@+id/balance"
                     layout="@layout/layout_saldo_booking_object"
-                    android:layout_width="250dip"
-                    android:layout_height="250dip" />
+                    android:layout_width="350dip"
+                    android:layout_height="350dip" />
 
                 <include
                     android:id="@+id/beer"
                     layout="@layout/layout_beer_booking_object"
-                    android:layout_width="250dip"
-                    android:layout_height="250dip" />
+                    android:layout_width="350dip"
+                    android:layout_height="350dip" />
 
                 <include
                     android:id="@+id/can"
                     layout="@layout/layout_can_booking_object"
-                    android:layout_width="250dip"
-                    android:layout_height="250dip" />
+                    android:layout_width="350dip"
+                    android:layout_height="350dip" />
 
                 <include
                     android:id="@+id/meat"
                     layout="@layout/layout_meat_booking_object"
-                    android:layout_width="250dip"
-                    android:layout_height="250dip" />
+                    android:layout_width="350dip"
+                    android:layout_height="350dip" />
 
             </GridLayout>
         </LinearLayout>

@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (SqlAccessAPI.isUserDbEmpty(getContentResolver())){
-                    Dialog d = HelperMethods.createNewUser(MainActivity.this, 4711, null);
+                    Dialog d = HelperMethods.createNewUser(MainActivity.this, null, null);
                     d.show();
                 }
                 else {
@@ -157,7 +157,7 @@ public class MainActivity extends Activity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Integer persno;
+                int persno;
 
                 if (!HelperMethods.isPersonalNumberValid(et_personalnumber.getText().toString()))
                 {
@@ -220,7 +220,7 @@ public class MainActivity extends Activity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Integer persno;
+                int persno;
 
                 if (!HelperMethods.isPersonalNumberValid(et_personalnumber.getText().toString()))
                 {
@@ -233,7 +233,7 @@ public class MainActivity extends Activity {
 
 
                 Cursor rfidCursor = getContentResolver().query(SqlDatabaseContentProvider.CONTENT_URI, null,
-                        SqliteDatabase.COLUMN_PERSONAL_NUMBER + " =  ?", new String[]{persno.toString()}, null);
+                        SqliteDatabase.COLUMN_PERSONAL_NUMBER + " =  ?", new String[]{Integer.toString(persno)}, null);
 
 
                 if (rfidCursor != null && rfidCursor.moveToFirst()) {
