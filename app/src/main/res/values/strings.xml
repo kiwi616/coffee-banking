@@ -83,7 +83,7 @@
     </string>
     <string name="import_database_question">Do you want to import these data set into coffeeapp database? All internal data will be deleted</string>
     <string name="all_deleted_you_are_fucked">Shit happens all your data are lost, because you gave me and invalid data set.</string>
-    <string name="all_fine">Successfully imported data</string>
+    <string name="all_fine">Successful done</string>
     <string name="shit_happens">This is not a valid file.</string>
     <string name="new_admin_code">administration code</string>
     <string name="reenter_new_admin_code">reenter administration code</string>
@@ -101,6 +101,9 @@
     <string name="misc">Meat and stuff</string>
     <string name="current_ballance">Current ballance</string>
     <string name="time">Time</string>
+    <string name="change_userdata">Change userdata</string>
+    <string name="error_invalid_username">Invalid username</string>
+    <string name="apply">Apply</string>
 
 </resources>
 

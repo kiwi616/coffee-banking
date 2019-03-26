@@ -5,9 +5,13 @@ import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,9 +30,12 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import de.fruity.coffeeapp.R;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
+import de.fruity.coffeeapp.database.SqlDatabaseContentProvider;
+import de.fruity.coffeeapp.database.SqliteDatabase;
 import de.fruity.coffeeapp.ui_elements.CustomToast;
 
 public class HelperMethods {
@@ -46,8 +53,7 @@ public class HelperMethods {
         return bd;
     }
 
-	public static int roundAndConvert(float value)
-    {
+    public static int roundAndConvert(float value) {
         String rounded = roundTwoDecimals(value);
         float value_f = 0;
         try {
@@ -80,7 +86,7 @@ public class HelperMethods {
         TimeSeries ts_coffee = getDataset(context.getContentResolver(), context.getText(R.string.coffee), "coffee", person_id);
         TimeSeries ts_candy = getDataset(context.getContentResolver(), context.getText(R.string.candy), "candy", person_id);
         TimeSeries ts_beer = getDataset(context.getContentResolver(), context.getText(R.string.beer), "beer", person_id);
-        TimeSeries ts_can = getDataset(context.getContentResolver(),context.getText(R.string.can),  "can", person_id);
+        TimeSeries ts_can = getDataset(context.getContentResolver(), context.getText(R.string.can), "can", person_id);
         TimeSeries ts_misc = getDataset(context.getContentResolver(), context.getText(R.string.misc), "misc", person_id);
 
         // Adding Visits Series to the dataset
@@ -144,7 +150,6 @@ public class HelperMethods {
     }
 
 
-
     public static void billanceToast(Context context, int pk, String database_ident) {
         String gettext = "comma_new_" + database_ident + "_billance";
 
@@ -176,6 +181,11 @@ public class HelperMethods {
         }
     }
 
+    public static boolean isNameSurnameTupleInvalid(String s) {
+        return s.split(" ").length < 2;
+    }
+
+
     private static boolean isPersonalNumberValid(int number) {
         return (number / 99) > 1;
     }
@@ -183,41 +193,39 @@ public class HelperMethods {
     @SuppressLint("SetTextI18n")
     public static Dialog createNewUser(final Context context, Integer personalnumber, Integer rfid) {
         // custom dialog
-        final int rfid_intern = rfid != null ?  rfid : 0;
+        final int rfid_intern = rfid != null ? rfid : 0;
 
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dialog_new_person);
         dialog.setTitle(R.string.create_user);
 
         // set the custom dialog components - text, image and button
-        final Button cancelButton = dialog.findViewById(R.id.newperson_dialog_btn_cancel);
-        final Button btnSave = dialog.findViewById(R.id.newperson_dialog_btn_save);
-        final EditText et = dialog.findViewById(R.id.newperson_dialog_et_name);
-        final EditText et_personalnumber = dialog.findViewById(R.id.newperson_dialog_et_personalnumber);
+        final TextInputLayout floatingUsernameLabel = dialog.findViewById(R.id.til_newperson_username);
+        final TextInputLayout floatingPersnoLabel = dialog.findViewById(R.id.til_newperson_personalnumber);
+        final Button btnSave = dialog.findViewById(R.id.btn_newperson_apply);
+        final EditText et_name = dialog.findViewById(R.id.et_newperson_username);
+        final EditText et_persno = dialog.findViewById(R.id.et_newperson_personalnumber);
+
+        HelperMethods.setupFloatingLabelErrorUsername(context, floatingUsernameLabel);
+        HelperMethods.setupFloatingLabelErrorPersonalNumber(context, floatingPersnoLabel, -1);
 
         if (personalnumber != null)
-            et_personalnumber.setText(personalnumber.toString());
+            et_persno.setText(personalnumber.toString());
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int personalnumber;
-
-                try {
-                    personalnumber = Integer.parseInt(et_personalnumber.getText().toString());
-                } catch (NumberFormatException ex) {
-                    new CustomToast(context,
-                            context.getText(R.string.no_personalnumber_number).toString(), 2000);
+                if (!HelperMethods.isPersonalNumberValid(et_persno.getText().toString())) {
+                    new CustomToast(context, context.getText(R.string.no_personalnumber_number).toString(), 2000);
                     return;
                 }
-                if (!isPersonalNumberValid(personalnumber)) { //more than 2 digit
-                    new CustomToast(context,
-                            context.getText(R.string.no_personalnumber_number).toString(), 2000);
+                if (HelperMethods.isNameSurnameTupleInvalid(et_name.getText().toString())) {
+                    new CustomToast(context, context.getText(R.string.error_invalid_username).toString(), 2000);
                     return;
                 }
 
                 try {
-                    SqlAccessAPI.createUser(context.getContentResolver(), et.getText().toString(), rfid_intern, personalnumber);
+                    SqlAccessAPI.createUser(context.getContentResolver(), et_name.getText().toString(), rfid_intern, Integer.parseInt(et_persno.getText().toString()));
                 } catch (SQLiteConstraintException ex) {
                     new CustomToast(context,
                             context.getText(R.string.personalnumber_in_use).toString(), 2000);
@@ -230,11 +238,6 @@ public class HelperMethods {
             }
         });
 
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -243,5 +246,68 @@ public class HelperMethods {
         });
 
         return dialog;
+    }
+
+    public static void setupFloatingLabelErrorUsername(final Context c, final TextInputLayout floatingUsernameLabel) {
+        Objects.requireNonNull(floatingUsernameLabel.getEditText()).addTextChangedListener(new TextWatcher() {
+            // ...
+            @Override
+            public void onTextChanged(CharSequence text, int start, int count, int after) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (HelperMethods.isNameSurnameTupleInvalid(s.toString())) {
+                    floatingUsernameLabel.setError(c.getString(R.string.error_invalid_username));
+                    floatingUsernameLabel.setErrorEnabled(true);
+                } else {
+                    floatingUsernameLabel.setErrorEnabled(false);
+                }
+            }
+        });
+    }
+
+    public static void setupFloatingLabelErrorPersonalNumber(final Context c, final TextInputLayout floatingUsernameLabel, final Integer pk_user) {
+        Objects.requireNonNull(floatingUsernameLabel.getEditText()).addTextChangedListener(new TextWatcher() {
+            // ...
+            @Override
+            public void onTextChanged(CharSequence text, int start, int count, int after) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                boolean valid = HelperMethods.isPersonalNumberValid(s.toString());
+
+                if (valid) {
+                    Cursor cursor = c.getContentResolver().query(
+                            SqlDatabaseContentProvider.CONTENT_URI,
+                            null,
+                            SqliteDatabase.COLUMN_PERSONAL_NUMBER + "= ? AND " +
+                                    SqliteDatabase.COLUMN_ID + "!= ?",
+                            new String[]{s.toString(), pk_user.toString()}, null);
+
+                    if (cursor != null) {
+                        if (cursor.moveToFirst()) {
+                            valid = false;
+                        }
+                        cursor.close();
+                    }
+                }
+
+                if (!valid)
+                    floatingUsernameLabel.setError(c.getString(R.string.no_personalnumber_number));
+                floatingUsernameLabel.setErrorEnabled(!valid);
+            }
+        });
     }
 }

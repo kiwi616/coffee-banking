@@ -66,6 +66,7 @@
     <string name="saldo">Saldo</string>
     <string name="import_database_question">Wollen Sie den Dateiinhalt in die Coffee app importieren? Alle anderen Daten werden verworfen.</string>
     <string name="all_deleted_you_are_fucked">Alle daten sind verloren gegangen. Die Datei enthielt ungueltige werte.</string>
+    <string name="all_fine">Erfolgreich ausgeführt</string>
     <string name="shit_happens">This is not a valid file.</string>
     <string name="new_admin_code">Admin Zugangscode</string>
     <string name="reenter_new_admin_code">Wiederholung Admin Zugangscode</string>
@@ -74,6 +75,7 @@
     <string name="enter_admin_code">Personalnummer ist kein Administrator</string>
     <string name="user_personal_number">Personal Nummer</string>
     <string name="user_rfid">RFID</string>
+    <string name="user_name">Benutzername</string>
     <string name="user_creation_date">Erstelldatum</string>
 
     <string name="coffee">Kaffee</string>
@@ -83,5 +85,8 @@
     <string name="misc">Fleisch und Wurst</string>
     <string name="current_ballance">Aktueller Kontostand</string>
     <string name="time">Zeit</string>
+    <string name="change_userdata">Benutzerdaten ändern</string>
+    <string name="error_invalid_username">Ungültiger Benutzername</string>
+    <string name="apply">Anwenden</string>
 </resources>
 
