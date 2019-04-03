@@ -53,7 +53,6 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
 
 
         Log.i(TAG, " id received " + rfidNumber);
-
     }
 
     private void showBalance(final Context context, final int pk_id) {

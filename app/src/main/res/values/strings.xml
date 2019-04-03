@@ -24,6 +24,7 @@
     <string name="comma_new_candy_billance">, your new candy balance is</string>
     <string name="comma_new_metcan_billance">, your new meat can balance is</string>
     <string name="comma_new_beer_billance">, your new beer balance is</string>
+    <string name="comma_new_can_billance">, your new can balance is</string>
     <string name="comma_new_misc_billance">, ihr meat/fish balance is</string>
     
     <string name="personalnumber_not_found">Personal number not found!</string>

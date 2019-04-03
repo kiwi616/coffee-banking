@@ -13,6 +13,7 @@ import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -158,7 +159,6 @@ public class HelperMethods {
         sb.append(context.getText(R.string.hello));
         sb.append(' ');
         sb.append(name);
-        sb.append(' ');
 
         float value = SqlAccessAPI.getValueFromPersonById(context.getContentResolver(), pk, database_ident);
         String packname = context.getPackageName();
@@ -196,8 +196,8 @@ public class HelperMethods {
         final int rfid_intern = rfid != null ? rfid : 0;
 
         final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_new_person);
-        dialog.setTitle(R.string.create_user);
 
         // set the custom dialog components - text, image and button
         final TextInputLayout floatingUsernameLabel = dialog.findViewById(R.id.til_newperson_username);
@@ -205,12 +205,15 @@ public class HelperMethods {
         final Button btnSave = dialog.findViewById(R.id.btn_newperson_apply);
         final EditText et_name = dialog.findViewById(R.id.et_newperson_username);
         final EditText et_persno = dialog.findViewById(R.id.et_newperson_personalnumber);
+        final EditText et_rfid = dialog.findViewById(R.id.et_newperson_rfid);
 
         HelperMethods.setupFloatingLabelErrorUsername(context, floatingUsernameLabel);
         HelperMethods.setupFloatingLabelErrorPersonalNumber(context, floatingPersnoLabel, -1);
 
         if (personalnumber != null)
             et_persno.setText(personalnumber.toString());
+        if (rfid != null)
+            et_rfid.setText(rfid.toString());
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override

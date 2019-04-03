@@ -22,6 +22,7 @@
     <string name="comma_new_candy_billance">, ihr Candykontostand ist</string>
     <string name="comma_new_metcan_billance">, ihr Dosenkontostand ist</string>
     <string name="comma_new_beer_billance">, ihr Bierkontostand ist</string>
+    <string name="comma_new_can_billance">, ihr Dosenkontostand ist</string>
     <string name="comma_new_misc_billance">, ihr Fleisch/Fisch Kontostand ist</string>
 
     <string name="personalnumber_not_found">Die angegebene Nummer ist nicht im System registriert. Bitte legen Sie ihren Zeiterfassungschip auf den Scanner.</string>

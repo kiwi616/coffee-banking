@@ -6,6 +6,7 @@ android {
 
     defaultConfig {
         applicationId "de.fruity.coffeeapp"
+        vectorDrawables.useSupportLibrary = true
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
