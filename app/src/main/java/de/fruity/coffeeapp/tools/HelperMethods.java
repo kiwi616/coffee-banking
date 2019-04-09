@@ -108,8 +108,8 @@ public class HelperMethods {
             singleRenderer.setPointStyle(PointStyle.CIRCLE);
             singleRenderer.setFillPoints(true);
             singleRenderer.setLineWidth(3);
-            singleRenderer.setChartValuesTextSize(50);
-            singleRenderer.setDisplayChartValues(true);
+//            singleRenderer.setChartValuesTextSize(30);
+//            singleRenderer.setDisplayChartValues(true);
             singleRenderer.setAnnotationsColor(Color.YELLOW);
             singleRenderer.setAnnotationsTextAlign(Paint.Align.CENTER);
             singleRenderer.setAnnotationsTextSize(20); //current bug annotations with time charts

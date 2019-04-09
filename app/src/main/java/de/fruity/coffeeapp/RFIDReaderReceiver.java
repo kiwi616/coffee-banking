@@ -41,6 +41,7 @@ public class RFIDReaderReceiver extends BroadcastReceiver {
         }
 
         try {
+            mRadiogroupMerger.retriggerTimer();
             if (position != R.id.balance)
                 mRadiogroupMerger.bookValueOnCustomer(pk_id);
             else

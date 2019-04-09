@@ -47,6 +47,7 @@ public class MainActivity extends Activity {
     private ListView mDrawerList;
 
     private BroadcastReceiver mReceiver;
+    private RadiogroupMerger mRadiogroupMerger;
 
 
     @Override
@@ -80,7 +81,7 @@ public class MainActivity extends Activity {
 
         default_coffee = SqlAccessAPI.getPriceMin(getContentResolver(), "coffee");
 
-        RadiogroupMerger mRadiogroupMerger = new RadiogroupMerger();
+        mRadiogroupMerger = new RadiogroupMerger();
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.candy));
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.coffee));
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.can));
@@ -149,6 +150,7 @@ public class MainActivity extends Activity {
         dialog.setTitle(R.string.enter_personalnumber);
 
         // set the custom dialog components - text, image and button
+        //TODO wait for admin rfid
 
         Button cancelButton = dialog.findViewById(R.id.personalnumber_dialog_btn_cancel);
         final Button btnSave = dialog.findViewById(R.id.personalnumber_dialog_btn_save);
@@ -258,6 +260,7 @@ public class MainActivity extends Activity {
                     btnSave.callOnClick();
                     return true;
                 }
+                mRadiogroupMerger.retriggerTimer();
                 return false;
             }
         });
