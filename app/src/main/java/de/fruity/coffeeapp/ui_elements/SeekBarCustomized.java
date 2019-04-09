@@ -101,10 +101,12 @@ public class SeekBarCustomized extends AppCompatSeekBar implements SeekBar.OnSee
             int step_size = HelperMethods.roundAndConvert(SqlAccessAPI.
                     getPriceStepsize(mContentResolver, mDatabaseIdentifier));
 
-//            progress += (getMax()/step_size);
+            while((progress % (step_size)) != 0)
+                progress--;
+
             if (progress % (step_size) == 0) {
-                float candy_val = (progress / 100.0f);
-                SqlAccessAPI.setCurrentPrice(mContentResolver, candy_val, mDatabaseIdentifier);
+                float float_val = (progress / 100.0f);
+                SqlAccessAPI.setCurrentPrice(mContentResolver, float_val, mDatabaseIdentifier);
             }
         }
     }
