@@ -78,17 +78,28 @@ public class HelperMethods {
         multiRenderer.setXLabelsPadding(4.0f);
         multiRenderer.setYTitle("Value in euro");
         multiRenderer.setYLabelsPadding(10.0f);
+        multiRenderer.setLabelsTextSize(20.0f);
         multiRenderer.setMargins(new int[]{25, 50, 25, 25});
         multiRenderer.setShowLabels(true);
         multiRenderer.setShowLegend(true);
         multiRenderer.setLegendTextSize(40);
         multiRenderer.setFitLegend(true);
 
-        TimeSeries ts_coffee = getDataset(context.getContentResolver(), context.getText(R.string.coffee), "coffee", person_id);
-        TimeSeries ts_candy = getDataset(context.getContentResolver(), context.getText(R.string.candy), "candy", person_id);
-        TimeSeries ts_beer = getDataset(context.getContentResolver(), context.getText(R.string.beer), "beer", person_id);
-        TimeSeries ts_can = getDataset(context.getContentResolver(), context.getText(R.string.can), "can", person_id);
-        TimeSeries ts_misc = getDataset(context.getContentResolver(), context.getText(R.string.misc), "misc", person_id);
+        TimeSeries ts_coffee = getDataset(context.getContentResolver(),
+                context.getText(R.string.coffee) + " (" + HelperMethods.roundTwoDecimals(SqlAccessAPI.getCoffeeValueFromPerson(context.getContentResolver(), person_id)) + "€)"
+                ,"coffee", person_id);
+        TimeSeries ts_candy = getDataset(context.getContentResolver(),
+                context.getText(R.string.candy) + " (" + HelperMethods.roundTwoDecimals(SqlAccessAPI.getCandyValueFromPerson(context.getContentResolver(), person_id)) + "€)"
+                ,"candy", person_id);
+        TimeSeries ts_beer = getDataset(context.getContentResolver(),
+                context.getText(R.string.beer) + " (" + HelperMethods.roundTwoDecimals(SqlAccessAPI.getBeerValueFromPerson(context.getContentResolver(), person_id)) + "€)"
+                , "beer", person_id);
+        TimeSeries ts_can = getDataset(context.getContentResolver(),
+                context.getText(R.string.can) + " (" + HelperMethods.roundTwoDecimals(SqlAccessAPI.getCanValueFromPerson(context.getContentResolver(), person_id)) + "€)"
+                , "can", person_id);
+        TimeSeries ts_misc = getDataset(context.getContentResolver(),
+                context.getText(R.string.misc) + " (" + HelperMethods.roundTwoDecimals(SqlAccessAPI.getMiscValueFromPerson(context.getContentResolver(), person_id)) + "€)"
+                , "misc", person_id);
 
         // Adding Visits Series to the dataset
         dataset.addSeries(ts_coffee);
