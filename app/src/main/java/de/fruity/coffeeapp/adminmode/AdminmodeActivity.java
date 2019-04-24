@@ -1,11 +1,17 @@
 package de.fruity.coffeeapp.adminmode;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -38,7 +44,7 @@ import de.fruity.coffeeapp.database.SqlAccessAPI;
 import de.fruity.coffeeapp.database.SqlDatabaseContentProvider;
 import de.fruity.coffeeapp.database.SqliteDatabase;
 
-public class AdminmodeActivity extends FragmentActivity {
+public class AdminmodeActivity extends FragmentActivity implements OnRequestPermissionsResultCallback {
 
     @SuppressWarnings("unused")
     private static final String TAG = AdminmodeActivity.class.getSimpleName();
@@ -47,15 +53,62 @@ public class AdminmodeActivity extends FragmentActivity {
             new Pair<>(android.R.drawable.ic_menu_delete, R.string.export_database),
             new Pair<>(android.R.drawable.ic_menu_save, R.string.backup_database)
     };
-    public static final int SECRET_ADMIN_CODE = Integer.MAX_VALUE;
-    private static final String PREFERENCE_KEY_ADMINCODE = "preference_key_admcode";
-
+    private static final int WRITE_EXTERNAL_STORAGE = 1;
     private DrawerLayout mDrawerLayout;
 
-    private void createTestUser()
-    {
-        for (int i = 0; i < 10; i++)
-            SqlAccessAPI.createUser(getContentResolver(), "user" + Integer.valueOf(i).toString(), 927139142 + i, 200 + i);
+
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        // BEGIN_INCLUDE(onRequestPermissionsResult)
+        if (requestCode == WRITE_EXTERNAL_STORAGE) {
+            // Request for camera permission.
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permission has been granted. Start camera preview Activity.
+                Intent intent = null;
+                try {
+                    intent = SqliteDatabase.backupDatabaseCSV(new File(Environment.getExternalStorageDirectory()
+                            + "/" + "coffeeDB.csv"), getContentResolver());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                if (intent != null) {
+                    startActivity(Intent.createChooser(intent, "Send mail..."));
+                    resetValuesInDatabase();
+                    Toast.makeText(getApplicationContext(), "All done :)", Toast.LENGTH_LONG).show();
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "You denied access backup failed", Toast.LENGTH_LONG).show();
+                // Permission request was denied.
+            }
+        }
+        // END_INCLUDE(onRequestPermissionsResult)
+    }
+
+    /**
+     * Requests the {@link android.Manifest.permission#CAMERA} permission.
+     * If an additional rationale should be displayed, the user has to launch the request from
+     * a SnackBar that includes additional information.
+     */
+    private void requestCameraPermission() {
+        // Permission has not been granted and must be requested.
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            // Provide an additional rationale to the user if the permission was not granted
+            // and the user would benefit from additional context for the use of the permission.
+            // Display a SnackBar with cda button to request the missing permission.
+            //TODO write some fancy please do it dialog
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE);
+
+        } else {
+//            Snackbar.make(mLayout, R.string.camera_unavailable, Snackbar.LENGTH_SHORT).show();
+            // Request the permission. The result will be received in onRequestPermissionResult().
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE);
+        }
     }
 
 
@@ -78,16 +131,23 @@ public class AdminmodeActivity extends FragmentActivity {
                 switch (((Integer) optionsmenu[i].second)) {
                     case R.string.export_database:
 
-                        File outputDir = getApplicationContext().getCacheDir(); // context being the Activity pointer
-                        File outputFile;
                         try {
-                            outputFile = File.createTempFile("coffeeDB", "csv", outputDir);
+//                            outputFile = File.createTempFile("coffeeDB", "csv", outputDir);
 
-                            Intent intent = SqliteDatabase.backupDatabaseCSV(outputFile, getContentResolver());
-                            if (intent != null) {
-                                startActivity(Intent.createChooser(intent, "Send mail..."));
-                                resetValuesInDatabase();
-                                Toast.makeText(getApplicationContext(), "All done :)", Toast.LENGTH_LONG).show();
+                            if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                    == PackageManager.PERMISSION_GRANTED) {
+
+                                Intent intent = SqliteDatabase.backupDatabaseCSV(new File(Environment.getExternalStorageDirectory()
+                                        + "/" + "coffeeDB.csv"), getContentResolver());
+                                if (intent != null) {
+                                    startActivity(Intent.createChooser(intent, "Send mail..."));
+                                    resetValuesInDatabase();
+                                    Toast.makeText(getApplicationContext(), "All done :)", Toast.LENGTH_LONG).show();
+                                }
+                            }
+                            else
+                            {
+                                requestCameraPermission();
                             }
                         } catch (IOException e) {
                             Toast.makeText(getApplicationContext(), "Something went wrong", Toast.LENGTH_LONG).show();

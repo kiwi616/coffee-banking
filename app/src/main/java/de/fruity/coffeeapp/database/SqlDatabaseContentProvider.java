@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
@@ -120,7 +121,7 @@ public class SqlDatabaseContentProvider extends ContentProvider {
                 Log.d(TAG, "backup Database ");
 
                 try {
-                    File filesDir = getContext().getFilesDir();
+                    File filesDir = Environment.getExternalStorageDirectory();
                     if (!database.backupDatabaseTo(getContext(), new File(filesDir,
                             selection + ".sqlite3")))
                         throw new IllegalArgumentException();

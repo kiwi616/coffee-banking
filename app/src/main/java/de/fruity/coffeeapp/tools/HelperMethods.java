@@ -82,7 +82,7 @@ public class HelperMethods {
         multiRenderer.setMargins(new int[]{25, 50, 25, 25});
         multiRenderer.setShowLabels(true);
         multiRenderer.setShowLegend(true);
-        multiRenderer.setLegendTextSize(40);
+        multiRenderer.setLegendTextSize(35);
         multiRenderer.setFitLegend(true);
 
         TimeSeries ts_coffee = getDataset(context.getContentResolver(),

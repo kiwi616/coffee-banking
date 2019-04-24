@@ -369,70 +369,67 @@ public class SqliteDatabase extends SQLiteOpenHelper {
             return -1;
     }
 
-    static public Intent backupDatabaseCSV(File outFile, ContentResolver cr) {
+    static public Intent backupDatabaseCSV(File outFile, ContentResolver cr) throws IOException{
         Log.d(TAG, "backupDatabaseCSV");
         String csvHeader = "";
         String csvValues;
 
-        csvHeader += DATABASE_VERSION + ";;;Kaffee;Candy;Bier;Dose\n";
-        csvHeader += ";;;Giacomo Gusto;Beck Ralph;Buongustaio Birra;Luigi Salsiccia\n";
+        csvHeader += DATABASE_VERSION + ";;;Kaffee;Candy;Bier;Dose;Misc\n";
+        csvHeader += ";;;Giacomo Gusto;Beck Ralph;Buongustaio Birra;Luigi Salsiccia;Pablo Escobar\n";
         csvHeader += "\n";
         Log.d(TAG, "header=" + csvHeader);
-        try {
-            FileWriter fileWriter = new FileWriter(outFile);
-            BufferedWriter out = new BufferedWriter(fileWriter);
-            Cursor cursor = cr.query(
-                    SqlDatabaseContentProvider.CONTENT_URI, null, null, null,
-                    null);
-            if (cursor != null) {
-                out.write(csvHeader);
-                while (cursor.moveToNext()) {
-                    csvValues = cursor.getString(cursor
-                            .getColumnIndex(SqliteDatabase.COLUMN_NAME)) + ";";
-                    csvValues += cursor
-                            .getInt(cursor
-                                    .getColumnIndex(SqliteDatabase.COLUMN_RFID))
-                            + ";";
-                    csvValues += cursor
-                            .getInt(cursor
-                                    .getColumnIndex(SqliteDatabase.COLUMN_PERSONAL_NUMBER))
-                            + ";";
+        FileWriter fileWriter = new FileWriter(outFile);
+        BufferedWriter out = new BufferedWriter(fileWriter);
+        Cursor cursor = cr.query(
+                SqlDatabaseContentProvider.CONTENT_URI, null, null, null,
+                null);
+        if (cursor != null) {
+            out.write(csvHeader);
+            while (cursor.moveToNext()) {
+                csvValues = cursor.getString(cursor
+                        .getColumnIndex(SqliteDatabase.COLUMN_NAME)) + ";";
+                csvValues += cursor
+                        .getInt(cursor
+                                .getColumnIndex(SqliteDatabase.COLUMN_RFID))
+                        + ";";
+                csvValues += cursor
+                        .getInt(cursor
+                                .getColumnIndex(SqliteDatabase.COLUMN_PERSONAL_NUMBER))
+                        + ";";
 
-                    long person_id = cursor
-                            .getInt(cursor
-                                    .getColumnIndexOrThrow(SqliteDatabase.COLUMN_ID));
+                long person_id = cursor
+                        .getInt(cursor
+                                .getColumnIndexOrThrow(SqliteDatabase.COLUMN_ID));
 
-                    csvValues += HelperMethods.roundTwoDecimals(
-                            SqlAccessAPI.getCoffeeValueFromPerson(cr, person_id))
-                            + ";";
-                    csvValues += HelperMethods.roundTwoDecimals(
-                            SqlAccessAPI.getCandyValueFromPerson(cr, person_id))
-                            + ";";
-                    csvValues += HelperMethods.roundTwoDecimals(
-                            SqlAccessAPI.getBeerValueFromPerson(cr, person_id))
-                            + ";";
-                    csvValues += HelperMethods.roundTwoDecimals(
-                            SqlAccessAPI.getCanValueFromPerson(cr, person_id))
-                            + "\n";
+                csvValues += HelperMethods.roundTwoDecimals(
+                        SqlAccessAPI.getCoffeeValueFromPerson(cr, person_id))
+                        + ";";
+                csvValues += HelperMethods.roundTwoDecimals(
+                        SqlAccessAPI.getCandyValueFromPerson(cr, person_id))
+                        + ";";
+                csvValues += HelperMethods.roundTwoDecimals(
+                        SqlAccessAPI.getBeerValueFromPerson(cr, person_id))
+                        + ";";
+                csvValues += HelperMethods.roundTwoDecimals(
+                        SqlAccessAPI.getCanValueFromPerson(cr, person_id))
+                        + ";";
+                csvValues += HelperMethods.roundTwoDecimals(
+                        SqlAccessAPI.getMiscValueFromPerson(cr, person_id))
+                        + "\n";
 
 
-                    out.write(csvValues);
-                }
-                cursor.close();
+                out.write(csvValues);
             }
-            out.close();
-            fileWriter.close();
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            intent.setType("text/xml");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "coffeapp database");
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(outFile));
-
-            return intent;
-        } catch (IOException e) {
-            Log.d(TAG, "IOException: " + e.getMessage());
+            cursor.close();
         }
+        out.close();
+        fileWriter.close();
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/xml");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "coffeapp database");
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(outFile));
 
-        return null;
+        return intent;
     }
 
 }
