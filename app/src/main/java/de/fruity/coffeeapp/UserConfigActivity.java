@@ -77,11 +77,10 @@ public class UserConfigActivity extends Activity {
 
         if ( pk_user > 0)
         {
-            Integer id = pk_user;
             Cursor cursor = getContentResolver().
                     query(SqlDatabaseContentProvider.CONTENT_URI, null,
                     SqliteDatabase.COLUMN_ID + " =  ?",
-                    new String[] {id.toString()}, null);
+                    new String[] {Integer.toString(pk_user)}, null);
             if (cursor != null && cursor.moveToFirst()) {
                 et_name.setText(
                         cursor.getString(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_NAME)));

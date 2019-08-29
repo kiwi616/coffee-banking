@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/btn_activity_import_cancel"
-            android:layout_toRightOf="@id/btn_activity_import_cancel"
+            android:layout_toEndOf="@id/btn_activity_import_cancel"
             android:text="@android:string/ok"
             android:textSize="22sp" />
 

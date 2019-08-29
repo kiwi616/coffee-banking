@@ -56,19 +56,19 @@ public class CheckboxListAdapter extends BaseAdapter implements OnClickListener 
 			GroupmodeData data = (GroupmodeData) getItem(position);
 	 
 			// Set the example text and the state of the checkbox
-			CheckBox cb = (CheckBox) view.findViewById(R.id.checkBox1);
+			CheckBox cb = view.findViewById(R.id.checkBox1);
 			cb.setChecked(data.isSelected());
 			// We tag the data object to retrieve it on the click listener.
 			cb.setTag(data);
 	 
-			TextView tv = (TextView) view.findViewById(R.id.textView1);
+			TextView tv = view.findViewById(R.id.textView1);
 			tv.setText(data.getName());
 	 
 			return view;
 		}
 	 
 		@Override
-		/** Will be called when a checkbox has been clicked. */
+		/* Will be called when a checkbox has been clicked. */
 		public void onClick(View view) {
 			GroupmodeData data = (GroupmodeData) view.getTag();
 			data.setSelected(((CheckBox) view).isChecked());

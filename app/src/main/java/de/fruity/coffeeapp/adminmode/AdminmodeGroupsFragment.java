@@ -28,6 +28,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 import de.fruity.coffeeapp.CheckboxListAdapter;
 import de.fruity.coffeeapp.GroupmodeData;
 import de.fruity.coffeeapp.R;
@@ -68,11 +70,11 @@ public class AdminmodeGroupsFragment extends ListFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mContentResolver = getActivity().getContentResolver();
+        mContentResolver = Objects.requireNonNull(getActivity()).getContentResolver();
 
         fillData();
 
-        FloatingActionButton fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        FloatingActionButton fab = getActivity().findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,12 +116,12 @@ public class AdminmodeGroupsFragment extends ListFragment implements
 
     private void createNewGroup() {
 
-        final Dialog dialog = new Dialog(getContext());
+        final Dialog dialog = new Dialog(Objects.requireNonNull(getContext()));
         dialog.setContentView(R.layout.dialog_groupmode);
         dialog.setTitle(R.string.groupmode);
 
         // set the custom dialog components - text, image and button
-        ListView lvData = (ListView) dialog
+        ListView lvData = dialog
                 .findViewById(R.id.groupmode_lv_dialog);
 
         final CheckboxListAdapter adapter = new CheckboxListAdapter(getLayoutInflater(null));
@@ -127,9 +129,9 @@ public class AdminmodeGroupsFragment extends ListFragment implements
         lvData.setAdapter(adapter);
 
         dialog.setCancelable(false);
-        Button cancelButton = (Button) dialog
+        Button cancelButton = dialog
                 .findViewById(R.id.groupmode_btn_cancel);
-        Button btnSave = (Button) dialog.findViewById(R.id.groupmode_btn_save);
+        Button btnSave = dialog.findViewById(R.id.groupmode_btn_save);
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 int curPosition = 0;
@@ -290,13 +292,13 @@ public class AdminmodeGroupsFragment extends ListFragment implements
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case DELETE_ID:
-                Long id;
+                long id;
                 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
                         .getMenuInfo();
                 id = info.id;
 
                 mContentResolver.delete(SqlDatabaseContentProvider.GROUP_URI,
-                        SqliteDatabase.COLUMN_G_GROUP_ID + " = ?", new String[]{id.toString()});
+                        SqliteDatabase.COLUMN_G_GROUP_ID + " = ?", new String[]{Long.toString(id)});
                 fillData();
                 return true;
             case RENAME_ID:

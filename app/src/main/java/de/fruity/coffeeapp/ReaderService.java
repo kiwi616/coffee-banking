@@ -196,25 +196,25 @@ public class ReaderService extends Service {
 		super.onDestroy();
 	}
 
-	static public class TransmitParams {
-		public int controlCode;
-		public String commandString;
+	static class TransmitParams {
+		int controlCode;
+		String commandString;
 
-		public TransmitParams(int controlCode, String commandString) {
+		TransmitParams(int controlCode, String commandString) {
 			this.controlCode = controlCode;
 			this.commandString = commandString;
 		}
 
 	}
 
-	static public class TransmitProgress {
+	static class TransmitProgress {
 
-		public int controlCode;
-		public byte[] command;
-		public int commandLength;
-		public byte[] response;
-		public int responseLength;
-		public Exception e;
+		int controlCode;
+		byte[] command;
+		int commandLength;
+		byte[] response;
+		int responseLength;
+		Exception e;
 	}
 
 	public class TransmitTask extends AsyncTask<TransmitParams, TransmitProgress, Void> {
@@ -387,14 +387,14 @@ public class ReaderService extends Service {
 
 	}
 
-	static public class PowerParams {
-		public int action;
+	static class PowerParams {
+		int action;
 	}
 
-	static public class PowerResult {
+	static class PowerResult {
 
-		public byte[] atr;
-		public Exception e;
+		byte[] atr;
+		Exception e;
 	}
 
 	static public class PowerTask extends AsyncTask<PowerParams, Void, PowerResult> {
@@ -429,15 +429,15 @@ public class ReaderService extends Service {
 		}
 	}
 
-	static public class SetProtocolParams {
+	static class SetProtocolParams {
 
-		public int preferredProtocols;
+		int preferredProtocols;
 	}
 
-	static public class SetProtocolResult {
+	static class SetProtocolResult {
 
-		public int activeProtocol;
-		public Exception e;
+		int activeProtocol;
+		Exception e;
 	}
 
 	static public class SetProtocolTask extends AsyncTask<SetProtocolParams, Void, SetProtocolResult> {
@@ -502,7 +502,7 @@ public class ReaderService extends Service {
 	@SuppressWarnings("unused")
 	private void logBuffer(byte[] buffer, int bufferLength) {
 
-		String bufferString = "";
+		StringBuilder bufferString = new StringBuilder();
 
 		for (int i = 0; i < bufferLength; i++) {
 
@@ -513,17 +513,17 @@ public class ReaderService extends Service {
 
 			if (i % 16 == 0) {
 
-				if (!bufferString.isEmpty()) {
+				if (bufferString.length() > 0) {
 
-					Log.w(TAG, bufferString);
-					bufferString = "";
+					Log.w(TAG, bufferString.toString());
+					bufferString = new StringBuilder();
 				}
 			}
 
-			bufferString += hexChar.toUpperCase() + " ";
+			bufferString.append(hexChar.toUpperCase()).append(" ");
 		}
 
-		if (!bufferString.isEmpty()) Log.w(TAG, bufferString);
+		if (bufferString.length() > 0) Log.w(TAG, bufferString.toString());
 	}
 
 	/**
@@ -595,7 +595,7 @@ public class ReaderService extends Service {
 	 */
 	public static String toHexString(byte[] buffer) {
 
-		String bufferString = "";
+		StringBuilder bufferString = new StringBuilder();
 
 		for (byte aBuffer : buffer) {
 
@@ -604,10 +604,10 @@ public class ReaderService extends Service {
 				hexChar = "0" + hexChar;
 			}
 
-			bufferString += hexChar.toUpperCase() + " ";
+			bufferString.append(hexChar.toUpperCase()).append(" ");
 		}
 
-		return bufferString;
+		return bufferString.toString();
 	}
 
 	/**

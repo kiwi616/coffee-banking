@@ -1,6 +1,7 @@
 package de.fruity.coffeeapp.adminmode;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,7 @@ public class ShowGroupsDetailFragment extends android.support.v4.app.DialogFragm
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         List<GroupmodeData> name_list;
         ArrayAdapter<String> adapter;
@@ -58,27 +59,20 @@ public class ShowGroupsDetailFragment extends android.support.v4.app.DialogFragm
             adapter.add(data.getName());
         }
 
-        elv = (ListView) mainMeasurementView.findViewById(R.id.lv_people_in_group);
+        elv = mainMeasurementView.findViewById(R.id.lv_people_in_group);
         elv.setAdapter(adapter);
 
         return mainMeasurementView;
     }
 
     /**
-     * Necessary for the update in MeasurementsFragment
-     *
-     * @return Position in ListView
-     */
-    public int getShownPosition() {
-        return getArguments().getInt("index", 0);
-    }
-
-    /**
      * @return id of sqliteobject
      */
     private long getShownID() {
-        if (D)
+        assert getArguments() != null;
+        if (D) {
             Log.d(TAG, "getShowID" + getArguments().getLong("id", 0));
+        }
         return getArguments().getLong("id", 0);
     }
 }

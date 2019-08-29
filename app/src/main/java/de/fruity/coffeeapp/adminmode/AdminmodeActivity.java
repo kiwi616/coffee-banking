@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
 import android.support.v4.app.Fragment;
@@ -21,7 +20,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -40,7 +38,6 @@ import java.io.IOException;
 import de.fruity.coffeeapp.BackupManager;
 import de.fruity.coffeeapp.R;
 import de.fruity.coffeeapp.ReaderService;
-import de.fruity.coffeeapp.database.SqlAccessAPI;
 import de.fruity.coffeeapp.database.SqlDatabaseContentProvider;
 import de.fruity.coffeeapp.database.SqliteDatabase;
 
@@ -187,11 +184,10 @@ public class AdminmodeActivity extends FragmentActivity implements OnRequestPerm
 
 
         FloatingActionButton fab = findViewById(R.id.fab_adminactivity);
-        fab.setOnTouchListener(new View.OnTouchListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
+            public void onClick(View v) {
                 mDrawerLayout.openDrawer(Gravity.END);
-                return true;
             }
         });
     }
@@ -209,7 +205,6 @@ public class AdminmodeActivity extends FragmentActivity implements OnRequestPerm
 
     private class NavigationDrawerWithIcon extends ArrayAdapter {
         private Context context;
-        private ViewHolder mViewHolder = null;
 
         NavigationDrawerWithIcon(Context context) {
             super(context, R.layout.activity_adminmode_navigationdrawer_object);
@@ -220,6 +215,7 @@ public class AdminmodeActivity extends FragmentActivity implements OnRequestPerm
         @NonNull
         @Override
         public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+            ViewHolder mViewHolder;
             if (convertView == null) {
                 mViewHolder = new ViewHolder();
 
@@ -239,7 +235,6 @@ public class AdminmodeActivity extends FragmentActivity implements OnRequestPerm
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 mViewHolder.thumb_image.setImageDrawable(context.getResources().getDrawable((Integer) optionsmenu[position].first, context.getTheme()));
             } else {
-                //noinspection deprecation
                 mViewHolder.thumb_image.setImageDrawable(context.getResources().getDrawable((Integer) optionsmenu[position].first));
             }
 

@@ -27,9 +27,8 @@ public class GroupTableCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView tvName = (TextView) view.findViewById(R.id.main_tv_names);
+        TextView tvName = view.findViewById(R.id.main_tv_names);
 
-        //int tmp = cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_TYPE);
         String type = cursor.getString(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_G_GROUP_NAME));
 
         tvName.setText(type);

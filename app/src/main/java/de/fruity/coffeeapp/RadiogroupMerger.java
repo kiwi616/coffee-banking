@@ -46,7 +46,7 @@ public class RadiogroupMerger {
         mHandler.postDelayed(runnable, 15000);
     }
 
-    public void addView(LinearLayout v) {
+    void addView(LinearLayout v) {
         RadioButtonCustomized rbc = v.findViewWithTag("RadioButtonCustomized");
 
         SeekBarCustomized sbc = v.findViewWithTag("SeekBarCustomized");
@@ -77,7 +77,7 @@ public class RadiogroupMerger {
         return null;
     }
 
-    public int getCheckedId() {
+    int getCheckedId() {
         return mChecked;
     }
 
@@ -102,7 +102,7 @@ public class RadiogroupMerger {
             sbc.setVisibility(View.VISIBLE);
     }
 
-    public void bookValueOnCustomer(int pk)
+    void bookValueOnCustomer(int pk)
     {
         LinearLayout v = GetViewFromId(mChecked);
         assert v != null;
@@ -110,13 +110,12 @@ public class RadiogroupMerger {
         rbc.bookValue(pk);
     }
 
-    public void setDefaults(ContentResolver cr, int default_view,
-                            float default_value, String default_datbaseident) {
+    void setDefaults(ContentResolver cr, float default_value) {
 
         mContentResolver = cr;
-        mDefaultViewId = default_view;
+        mDefaultViewId = R.id.coffee;
         mDefaultValue = default_value;
-        mDatabaseIdentifier = default_datbaseident;
+        mDatabaseIdentifier = "coffee";
 
         check(mDefaultViewId);
     }

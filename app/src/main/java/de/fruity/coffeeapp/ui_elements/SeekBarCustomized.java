@@ -45,11 +45,12 @@ public class SeekBarCustomized extends AppCompatSeekBar implements SeekBar.OnSee
     private void constructor(Context context, AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
-                attrs, R.styleable.RadioButtonCustomized, defStyle, 0);
+                attrs, R.styleable.SeekBarCustomized, defStyle, 0);
 
         setTag("SeekBarCustomized");
 
-        mDatabaseIdentifier = a.getString(R.styleable.RadioButtonCustomized_databaseIdentifier);
+        mDatabaseIdentifier = a.getString(R.styleable.SeekBarCustomized_dbIdentifier);
+        a.recycle();
 
         if ( mDatabaseIdentifier == null)
             return;

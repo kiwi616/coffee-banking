@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/newperson_dialog_btn_cancel"
-            android:layout_toRightOf="@id/newperson_dialog_btn_cancel"
+            android:layout_toEndOf="@id/newperson_dialog_btn_cancel"
             style="?android:attr/buttonBarButtonStyle"
             android:text="@android:string/ok" />
 

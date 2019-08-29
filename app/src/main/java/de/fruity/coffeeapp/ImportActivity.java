@@ -39,9 +39,6 @@ public class ImportActivity extends Activity {
                 CustomToast ct;
 
                 switch (SqliteDatabase.importCsv(fileUri, getApplicationContext())) {
-                    case -2:
-                        ct = new CustomToast(getApplicationContext(), getText(R.string.all_deleted_you_are_fucked).toString(), 1500);
-                        break;
                     case -1:
                         ct = new CustomToast(getApplicationContext(), getText(R.string.shit_happens).toString(), 1500);
                         break;

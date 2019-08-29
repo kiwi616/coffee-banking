@@ -16,6 +16,8 @@ import android.widget.ListView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import de.fruity.coffeeapp.R;
 import de.fruity.coffeeapp.database.AdminCursorAdapter;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
@@ -49,6 +51,8 @@ public class AdminmodeAdminsFragment extends Fragment implements
         final String[] nums = {"0.05", "0.10", "0.15", "0.2", "0.25", "0.30", "0.35", "0.40",
                 "0.45", "0.50", "0.55", "0.60", "0.70", "0.75", "0.8", "0.9", "1", "1.5", "2.0", "2.5",
                 "3.0", "3.5", "4.0", "4.5", "5.0", "10.0", "20.0", "30.0", "40.0", "50.0"};
+
+        assert Objects.requireNonNull(getActivity()).getContentResolver() != null;
 
         switch (kind){
             case MAX:
@@ -85,6 +89,7 @@ public class AdminmodeAdminsFragment extends Fragment implements
                 int index = numberPicker.getValue();
                 String val = nums[index];
                 float selectedFloat = Float.parseFloat(val);
+                assert Objects.requireNonNull(getActivity()).getContentResolver() != null;
 
                 switch (kind) {
                     case MIN:
@@ -126,6 +131,7 @@ public class AdminmodeAdminsFragment extends Fragment implements
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 int personal_id = (int) mAdminCursorAdapter.getItemId(position);
+                assert Objects.requireNonNull(getActivity()).getContentResolver() != null;
 
                 if (SqlAccessAPI.isAdminByID(getActivity().getContentResolver(), personal_id))
                     SqlAccessAPI.deleteAdmin(getActivity().getContentResolver(), personal_id);
@@ -182,10 +188,9 @@ public class AdminmodeAdminsFragment extends Fragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        if (D)
-            Log.i(TAG, "onCreateLoader");
+        if (D) Log.i(TAG, "onCreateLoader");
         String[] projection = {SqliteDatabase.COLUMN_ID, SqliteDatabase.COLUMN_NAME};
-        return new CursorLoader(getActivity(),
+        return new CursorLoader(Objects.requireNonNull(getActivity()),
                 SqlDatabaseContentProvider.CONTENT_URI, projection, null, null,
                 SqliteDatabase.COLUMN_POSITION + " ASC");
     }

@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="SeekBarCustomized">
+        <attr name="dbIdentifier" format="string"/>
+    </declare-styleable>
+</resources>

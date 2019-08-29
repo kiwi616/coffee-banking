@@ -23,11 +23,11 @@ public class GroupmodeData {
 			this.name = name;
 		}
 	 
-		public boolean isSelected() {
+		boolean isSelected() {
 			return selected;
 		}
 	 
-		public void setSelected(boolean selected) {
+		void setSelected(boolean selected) {
 			this.selected = selected;
 		}
 		

@@ -17,13 +17,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import de.fruity.coffeeapp.GroupmodeData;
 import de.fruity.coffeeapp.tools.HelperMethods;
 
 public class SqlAccessAPI {
-    static final String TAG = SqlAccessAPI.class.getSimpleName();
+    private static final String TAG = SqlAccessAPI.class.getSimpleName();
 
     static private float valueQueryFor(ContentResolver cr, int people_id, String value_type)
     {
@@ -77,7 +78,7 @@ public class SqlAccessAPI {
         return value;
     }
 
-    static private int updatePrices(ContentResolver cr, String value_type,
+    static private void updatePrices(ContentResolver cr, String value_type,
                                      String column_type, float new_price) {
         ContentValues cv = new ContentValues();
         Uri uri = Uri.parse(SqlDatabaseContentProvider.PRODUCT_URI + "/" + value_type);
@@ -100,7 +101,7 @@ public class SqlAccessAPI {
 
         cv.put(column_type, new_price);
 
-        return cr.update(uri, cv, null, null);
+        cr.update(uri, cv, null, null);
     }
 
     static public float getPriceByIdentifier(ContentResolver cr, String value_type)
@@ -277,7 +278,6 @@ public class SqlAccessAPI {
 
 
         Cursor cursor = cr.query(
-//                uri, new String[]{SqliteDatabase.COLUMN_VE_VALUE, SqliteDatabase.COLUMN_VE_TIMESTAMP},
                 uri, null,
                 SqliteDatabase.COLUMN_PRODUCT_KIND + " = ?", new String[]{database_id}, null);
 
@@ -297,8 +297,8 @@ public class SqlAccessAPI {
                     e.printStackTrace();
                 }
 
+                assert finished_date != null;
                 retMap.put(finished_date, value);
-
             }
 
             cursor.close();
@@ -309,10 +309,9 @@ public class SqlAccessAPI {
 
     static public String getName(ContentResolver cr, long people_id)
     {
-        Long id = people_id;
         Cursor cursor = cr.query(SqlDatabaseContentProvider.CONTENT_URI, null,
                 SqliteDatabase.COLUMN_ID + " =  ?",
-                new String[] {id.toString()}, null);
+                new String[] {Long.toString(people_id)}, null);
         if (cursor != null && cursor.moveToFirst()) {
             String ret = cursor.getString(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_NAME));
             cursor.close();
@@ -325,11 +324,10 @@ public class SqlAccessAPI {
     static public int getPeopleIdByRFID(ContentResolver cr, int rfid)
     {
         int pk_id = -1;
-        Integer rfid_class = rfid;
         String[] projection = { SqliteDatabase.COLUMN_ID };
 
         Cursor idCursor = cr.query(SqlDatabaseContentProvider.CONTENT_URI, projection,
-                SqliteDatabase.COLUMN_RFID + " = ?", new String[]{rfid_class.toString()}, null);
+                SqliteDatabase.COLUMN_RFID + " = ?", new String[]{Integer.toString(rfid)}, null);
 
         if (idCursor != null && idCursor.moveToFirst()) {
             pk_id = idCursor.getInt(idCursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_ID));
@@ -342,11 +340,10 @@ public class SqlAccessAPI {
     static public int getPeopleIdByPersonalnumber(ContentResolver cr, int personalnumber)
     {
         int pk_id = -1;
-        Integer rfid_class = personalnumber;
         String[] projection = { SqliteDatabase.COLUMN_ID };
 
         Cursor idCursor = cr.query(SqlDatabaseContentProvider.CONTENT_URI, projection,
-                SqliteDatabase.COLUMN_PERSONAL_NUMBER + " = ?", new String[]{rfid_class.toString()}, null);
+                SqliteDatabase.COLUMN_PERSONAL_NUMBER + " = ?", new String[]{Integer.toString(personalnumber)}, null);
 
         if (idCursor != null && idCursor.moveToFirst()) {
             pk_id = idCursor.getInt(idCursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_ID));
@@ -385,7 +382,7 @@ public class SqlAccessAPI {
         Uri uri = cr.insert(SqlDatabaseContentProvider.CONTENT_URI, values);
 
         assert uri != null;
-        ret = Integer.parseInt(uri.getLastPathSegment());
+        ret = Integer.parseInt(Objects.requireNonNull(uri.getLastPathSegment()));
         if (make_admin)
             setAdmin(cr, ret);
         return ret;
@@ -432,11 +429,11 @@ public class SqlAccessAPI {
 
     public static boolean isAdminByPersonalnumber(ContentResolver cr, int persno) {
         boolean ret = false;
-        Integer people_id = getPeopleIdByPersonalnumber(cr, persno);
+        int people_id = getPeopleIdByPersonalnumber(cr, persno);
 
         Cursor admin_cursor = cr.query(SqlDatabaseContentProvider.ADMIN_URI, null,
                 SqliteDatabase.COLUMN_ADMINS_USER_ID + "= ?",
-                new String[]{people_id.toString()}, null);
+                new String[]{Integer.toString(people_id)}, null);
 
         if (admin_cursor != null) {
             ret = admin_cursor.moveToFirst();
@@ -449,11 +446,10 @@ public class SqlAccessAPI {
 
     public static boolean isAdminByID(ContentResolver cr, int people_id) {
         boolean ret = false;
-        Integer p = people_id;
 
         Cursor admin_cursor = cr.query(SqlDatabaseContentProvider.ADMIN_URI, null,
                 SqliteDatabase.COLUMN_ADMINS_USER_ID + "= ?",
-                new String[]{p.toString()}, null);
+                new String[]{Integer.toString(people_id)}, null);
 
         if (admin_cursor != null) {
             ret = admin_cursor.moveToFirst();
@@ -472,9 +468,8 @@ public class SqlAccessAPI {
     }
 
     public static void deleteAdmin(ContentResolver cr, int people_id) {
-        Integer p = people_id;
 
         cr.delete(SqlDatabaseContentProvider.ADMIN_URI, SqliteDatabase.COLUMN_ADMINS_USER_ID + " = ?",
-                new String[] {p.toString()});
+                new String[] {Integer.toString(people_id)});
     }
 }

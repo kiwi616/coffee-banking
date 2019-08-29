@@ -32,7 +32,7 @@
         <de.fruity.coffeeapp.ui_elements.SeekBarCustomized
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:databaseIdentifier="beer"
+            app:dbIdentifier="beer"
             android:visibility="invisible"
             android:layout_weight="9" />
 

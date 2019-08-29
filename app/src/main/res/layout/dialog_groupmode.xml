@@ -13,7 +13,8 @@
         android:clickable="true"
         android:longClickable="false"
         android:minHeight="60dip"
-        android:stackFromBottom="true" />
+        android:stackFromBottom="true"
+        android:focusable="true" />
 
     <RelativeLayout
         style="?android:attr/buttonBarStyle"
@@ -34,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/groupmode_btn_cancel"
-            android:layout_toRightOf="@id/groupmode_btn_cancel"
+            android:layout_toEndOf="@id/groupmode_btn_cancel"
             android:text="@android:string/ok" />
 
 

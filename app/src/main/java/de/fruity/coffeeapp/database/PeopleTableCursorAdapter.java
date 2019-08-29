@@ -28,9 +28,8 @@ public class PeopleTableCursorAdapter extends CursorAdapter{
 	@Override
 	public void bindView(View view, Context context, Cursor cursor) {
 
-		TextView tvName = (TextView) view.findViewById(R.id.main_tv_names);
+		TextView tvName = view.findViewById(R.id.main_tv_names);
 
-		//int tmp = cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_TYPE);
 		String type = cursor.getString(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_NAME));
 		int people_id = cursor.getInt(cursor.getColumnIndexOrThrow(SqliteDatabase.COLUMN_ID));
 
@@ -38,7 +37,6 @@ public class PeopleTableCursorAdapter extends CursorAdapter{
 
 		if (SqlAccessAPI.isAdminByID(context.getContentResolver(), people_id))
 			tvName.append("  (admin)");
-
 	}
 
     @Override

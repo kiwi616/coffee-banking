@@ -1,7 +1,7 @@
 package de.fruity.coffeeapp.adminmode;
 
-import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +11,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import org.achartengine.GraphicalView;
-import org.achartengine.chart.PointStyle;
-import org.achartengine.model.TimeSeries;
-import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.renderer.XYMultipleSeriesRenderer;
-import org.achartengine.renderer.XYSeriesRenderer;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Map;
 
 import de.fruity.coffeeapp.R;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
@@ -48,7 +39,7 @@ public class ShowPersonsDetailFragment extends android.support.v4.app.DialogFrag
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         if (container == null) {
             return null;
@@ -74,6 +65,9 @@ public class ShowPersonsDetailFragment extends android.support.v4.app.DialogFrag
         ImageButton ib_inc_meat = mainMeasurementView.findViewById(R.id.ib_meat_up);
         ImageButton ib_dec_meat = mainMeasurementView.findViewById(R.id.ib_meat_down);
 
+        assert getContext() != null;
+        assert getActivity() != null;
+        assert getActivity().getContentResolver() != null;
 
         etCoffee.setText(String.format("Coffee Balance: %s", HelperMethods.roundTwoDecimals(
                 SqlAccessAPI.getCoffeeValueFromPerson(

@@ -12,10 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import de.fruity.coffeeapp.R;
 import de.fruity.coffeeapp.database.SqlAccessAPI;
@@ -36,7 +33,6 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
 
     private float mCurrentValue;
     private String mDatabaseIdentifier;
-    private boolean mHasSeekbar = false;
 
     private Paint mTextPaint;
 
@@ -44,19 +40,17 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
 
     public RadioButtonCustomized(Context context) {
         super(context);
-        constructor(context,null, 0);
+        constructor(null, 0);
     }
 
     public RadioButtonCustomized(Context context, AttributeSet attrs) {
         super(context, attrs);
-        constructor(context, attrs, 0);
+        constructor(attrs, 0);
     }
-
-    private SeekBarCustomized mSeekbar;
 
     public RadioButtonCustomized(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        constructor(context, attrs, defStyle);
+        constructor(attrs, defStyle);
 
     }
 
@@ -89,14 +83,12 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
                 }
             }
         };
-        if (mHandler != null) {
-            mHandler.removeMessages(0); // this id is 100 percent random :P seems
-            // to be the default id
-            mHandler.postDelayed(runnable, 20000);
-        }
+        mHandler.removeMessages(0); // this id is 100 percent random :P seems
+        // to be the default id
+        mHandler.postDelayed(runnable, 20000);
     }
 
-    private void constructor(Context context, AttributeSet attrs, int defStyle) {
+    private void constructor(AttributeSet attrs, int defStyle) {
         // Load attributes
         final TypedArray a = getContext().obtainStyledAttributes(
                 attrs, R.styleable.RadioButtonCustomized, defStyle, 0);
@@ -140,19 +132,24 @@ public class RadioButtonCustomized extends AppCompatRadioButton {
     }
 
     @Override
-    public boolean onTouchEvent(@NonNull MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (isChecked() && mDatabaseIdentifier != null) {
-                float new_value = mCurrentValue + SqlAccessAPI.getPriceStepsize(
-                        getContext().getContentResolver(), mDatabaseIdentifier);
-                SqlAccessAPI.setCurrentPrice(getContext().getContentResolver(),
-                        new_value, mDatabaseIdentifier);
+    public boolean performClick() {
+        if (isChecked() && mDatabaseIdentifier != null) {
+            float new_value = mCurrentValue + SqlAccessAPI.getPriceStepsize(
+                    getContext().getContentResolver(), mDatabaseIdentifier);
+            SqlAccessAPI.setCurrentPrice(getContext().getContentResolver(),
+                    new_value, mDatabaseIdentifier);
 
-                triggerTimer();
-            }
-
-            invalidate(); //should be useless
+            triggerTimer();
         }
+
+        invalidate(); //should be useless
+        return super.performClick();
+    }
+
+    @Override
+    public boolean onTouchEvent(@NonNull MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN)
+            return performClick();
 
         return super.onTouchEvent(event);
     }

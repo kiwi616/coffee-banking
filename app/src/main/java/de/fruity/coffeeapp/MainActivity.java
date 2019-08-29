@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.beer));
         mRadiogroupMerger.addView((LinearLayout) findViewById(R.id.meat));
 
-        mRadiogroupMerger.setDefaults(getContentResolver(), R.id.coffee, default_coffee, "coffee");
+        mRadiogroupMerger.setDefaults(getContentResolver(), default_coffee);
 
         FloatingActionButton fab = findViewById(R.id.fab_admin);
         fab.setOnClickListener(new OnClickListener() {

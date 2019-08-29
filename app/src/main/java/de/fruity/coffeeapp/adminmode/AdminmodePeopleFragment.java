@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
@@ -64,6 +65,8 @@ public class AdminmodePeopleFragment extends ListFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        assert getActivity() != null;
+
         mContentResolver = getActivity().getContentResolver();
 
         fillData();
@@ -115,6 +118,7 @@ public class AdminmodePeopleFragment extends ListFragment implements
                 Log.d(TAG, "showDeatil position =  " + mCurCheckPosition);
 
             // Check what fragment is currently shown, replace if needed.
+            assert getFragmentManager() != null;
             Fragment databaseDetail = getFragmentManager().findFragmentById(
                     R.id.people_details_fragment);
 
@@ -184,6 +188,7 @@ public class AdminmodePeopleFragment extends ListFragment implements
         return super.onContextItemSelected(item);
     }
 
+    @NonNull
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         if (D)
@@ -195,14 +200,14 @@ public class AdminmodePeopleFragment extends ListFragment implements
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+    public void onLoadFinished(@NonNull Loader<Cursor> cursorLoader, Cursor cursor) {
         // Set the new data in the adapter.
         mAdapter.swapCursor(cursor);
         refreshView();
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> cursorLoader) {
         mAdapter.swapCursor(null);
     }
 

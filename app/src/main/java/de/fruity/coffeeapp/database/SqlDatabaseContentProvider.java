@@ -3,9 +3,6 @@ package de.fruity.coffeeapp.database;
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
@@ -16,9 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.Objects;
 
 /**
  * ContentProvider for generated {@link SqliteDatabase}
@@ -122,7 +117,7 @@ public class SqlDatabaseContentProvider extends ContentProvider {
 
                 try {
                     File filesDir = Environment.getExternalStorageDirectory();
-                    if (!database.backupDatabaseTo(getContext(), new File(filesDir,
+                    if (!database.backupDatabaseTo(Objects.requireNonNull(getContext()), new File(filesDir,
                             selection + ".sqlite3")))
                         throw new IllegalArgumentException();
                 } catch (NullPointerException ex)
@@ -199,15 +194,15 @@ public class SqlDatabaseContentProvider extends ContentProvider {
         return null;
     }
 
-    private int getNextPostion(SQLiteDatabase sqlDB, String table, String column) {
+    private int getNextPostion(SQLiteDatabase sqlDB) {
         int curPosition = 0;
 
-        Cursor mCursor = sqlDB.query(table, new String[]{column}, null,
+        Cursor mCursor = sqlDB.query(SqliteDatabase.TABLE_PEOPLE, new String[]{SqliteDatabase.COLUMN_POSITION}, null,
                 null, null, null, null);
 
         if (mCursor.moveToFirst()) {
             try {
-                curPosition = mCursor.getInt(mCursor.getColumnIndex(column));
+                curPosition = mCursor.getInt(mCursor.getColumnIndex(SqliteDatabase.COLUMN_POSITION));
                 curPosition++;
             } catch (Exception es) {
                 Log.e(TAG, "I hate you all");
@@ -226,7 +221,7 @@ public class SqlDatabaseContentProvider extends ContentProvider {
         switch (uriType) {
             case TablePeople:
                 values.put(SqliteDatabase.COLUMN_POSITION, getNextPostion(
-                        sqlDB, SqliteDatabase.TABLE_PEOPLE, SqliteDatabase.COLUMN_POSITION));
+                        sqlDB));
                 Log.i(TAG, "insert new person " + values.toString());
                 id = sqlDB.insertOrThrow(SqliteDatabase.TABLE_PEOPLE, null, values);
                 uri = Uri.parse(CONTENT_URI + "/" + id);
@@ -245,6 +240,7 @@ public class SqlDatabaseContentProvider extends ContentProvider {
                 int price_signness = 1;
                 float price;
                 String valuetype = uri.getLastPathSegment();
+                assert valuetype != null;
                 if (valuetype.startsWith("-")) { //value negation
                     valuetype = valuetype.substring(1);
                     price_signness = -1;

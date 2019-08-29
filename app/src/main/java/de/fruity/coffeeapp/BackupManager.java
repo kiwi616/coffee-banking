@@ -3,11 +3,10 @@ package de.fruity.coffeeapp;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
@@ -15,7 +14,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.fruity.coffeeapp.database.SqlDatabaseContentProvider;
-import de.fruity.coffeeapp.database.SqliteDatabase;
 
 public class BackupManager extends BroadcastReceiver {
 	static final String TAG = BackupManager.class.getSimpleName();
@@ -28,7 +26,9 @@ public class BackupManager extends BroadcastReceiver {
         String out = DATEFORMAT.format(new Date());
 		Log.d(TAG, "backup Database ");
 
-		provider.query(SqlDatabaseContentProvider.BACKUP_URI, null, out, null, null);
+		Cursor c = provider.query(SqlDatabaseContentProvider.BACKUP_URI, null, out, null, null);
+		assert c != null;
+		c.close();
 
 		return out;
 	}
